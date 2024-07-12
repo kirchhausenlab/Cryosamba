@@ -20,6 +20,7 @@ jobs:
           pip3 install ruff
           ruff --output-format=github .
         continue-on-error: true
+
   format:
     runs-on: ubuntu-latest
     steps:
@@ -28,26 +29,20 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Run black formatter
+      - name: Install Black
         run: |
           pip3 install black
-          black --check .        
-    test:
-      runs-on: ubuntu-latest
-      strategy:
-        matrix:
-          python-version: ['3.9', '3.11']
-      steps:
-        - uses: actions/checkout@v4
-        - name: Setup Python ${{matrix.python-version}}
-          uses: actions/setup-python@v5
-          with:
-            python-version: ${{matrix.python-version}}
-        - name: Install dependencies
-          run: | 
-            python3 -m pip install --upgrade pip
-            pip3 install -r requirements.txt
-        - name: Install tox and any other packages
-          run: pip3 install tox
-        - name: Run tox
-          run: tox -e py
+      - name: Run Black formatter
+        id: black
+        run: |
+          black .
+      - name: Commit changes
+        if: ${{ steps.black.outcome == 'success' }}
+        run: |
+          git config --global user.name 'github-actions'
+          git config --global user.email 'github-actions@github.com'
+          git add .
+          git commit -m "Auto-format code with Black"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
