@@ -9,7 +9,8 @@ pip install streamlit
 cd automate
 streamlit run main.py
 ```
-![](https://github.com/kirchhausenlab/Cryosamba/blob/main/how_to_open_cryosamba.gif)
+
+![](https://github.com/kirchhausenlab/Cryosamba/blob/main/how_to_open_cryosamba.gif){width=700}
 You can setup the environment, train models, make configs and run inferences on them from here.
 
 ## Terminal
