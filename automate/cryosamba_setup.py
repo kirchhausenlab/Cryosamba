@@ -1,9 +1,11 @@
-import streamlit as st
+import logging
 import os
 import subprocess
 from functools import wraps
-import logging
+
+import streamlit as st
 from training_setup import handle_exceptions
+
 logging.basicConfig(level=logging.INFO)
 logging.basicConfig(filename='debug_errors_for_environment.log', encoding='utf-8', level=logging.DEBUG)
 logger = logging.getLogger(__name__)
@@ -51,8 +53,12 @@ def setup_environment(env_name):
         subprocess.run("pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118", shell=True)
         
         st.write("Installing other dependencies")
-        subprocess.run("pip install tifffile mrcfile easydict loguru tensorboard cupy-cuda11x", shell=True)
-        
+        subprocess.run("pip install tifffile mrcfile easydict loguru tensorboard streamlit pipreqs cupy-cuda11x", shell=True)
+        get_reqs="pipreqs ../."
+        install_reqs="python3 -m pip install -r ../requirements.txt"
+        subprocess.run(get_reqs, shell=True, check=True)
+        subprocess.run(install_reqs, shell=True, check=True)
+
         st.write("Environment setup complete.")
 
 @handle_exceptions
@@ -67,12 +73,23 @@ def setup_environment_for_cryosamba() -> None:
     st.title("Cryosamba Setup Interface")
     st.write("Welcome to Cryosamba Setup Interface!")
 
-    setup_conda()
+    # setup_conda()
 
-    env_name = "cryosamba-env"
-    setup_environment(env_name)
+    # env_name = "cryosamba-env"
+    # setup_environment(env_name)
 
-    export_env()
+    # export_env()
 
-    st.success("Cryosamba setup is complete!")
+    if st.button('Setup Conda'):
+        setup_conda() 
+        
+    env_name = st.text_input("Enter environment name", "incasem")
+    
+    if st.button('Setup Environment'):
+        setup_environment(env_name)
+    
+    if st.button('Export Environment'):
+        export_env()
+
+
 
