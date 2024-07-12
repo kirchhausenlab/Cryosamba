@@ -7,6 +7,7 @@ from core.dataset import DatasetBase
 from core.biflownet import BiFlowNet
 from core.fusionnet import FusionNet
 
+
 class CharbonnierLoss(nn.Module):
     def __init__(self, eps=1e-6):
         super().__init__()
@@ -15,7 +16,8 @@ class CharbonnierLoss(nn.Module):
     def forward(self, x, y):
         loss = torch.mean(torch.sqrt((x - y).pow(2) + self.eps))
         return loss
- 
+
+
 class TernaryLoss(nn.Module):
     def __init__(self):
         super().__init__()
@@ -24,7 +26,7 @@ class TernaryLoss(nn.Module):
         self.padding = 1
 
     def transform(self, img):
-        patches = F.conv2d(img, self.w, padding=3, bias=None) #########
+        patches = F.conv2d(img, self.w, padding=3, bias=None)  #########
         transf = patches - img
         transf_norm = transf / torch.sqrt(0.81 + transf**2)
         return transf_norm
@@ -36,16 +38,21 @@ class TernaryLoss(nn.Module):
 
     def valid_mask(self, t):
         n, _, h, w = t.size()
-        inner = torch.ones(n, 1, h - 2 * self.padding, w - 2 * self.padding, device=t.device).type_as(t)
+        inner = torch.ones(
+            n, 1, h - 2 * self.padding, w - 2 * self.padding, device=t.device
+        ).type_as(t)
         mask = F.pad(inner, [self.padding] * 4)
         return mask
 
     def forward(self, x, y):
-        self.w = torch.eye(self.out_channels, device=x.device).reshape((self.patch_size, self.patch_size, 1, self.out_channels))
+        self.w = torch.eye(self.out_channels, device=x.device).reshape(
+            (self.patch_size, self.patch_size, 1, self.out_channels)
+        )
         self.w = self.w.permute(3, 2, 0, 1).float()
         x = self.transform(x)
         y = self.transform(y)
         return (self.hamming(x, y) * self.valid_mask(x)).mean()
+
 
 class PhotometricLoss(nn.Module):
     def __init__(self):
@@ -55,11 +62,15 @@ class PhotometricLoss(nn.Module):
         self.char_loss = CharbonnierLoss()
 
     def forward(self, interp_img, gt):
-        loss = 100*(self.char_loss(interp_img, gt) + 0.1*self.ter_loss(interp_img, gt))
+        loss = 100 * (
+            self.char_loss(interp_img, gt) + 0.1 * self.ter_loss(interp_img, gt)
+        )
         return loss
+
 
 def get_loss():
     return PhotometricLoss()
+
 
 class CryoSamba(nn.Module):
     def __init__(self, cfg):
@@ -69,9 +80,9 @@ class CryoSamba(nn.Module):
         self.fusionnet = FusionNet(cfg.fusionnet)
 
         self.gap = cfg.train_data.max_frame_gap
-        
+
         self.apply(self.init_weights)
-    
+
     def init_weights(self, m):
         if isinstance(m, nn.Conv2d):
             nn.init.kaiming_normal_(m.weight)
@@ -81,21 +92,20 @@ class CryoSamba(nn.Module):
 
     def validation(self, img0, img1):
         biflow = self.biflownet(img0, img1).contiguous()
-        rec = self.fusionnet(img0, img1, biflow)   
+        rec = self.fusionnet(img0, img1, biflow)
         rec = torch.clamp(rec, -1, 1)
         return rec
 
     def forward(self, img0, img1):
         biflow = self.biflownet(img0, img1).contiguous()
-        rec = self.fusionnet(img0, img1, biflow)   
+        rec = self.fusionnet(img0, img1, biflow)
         rec = torch.clamp(rec, -1, 1)
         return rec
 
-    
+
 def get_model(cfg, device, is_ddp, compile):
     model = CryoSamba(cfg).to(device=device)
     if compile:
         model = torch.compile(model, dynamic=False)
     model = DDP(model, device_ids=[device]) if is_ddp else model
     return model
-
