@@ -1,0 +1,22 @@
+{
+    "ckpt_dir": "/nfs/datasync4/inacio/data/denoising/cryosamba/axel_4xBin/train",
+    "data_path": "/nfs/datasync4/inacio/data/raw_data/cryo/axel/representative_tomogram/TS001_rec_6.8Apx.tif",
+    "output_dir": "/nfs/datasync4/inacio/data/denoising/cryosamba/axel_4xBin/inference",
+    "output_format": "same",
+    "ckpt_iter": -1,
+    "test_pyr_level": 3,
+    "test_aug": true,
+    "test_data": {
+        "max_frame_gap": 12,
+        "patch_shape": [
+            256,
+            256
+        ],
+        "patch_overlap": [
+            32,
+            32
+        ],
+        "batch_size": 16,
+        "num_workers": 4
+    }
+}

@@ -1,0 +1,22 @@
+{
+    "ckpt_dir": "/nfs/datasync4/inacio/data/denoising/cryosamba/ndc10gfp_g8_l3_ts_002_ctf_6xBin_Odd/train",
+    "data_path": "/nfs/datasync4/inacio/data/raw_data/cryo/novareconstructions/ndc10gfp_g8_l3_ts_002_ctf_6xBin_Odd.rec",
+    "output_dir": "/nfs/datasync4/inacio/data/denoising/cryosamba/ndc10gfp_g8_l3_ts_002_ctf_6xBin_Odd/inference",
+    "output_format": "same",
+    "ckpt_iter": -1,
+    "test_pyr_level": 3,
+    "test_aug": true,
+    "test_data": {
+        "max_frame_gap": 6,
+        "patch_shape": [
+            256,
+            256
+        ],
+        "patch_overlap": [
+            32,
+            32
+        ],
+        "batch_size": 16,
+        "num_workers": 4
+    }
+}

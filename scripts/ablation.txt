@@ -1,0 +1,52 @@
+
+baseline:
+lr = 2e-4
+lr_decay = 0.9998
+warmup_iters = 300
+default ImportanceMask
+num_channels 16
+pyr_dim 24
+
+train_0: baseline
+train_1: shallow ImportanceMask
+train_2: unet ImportanceMask
+train_3: num_channels 32
+train_4: pyr_dim 32
+train_5: warmup_iters = 1000
+train_6: lr_decay = 0.99995
+train_7: lr_decay = 0.999
+
+CUDA_VISIBLE_DEVICES=0,1 torchrun --standalone --nproc_per_node=2 train.py --seed 1234 --config configs/nova/ndc10gfp_g8_l3_ts_002_ctf_3xBin_train.json
+
+CUDA_VISIBLE_DEVICES=2,3 torchrun --standalone --nproc_per_node=2 train.py --seed 1234 --config configs/nova/SMH825_ctf_3xBin_train.json
+
+CUDA_VISIBLE_DEVICES=4,5 torchrun --standalone --nproc_per_node=2 train.py --seed 1234 --config configs/nova/ndc10gfp_g8_l3_ts_002_ctf_3xBin_Even_train.json
+
+CUDA_VISIBLE_DEVICES=6,7 torchrun --standalone --nproc_per_node=2 train.py --seed 1234 --config configs/nova/ndc10gfp_g8_l3_ts_002_ctf_3xBin_Odd_train.json
+
+
+
+
+CUDA_VISIBLE_DEVICES=4,5 torchrun --standalone --nproc_per_node=2 train.py --seed 1234 --config configs/nova/SMH825_ctf_3xBin_Even_train.json
+
+CUDA_VISIBLE_DEVICES=6,7 torchrun --standalone --nproc_per_node=2 train.py --seed 1234 --config configs/nova/SMH825_ctf_3xBin_Odd_train.json
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

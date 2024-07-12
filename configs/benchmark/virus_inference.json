@@ -1,0 +1,26 @@
+{
+    "train_dir": "/nfs/datasync4/inacio/data/denoising/cryosamba/rotacell_grid1_TS09_ctf_1xBin/train",
+    "data_path": "/nfs/datasync4/inacio/data/raw_data/cryo/novareconstructions/cropped/rotacell_grid1_TS09_ctf_1xBin_virus.rec",
+    "inference_dir": "/nfs/datasync4/inacio/data/denoising/cryosamba/benchmark/virus_1x/gap_12",
+    "inference_data": {
+        "max_frame_gap": 12,
+        "patch_shape": [
+            384,
+            384
+        ],
+        "patch_overlap": [
+            0,
+            0
+        ],
+        "batch_size": 32,
+        "num_workers": 4
+    },
+    "inference": {
+        "output_format": "same",
+        "load_ckpt_name": null,
+        "pyr_level": 3,
+        "TTA": true,
+        "mixed_precision": true,
+        "compile": false
+    }
+}

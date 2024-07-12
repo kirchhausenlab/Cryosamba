@@ -1,0 +1,22 @@
+{
+    "ckpt_dir": "/nfs/datasync4/inacio/data/denoising/cryosamba/fib_221_n2n/train",
+    "data_path": "/nfs/datasync4/inacio/data/denoising/fib_n2n/IPSC_269_221_safe/inference_esb/result/",
+    "output_dir": "/nfs/datasync4/inacio/data/denoising/cryosamba/fib_221_n2n/inference",
+    "output_format": "same",
+    "ckpt_iter": -1,
+    "test_pyr_level": 3,
+    "test_aug": false,
+    "test_data": {
+        "max_frame_gap": 6,
+        "patch_shape": [
+            256,
+            256
+        ],
+        "patch_overlap": [
+            32,
+            32
+        ],
+        "batch_size": 24,
+        "num_workers": 4
+    }
+}

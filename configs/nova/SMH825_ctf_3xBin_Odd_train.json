@@ -1,0 +1,52 @@
+{
+    "ckpt_dir": "/nfs/datasync4/inacio/data/denoising/cryosamba/SMH825_ctf_3xBin_Odd/train",
+    "data_path": "/nfs/datasync4/inacio/data/raw_data/cryo/novareconstructions/SMH825_ctf_3xBin_Odd.rec",
+    "train_data": {
+        "max_frame_gap": 6,
+        "patch_shape": [
+            256,
+            256
+        ],
+        "patch_overlap": [
+            32,
+            32
+        ],
+        "split_ratio": 1.0,
+        "batch_size": 16,
+        "num_workers": 4
+    },
+    "train": {
+        "background_mask": false,
+        "print_freq": 100,
+        "save_freq": 1000,
+        "val_freq": 1000,
+        "num_iters": 200000,
+        "warmup_iters": 300,
+        "mixed_precision": false
+    },
+    "optimizer": {
+        "lr": 0.0002,
+        "lr_decay": 0.9999,
+        "weight_decay": 0.0001,
+        "epsilon": 1e-08,
+        "betas": [
+            0.9,
+            0.999
+        ]
+    },
+    "biflownet": {
+        "pyr_dim": 24,
+        "pyr_level": 3,
+        "corr_radius": 4,
+        "kernel_size": 3,
+        "warp_type": "soft_splat",
+        "padding_mode": "reflect",
+        "fix_params": false
+    },
+    "fusionnet": {
+        "num_channels": 16,
+        "high_synthesis": true,
+        "padding_mode": "reflect",
+        "fix_params": false
+    }
+}
