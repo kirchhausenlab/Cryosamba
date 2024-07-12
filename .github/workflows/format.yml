@@ -33,11 +33,14 @@ jobs:
         run: |
           pip3 install black
       - name: Run Black formatter
-        id: black
         run: |
           black .
+      - name: Check for changes
+        id: git_status
+        run: |
+          git diff --exit-code || echo "::set-output name=changes::true"
       - name: Commit changes
-        if: ${{ steps.black.outcome == 'success' }}
+        if: steps.git_status.outputs.changes == 'true'
         run: |
           git config --global user.name 'github-actions'
           git config --global user.email 'github-actions@github.com'
