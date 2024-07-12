@@ -171,6 +171,7 @@ def get_data(path):
 
 
 def save_data(path, name, data, metadata, output_format="same"):
+
     if output_format == "same":
         output_format = metadata["format"]
 

@@ -33,6 +33,7 @@ class DatasetBase(Dataset):
         )
 
         if self.split != "test":
+
             self.split_ratio = args.split_ratio
             length = int(len(self.indices[0]) * self.split_ratio)
             if self.split == "train":

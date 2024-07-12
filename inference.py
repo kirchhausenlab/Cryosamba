@@ -257,6 +257,7 @@ class Inference:
 
 
 if __name__ == "__main__":
+
     parser = argparse.ArgumentParser()
     parser.add_argument("-c", "--config", default="configs/default_inference.json")
     parser.add_argument("-s", "--seed", type=int, default=-1)
