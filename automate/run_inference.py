@@ -1,9 +1,10 @@
-import streamlit as st
+import logging
 import os
 import subprocess
 from functools import wraps
-import logging
 from typing import List
+
+import streamlit as st
 from training_setup import handle_exceptions
 
 logger = logging.getLogger(__name__)
@@ -57,10 +58,9 @@ def select_experiment() -> None:
             st.error(f"Folder {base_path} not found")
             st.session_state.folder = False
 
-
+@handle_exceptions
 def select_experiment_and_run() -> None:
     st.header("Welcome to the CryoSamba Training Runner")
-
     if "folder_found" not in st.session_state:
         select_experiment()
     elif st.session_state.folder_found:
