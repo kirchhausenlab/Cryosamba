@@ -22,7 +22,7 @@ check_conda() {
 
 # Function to create and set up the conda environment
 setup_environment() {
-    env_name="cryosamba-env"
+    env_name="cryosamba"
     
     echo "Creating conda environment: $env_name"
     conda create --name $env_name python=3.11 -y
@@ -30,9 +30,14 @@ setup_environment() {
     echo "running conda init"
     conda init --all 
    
+
+    sleep 5
+    echo "update shell"
     source ~/.bashrc
+    }
 
-
+activate_env() {
+    env_name="cryosamba"
     echo "Activating conda environment: $env_name"
     conda activate $env_name
     
@@ -42,6 +47,7 @@ setup_environment() {
     echo "Installing other dependencies"
     pip install tifffile mrcfile easydict loguru tensorboard cupy-cuda11x streamlit
     echo "Environment setup complete"
+
 }
 
 export_env(){
@@ -56,6 +62,8 @@ check_conda
 echo "conda installed"
 # install necessary dependencies 
 setup_environment
+
+activate_env
 # update bash path
 source ~/.bashrc     
 # make a yml and move it
