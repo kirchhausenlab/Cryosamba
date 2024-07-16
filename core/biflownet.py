@@ -1,9 +1,9 @@
-import torch
 import numpy as np
-import torch.nn.functional as F
+import torch
 import torch.nn as nn
+import torch.nn.functional as F
 
-from core.utils.nn_utils import ConvBlock, warp_fn, backwarp, conv2, deconv
+from core.utils.nn_utils import ConvBlock, backwarp, conv2, deconv, warp_fn
 
 
 class ImportanceMask(nn.Module):
