@@ -5,7 +5,6 @@ from functools import wraps
 from random import randint
 
 import streamlit as st
-
 from file_selector import get_dir, list_directories_in_directory
 
 logging.basicConfig(level=logging.INFO)

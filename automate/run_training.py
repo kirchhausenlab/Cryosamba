@@ -5,6 +5,7 @@ from functools import wraps
 from typing import List
 
 import streamlit as st
+from file_selector import get_dir, list_directories_in_directory
 from training_setup import handle_exceptions
 
 logger = logging.getLogger(__name__)
@@ -46,6 +47,7 @@ def run_experiment(gpus: str, folder_path: str) -> None:
 
 @handle_exceptions
 def select_experiment() -> None:
+    get_dir()
     st.write("Please enter the experiment you want to run: ")
     input_name = st.text_input("Experiment Name", "")
     base_path = f"../{input_name}"
