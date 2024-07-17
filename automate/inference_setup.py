@@ -1,10 +1,13 @@
-import streamlit as st
-import os
 import json
-from random import randint
-from functools import wraps
 import logging
+import os
+from functools import wraps
+from random import randint
+
+import streamlit as st
 from training_setup import handle_exceptions
+
+from file_selector import get_dir, list_directories_in_directory
 
 logging.basicConfig(level=logging.INFO)
 logging.basicConfig(
@@ -20,6 +23,8 @@ def folder_exists(folder_path):
 
 @handle_exceptions
 def make_folder(is_inference=False):
+    get_dir()
+
     if is_inference:
         st.subheader("Inference Folder Check")
         st.write("Enter the name for your experiment:")
@@ -36,6 +41,7 @@ def make_folder(is_inference=False):
             st.success(f"Folder '{base_path}' found.")
             st.session_state.folder_found = True
             st.session_state.DEFAULT_NAME = input_name
+            st.session_state.step = "mandatory_params"
         else:
             st.error(f"Folder '{base_path}' not found.")
             st.session_state.folder_found = False
@@ -43,6 +49,7 @@ def make_folder(is_inference=False):
 
 @handle_exceptions
 def generate_mandatory_params():
+    get_dir()
     st.subheader("Generate JSON Config")
     st.write("Enter the mandatory details: ")
 
@@ -200,7 +207,15 @@ def generate_config():
         **inference_defaults,
         **st.session_state.get("inference_params", {}),
     }
-
+    # base_config = {
+    #     "train_dir": mandatory_params["train_dir"],
+    #     "data_path": [mandatory_params["data_path"]],
+    #     "inference_data": {
+    #         "max_frame_gap": mandatory_params["max_frame_gap"],
+    #         **inference_data_params,
+    #     },
+    #     "inference": {**inference_params},
+    # }
     base_config = {
         "train_dir": mandatory_params["train_dir"],
         "data_path": [mandatory_params["data_path"]],

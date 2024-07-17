@@ -1,11 +1,12 @@
-import os
 import logging
-from training_setup import setup_cryosamba_and_training
+import os
+from test import setup_environment_for_cryosamba
+
+import streamlit as st
+from inference_setup import setup_inference
 from run_inference import select_experiment_and_run
 from run_training import select_experiment_and_run_training
-from inference_setup import setup_inference
-from cryosamba_setup import setup_environment_for_cryosamba
-import streamlit as st
+from training_setup import setup_cryosamba_and_training
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(
@@ -28,7 +29,7 @@ def main():
     )
     if app_mode == "Choose your options!":
         st.header(
-            "Please look at the options from the dropdown to either setup, train or run inferences"
+            "Please look at the options from the dropdown to either setup, train or run inferences. CAREFUL, IT WILL ONLY RUN ON A WINDOWS OR A LINUX"
         )
     elif app_mode == "Setup Environment":
         setup_environment_for_cryosamba()

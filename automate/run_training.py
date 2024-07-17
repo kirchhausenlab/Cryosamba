@@ -1,9 +1,11 @@
-import streamlit as st
+import logging
 import os
 import subprocess
 from functools import wraps
-import logging
 from typing import List
+
+import streamlit as st
+from file_selector import get_dir, list_directories_in_directory
 from training_setup import handle_exceptions
 
 logger = logging.getLogger(__name__)
@@ -31,7 +33,7 @@ def select_gpus() -> List[str]:
 @handle_exceptions
 def run_experiment(gpus: str, folder_path: str) -> None:
     print(f"{folder_path}")
-    cmd = f"CUDA_VISIBLE_DEVICES=${gpus} torchrun --standalone --nproc_per_node=$(echo ${gpus} | tr ',' '\n' | wc -l) ../train.py --config ../${folder_path}/config.json"
+    cmd = f"CUDA_VISIBLE_DEVICES=${gpus} torchrun --standalone --nproc_per_node=$(echo ${gpus} | tr ',' '\n' | wc -l) ../train.py --config ../${folder_path}/train_config.json"
     st.text(f"Do you want to run the command: {cmd}?")
     selection = st.radio("Type y/n: ", ["y", "n"], index=None)
     if selection == "n":
@@ -45,6 +47,7 @@ def run_experiment(gpus: str, folder_path: str) -> None:
 
 @handle_exceptions
 def select_experiment() -> None:
+    get_dir()
     st.write("Please enter the experiment you want to run: ")
     input_name = st.text_input("Experiment Name", "")
     base_path = f"../{input_name}"
