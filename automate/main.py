@@ -1,11 +1,12 @@
-import os
 import logging
-from training_setup import setup_cryosamba_and_training
+import os
+
+import streamlit as st
+from cryosamba_setup import setup_environment_for_cryosamba
+from inference_setup import setup_inference
 from run_inference import select_experiment_and_run
 from run_training import select_experiment_and_run_training
-from inference_setup import setup_inference
-from cryosamba_setup import setup_environment_for_cryosamba
-import streamlit as st
+from training_setup import setup_cryosamba_and_training
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(
@@ -55,3 +56,4 @@ if __name__ == "__main__":
     except Exception as e:
         logger.exception(f"An error occurred: {str(e)}")
         raise Exception from exec
+
