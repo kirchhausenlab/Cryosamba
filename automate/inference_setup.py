@@ -254,4 +254,3 @@ def setup_inference() -> None:
     else:
         st.error("Please ensure the folder exists before proceeding.")
         make_folder(is_inference=True)
-
