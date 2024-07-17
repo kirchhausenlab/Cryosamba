@@ -1,10 +1,9 @@
-import json
-import logging
-import os
-from functools import wraps
-from random import randint
-
 import streamlit as st
+import os
+import json
+from random import randint
+from functools import wraps
+import logging
 
 logging.basicConfig(level=logging.INFO)
 logging.basicConfig(
@@ -377,4 +376,3 @@ def setup_cryosamba_and_training() -> None:
 
 # if __name__ == "__main__":
 #     main()
-
