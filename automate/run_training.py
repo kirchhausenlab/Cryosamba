@@ -1,9 +1,10 @@
-import streamlit as st
+import logging
 import os
 import subprocess
 from functools import wraps
-import logging
 from typing import List
+
+import streamlit as st
 from training_setup import handle_exceptions
 
 logger = logging.getLogger(__name__)
@@ -24,13 +25,13 @@ def select_gpus() -> List[str]:
     )
 
     st.write("You selected:", options)
-    # print(type(options), options)
+logger.info(type(options), options)
     return options
 
 
 @handle_exceptions
 def run_experiment(gpus: str, folder_path: str) -> None:
-    print(f"{folder_path}")
+logger.info(f"{folder_path}")
     cmd = f"CUDA_VISIBLE_DEVICES=${gpus} torchrun --standalone --nproc_per_node=$(echo ${gpus} | tr ',' '\n' | wc -l) ../train.py --config ../${folder_path}/config.json"
     st.text(f"Do you want to run the command: {cmd}?")
     selection = st.radio("Type y/n: ", ["y", "n"], index=None)
@@ -71,3 +72,4 @@ def select_experiment_and_run_training():
             st.error("you did not select any options!")
             st.stop()
         run_experiment(",".join(options), st.session_state.input_name)
+
