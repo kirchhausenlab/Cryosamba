@@ -29,7 +29,7 @@ def main():
     )
     if app_mode == "Choose your options!":
         st.header(
-            "Please look at the options from the dropdown to either setup, train or run inferences"
+            "Please look at the options from the dropdown to either setup, train or run inferences. CAREFUL, IT WILL ONLY RUN ON A WINDOWS OR A LINUX"
         )
     elif app_mode == "Setup Environment":
         setup_environment_for_cryosamba()
