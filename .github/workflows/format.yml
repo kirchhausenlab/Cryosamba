@@ -18,7 +18,7 @@ jobs:
       - name: Lint with Ruff
         run: |
           pip3 install ruff
-          ruff --output-format=github .
+          ruff check --output-format=github .
         continue-on-error: true
 
   format:
