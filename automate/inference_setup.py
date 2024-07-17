@@ -23,7 +23,7 @@ def folder_exists(folder_path):
 
 @handle_exceptions
 def make_folder(is_inference=False):
-    get_dir()     
+    get_dir()
 
     if is_inference:
         st.subheader("Inference Folder Check")
