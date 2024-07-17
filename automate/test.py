@@ -2,6 +2,7 @@ import logging
 import os
 import subprocess
 from functools import wraps
+
 import streamlit as st
 from training_setup import handle_exceptions
 
@@ -83,10 +84,12 @@ def setup_environment_for_cryosamba() -> None:
 
     env_name = st.text_input("Enter environment name", "cryosamba")
     if st.button("Setup Environment"):
-        setup_environment(env_name)
+        with st.echo():
+            setup_environment(env_name)
 
     if st.button("Export Environment"):
         export_env(env_name)
+
 
 if __name__ == "__main__":
     setup_environment_for_cryosamba()
