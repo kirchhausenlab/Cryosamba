@@ -7,6 +7,8 @@ from random import randint
 import streamlit as st
 from training_setup import handle_exceptions
 
+from file_selector import get_dir, list_directories_in_directory
+
 logging.basicConfig(level=logging.INFO)
 logging.basicConfig(
     filename="debug_errors_for_inference.log", encoding="utf-8", level=logging.DEBUG
@@ -21,6 +23,8 @@ def folder_exists(folder_path):
 
 @handle_exceptions
 def make_folder(is_inference=False):
+    get_dir()     
+
     if is_inference:
         st.subheader("Inference Folder Check")
         st.write("Enter the name for your experiment:")
@@ -45,6 +49,7 @@ def make_folder(is_inference=False):
 
 @handle_exceptions
 def generate_mandatory_params():
+    get_dir()
     st.subheader("Generate JSON Config")
     st.write("Enter the mandatory details: ")
 

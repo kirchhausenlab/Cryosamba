@@ -6,6 +6,8 @@ from random import randint
 
 import streamlit as st
 
+from file_selector import get_dir, list_directories_in_directory
+
 logging.basicConfig(level=logging.INFO)
 logging.basicConfig(
     filename="debug_errors_for_training.log", encoding="utf-8", level=logging.DEBUG
@@ -56,6 +58,7 @@ def handle_exceptions(input_func):
 
 @handle_exceptions
 def make_folder():
+    get_dir()
     st.subheader("Experiment Folder Creation")
     st.write("Enter the name for your experiment:")
 
@@ -81,6 +84,7 @@ def make_folder():
 
 @handle_exceptions
 def generate_mandatory_params():
+    get_dir()
     st.subheader("Generate JSON Config")
     st.write("Enter the mandatory details: ")
 
