@@ -33,12 +33,19 @@ def get_dir():
             )
 
     with col2:
-        selected_subdir = st.selectbox('Subdirectories:', [''] + list_directories_in_directory(st.session_state.current_directory))
-        if st.button('Submit'):
-            st.session_state.current_directory = os.path.join(st.session_state.current_directory, selected_subdir)
+        selected_subdir = st.selectbox(
+            "Subdirectories:",
+            [""] + list_directories_in_directory(st.session_state.current_directory),
+        )
+        if st.button("Submit"):
+            st.session_state.current_directory = os.path.join(
+                st.session_state.current_directory, selected_subdir
+            )
 
-        if st.button('Go Down') and selected_subdir:
-            st.session_state.current_directory = os.path.join(st.session_state.current_directory, selected_subdir)
+        if st.button("Go Down") and selected_subdir:
+            st.session_state.current_directory = os.path.join(
+                st.session_state.current_directory, selected_subdir
+            )
 
     # Display the selected directory
     st.write("Selected Directory:")
