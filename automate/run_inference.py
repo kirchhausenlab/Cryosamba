@@ -58,6 +58,7 @@ def select_experiment() -> None:
             st.error(f"Folder {base_path} not found")
             st.session_state.folder = False
 
+
 @handle_exceptions
 def select_experiment_and_run() -> None:
     st.header("Welcome to the CryoSamba Training Runner")

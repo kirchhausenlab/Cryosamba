@@ -37,7 +37,7 @@ def make_folder(is_inference=False):
             st.success(f"Folder '{base_path}' found.")
             st.session_state.folder_found = True
             st.session_state.DEFAULT_NAME = input_name
-            st.session_state.step="mandatory_params"
+            st.session_state.step = "mandatory_params"
         else:
             st.error(f"Folder '{base_path}' not found.")
             st.session_state.folder_found = False
