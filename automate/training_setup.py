@@ -1,9 +1,10 @@
-import streamlit as st
-import os
 import json
-from random import randint
-from functools import wraps
 import logging
+import os
+from functools import wraps
+from random import randint
+
+import streamlit as st
 
 logging.basicConfig(level=logging.INFO)
 logging.basicConfig(
@@ -340,7 +341,7 @@ def generate_config():
         },
     }
 
-    config_file = f"../{DEFAULT_NAME}/config.json"
+    config_file = f"../{DEFAULT_NAME}/train_config.json"
     with open(config_file, "w") as f:
         json.dump(base_config, f, indent=4)
     st.success(f"Config file generated successfully at {config_file}")
