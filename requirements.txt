@@ -1,4 +1,4 @@
-cupy==13.2.0
+cupy==11
 easydict==1.13
 loguru==0.7.2
 mrcfile==1.5.1

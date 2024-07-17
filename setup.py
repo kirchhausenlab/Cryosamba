@@ -3,7 +3,7 @@ from setuptools import setup
 setup(
     name="cryosamba",
     version="0.1",
-    description="",
+    description="Arkash Jain added the automate folder CI/CD, reach out to him for assistance",
     author="Jose Inacio da Costa Filho",
     author_email="",
     license="MIT",
