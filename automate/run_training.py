@@ -46,7 +46,9 @@ def run_experiment(gpus: str, folder_path: str) -> None:
             "Please open up a new terminal on your machine and navigate to the cryosamba/automate folder. Then run this command"
         )
         st.code(cmd)
-        st.code(f"SAMPLE COMMAND LOOKS LIKE: \n CUDA_VISIBLE_DEVICES=0,1 torchrun --standalone --nproc_per_node=2 train.py --config configs/your_config_train.json \n: ")
+        st.code(
+            f"SAMPLE COMMAND LOOKS LIKE: \n CUDA_VISIBLE_DEVICES=0,1 torchrun --standalone --nproc_per_node=2 train.py --config configs/your_config_train.json \n: "
+        )
 
 
 @handle_exceptions
