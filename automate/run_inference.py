@@ -33,7 +33,7 @@ def select_gpus() -> List[str]:
 @handle_exceptions
 def run_experiment(gpus: str, folder_path: str) -> None:
     print(f"{folder_path}")
-    cmd = f"CUDA_VISIBLE_DEVICES=${gpus} torchrun --standalone --nproc_per_node=$(echo ${gpus} | tr ',' '\n' | wc -l) ../train.py --config ../${folder_path}/inference_config.json"
+    cmd = f"CUDA_VISIBLE_DEVICES={gpus} torchrun --standalone --nproc_per_node=$(echo {gpus} | tr ',' '\n' | wc -l) ../train.py --config ../{folder_path}/inference_config.json"
     st.text(f"Do you want to run the command: {cmd}?")
     selection = st.radio("Type y/n: ", ["y", "n"], index=None)
     if selection == "n":
