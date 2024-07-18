@@ -10,6 +10,8 @@ This repository contains the segmentation pipeline described in the following pu
 
 Note: CryoSamba is written for machines with either a Linux or Windows operating system and a CUDA capable GPU. MacOS is not supported.
 
+### PLEASE WATCH THE VIDEOS IN THE GITHUB (move_to_remote_server.mp4, install_and_startup.mp4 and How_to_run.mp4 to see an end-to-end example of running cryosamba)
+
 ## Table of Contents
 
 1. [UI](#ui) 🖥️
@@ -61,6 +63,7 @@ This creates a conda environment called `cryosamba` and activates it. In the fut
 ```bash
 conda activate cryosamba
 ```
+
 anytime you want to run the CryoSamba again.
 
 In case of errors, try running `conda init --all && source ~/.bashrc` in your terminal.
@@ -218,4 +221,3 @@ To start inference, run the command below from the same folder `automate/scripts
 To interrupt the process, press CTRL + C. You can resume or start from scratch if prompted.
 
 The final denoised volume will be located at `/path/to/dir/runs/exp-name/inference`. It will be either a file named `result.tif`, `result.mrc`, `result.rec` or a folder named `result`.
-
