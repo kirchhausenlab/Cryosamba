@@ -15,7 +15,7 @@ This repository contains the segmentation pipeline described in the following pu
    - [Visualization with TensorBoard](#visualization-with-tensorboard) 📈
    - [Inference](#inference) 🔍
 
-## UI 🖥️
+## UI
 
 From `cryosamba/automate`:
 
@@ -27,9 +27,9 @@ streamlit run main.py
 
 You can set up the environment, train models, make configs, and run inferences from here.
 
-## Terminal 💻
+## Terminal
 
-### Installation 🛠️
+### Installation
 
 Open a terminal window (Powershell if on Windows or Terminal if on Ubuntu) and navigate to the directory where you want to save Cryosamba via `cd /path/to/dir`. Then run
 
@@ -59,7 +59,7 @@ anytime you want to run the CryoSamba again.
 
 In case of errors, try running `conda init --all && source ~/.bashrc` in your terminal.
 
-### Training 🚀
+### Training
 
 From the same directory `automate/scripts`, run:
 
@@ -149,7 +149,7 @@ To start training the model, run the command below from the same folder `automat
 
 To interrupt training, press CTRL + C. You can resume training or start from scratch if prompted.
 
-### Visualization with TensorBoard 📊
+### Visualization with TensorBoard
 
 TensorBoard can be used to monitor the progress of the training losses.
 
@@ -161,7 +161,7 @@ TensorBoard can be used to monitor the progress of the training losses.
 3. In a browser, open `localhost:6006`.
 4. Use the slider under `SCALARS` to smooth noisy plots.
 
-### Inference 🔍
+### Inference
 
 From the same directory `automate/scripts`, run:
 
