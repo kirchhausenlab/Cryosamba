@@ -21,7 +21,7 @@ Note: CryoSamba is written for machines with either a Linux or Windows operating
 
 ## UI
 
-From `cryosamba/automate`:
+From `Cryosamba/automate`:
 
 ```bash
 pip install streamlit
@@ -43,7 +43,7 @@ Open a Terminal window and navigate to the directory where you want to save the 
 git clone https://github.com/kirchhausenlab/Cryosamba.git
 ```
 
-in this directory. Once successfully cloned, navigate to the scipts folder via `cd cryosamba/automate/scripts`
+in this directory. Once successfully cloned, navigate to the scipts folder via `cd Cryosamba/automate/scripts`
 
 To setup the environment, run:
 
@@ -101,7 +101,7 @@ The generated `train_config.json` file will contain all parameters for training 
 
 ```json
 {
-  "train_dir": "/path/to/dir/cryosamba/runs/exp-name/train",
+  "train_dir": "/path/to/dir/Cryosamba/runs/exp-name/train",
   "data_path": ["/path/to/file/volume.mrc"],
   "train_data": {
     "max_frame_gap": 6,
@@ -162,7 +162,7 @@ TensorBoard can be used to monitor the progress of the training losses.
 1. Open a terminal window inside a graphical interface (e.g., XDesk).
 2. Activate the environment and run:
    ```bash
-   tensorboard --logdir /path/to/dir/cryosamba/runs/exp-name/train
+   tensorboard --logdir /path/to/dir/Cryosamba/runs/exp-name/train
    ```
 3. In a browser, open `localhost:6006`.
 4. Use the slider under `SCALARS` to smooth noisy plots.
@@ -186,9 +186,9 @@ The generated `inference_config.json` file will contain all parameters for runni
 
 ```json
 {
-  "train_dir": "/path/to/dir/cryosamba/runs/exp-name/train",
+  "train_dir": "/path/to/dir/Cryosamba/runs/exp-name/train",
   "data_path": "/path/to/file/volume.mrc",
-  "inference_dir": "/path/to/dir/cryosamba/runs/exp-name/inference",
+  "inference_dir": "/path/to/dir/Cryosamba/runs/exp-name/inference",
   "inference_data": {
     "max_frame_gap": 12,
     "patch_shape": [256, 256],
@@ -217,5 +217,5 @@ To start inference, run the command below from the same folder `automate/scripts
 
 To interrupt the process, press CTRL + C. You can resume or start from scratch if prompted.
 
-The final denoised volume will be located at `/path/to/dir/cryosamba/runs/exp-name/inference`. It will be either a file named `result.tif`, `result.mrc`, `result.rec` or a folder named `result`.
+The final denoised volume will be located at `/path/to/dir/runs/exp-name/inference`. It will be either a file named `result.tif`, `result.mrc`, `result.rec` or a folder named `result`.
 
