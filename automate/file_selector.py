@@ -23,9 +23,9 @@ def get_dir():
     # Display the current directory
     st.write(f"Current Directory: {st.session_state.current_directory}")
     selected_subdir = st.selectbox(
-            "Subdirectories:",
-            [""] + list_directories_in_directory(st.session_state.current_directory),
-        )
+        "Subdirectories:",
+        [""] + list_directories_in_directory(st.session_state.current_directory),
+    )
     # Buttons to navigate up and down the directory levels
     col1, col2 = st.columns(2)
 
@@ -36,8 +36,7 @@ def get_dir():
             )
 
     with col2:
-       
-        
+
         if st.button("Go Down") and selected_subdir:
             st.session_state.current_directory = os.path.join(
                 st.session_state.current_directory, selected_subdir

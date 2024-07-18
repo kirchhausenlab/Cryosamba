@@ -332,8 +332,12 @@ def generate_config():
 @handle_exceptions
 def setup_cryosamba_and_training() -> None:
     st.title("Cryosamba Setup Interface")
-    st.write("Welcome to the training setup for cryosamba. Here you can set the parameters for your machine learning configuration.")
-    st.write("*Note that you have to hit a button twice to see results. The first click shows you a preview of what will happen and the next click runs it*")
+    st.write(
+        "Welcome to the training setup for cryosamba. Here you can set the parameters for your machine learning configuration."
+    )
+    st.write(
+        "*Note that you have to hit a button twice to see results. The first click shows you a preview of what will happen and the next click runs it*"
+    )
     if "DEFAULT_NAME" not in st.session_state:
         make_folder()
     else:
