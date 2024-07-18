@@ -8,6 +8,8 @@ This repository contains the segmentation pipeline described in the following pu
 >
 > Please cite this publication if you are using this code in your research. For installation, UI, and code setup questions, reach out to [Arkash Jain](https://www.linkedin.com/in/arkashj/) at arkash@tklab.hms.harvard.edu
 
+Note: CryoSamba is written for machines with either a Linux or Windows operating system and a CUDA capable GPU. MacOS is not supported.
+
 ## Table of Contents
 
 1. [UI](#ui) 🖥️
@@ -30,6 +32,8 @@ streamlit run main.py
 You can set up the environment, train models, make configs, and run inferences from here.
 
 ## Terminal
+
+Note: these instructions are designed for machines with a Linux operating system. For Windows, refer to the <br>[manual installation instructions](https://github.com/kirchhausenlab/Cryosamba/blob/main/installation_instructions.md)<br>.
 
 ### Installation
 
@@ -141,7 +145,7 @@ The generated `train_config.json` file will contain all parameters for training 
 }
 ```
 
-If you want to change other parameters, edit the `.json` file directly. In `installation_instructions.md` we provide a full explanation of all config parameters.
+If you want to change other parameters, edit the `.json` file directly. In <br>[manual installation instructions](https://github.com/kirchhausenlab/Cryosamba/blob/main/installation_instructions.md)<br> we provide a full explanation of all config parameters.
 
 To start training the model, run the command below from the same folder `automate/scripts`
 
