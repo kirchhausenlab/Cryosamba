@@ -21,35 +21,13 @@ def handle_exceptions(input_func):
     def wrapper(*args, **kwargs):
         try:
             return input_func(*args, **kwargs)
-        except FileNotFoundError as e:
-            logger.error(
-                f"File not found in {input_func.__name__}: {str(e)}| Args: {args} | Kwargs: {kwargs} | Annotations: {input_func.__annotations__} | Code: {input_func.__code__} "
-            )
-            st.error(f"File not found in {input_func.__name__}: {str(e)}")
-            raise FileNotFoundError(
-                f"File not found in {input_func.__name__}: {str(e)}| Args: {args} | Kwargs: {kwargs} | Annotations: {input_func.__annotations__} | Code: {input_func.__code__} "
-            )
-        except json.JSONDecodeError as e:
-            logger.error(
-                f"JSON decode error in {input_func.__name__}: {str(e)} | Args: {args} | Kwargs: {kwargs} | Annotations: {input_func.__annotations__} | Code: {input_func.__code__}"
-            )
-            st.error(f"JSON decode error in  {input_func.__name__}: {str(e)}")
-            raise json.JSONDecodeError(
-                f"File not found in {input_func.__name__}: {str(e)}"
-            )
-        except ValueError as e:
-            logger.error(
-                f"Value Error in {input_func.__name__}: {str(e)} | Args: {args} | Kwargs: {kwargs} | Annotations: {input_func.__annotations__} | Code: {input_func.__code__}"
-            )
-            st.error(f"Value Error in {input_func.__name__}: {str(e)}")
-            raise ValueError(f"value error in {input_func.__name__}: {str(e)}")
         except Exception as e:
             logger.error(
-                f"Error in {input_func.__name__}: {str(e)}| Args: {args} | Kwargs: {kwargs} | Annotations: {input_func.__annotations__} | Code: {input_func.__code__} "
+                f"Error in {input_func.__name__}: {str(e)}| Code: {input_func.__code__} "
             )
             st.error(f"An error occurred: {str(e)}")
             raise RuntimeError(
-                f"The function {input_func.__name__} failed with the error {str(e)}  | Args: {args} | Kwargs: {kwargs} | Annotations: {input_func.__annotations__} | Code: {input_func.__code__}"
+                f"The function {input_func.__name__} failed with the error {str(e)} | Code: {input_func.__code__}"
             )
 
     return wrapper
@@ -354,8 +332,8 @@ def generate_config():
 @handle_exceptions
 def setup_cryosamba_and_training() -> None:
     st.title("Cryosamba Setup Interface")
-    st.write("Welcome to Cryosamba Setup Interface!")
-
+    st.write("Welcome to the training setup for cryosamba. Here you can set the parameters for your machine learning configuration.")
+    st.write("*Note that you have to hit a button twice to see results. The first click shows you a preview of what will happen and the next click runs it*")
     if "DEFAULT_NAME" not in st.session_state:
         make_folder()
     else:

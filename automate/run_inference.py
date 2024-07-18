@@ -42,6 +42,7 @@ def run_experiment(gpus: str, folder_path: str) -> None:
         st.write(
             "Dear Reader, copy this command onto your terminal or powershell to train the model, and follow the prompts!"
         )
+        st.write("Please open up a new terminal on your machine and navigate to the cryosamba/automate folder. Then run this command")
         st.code(cmd)
 
 
@@ -64,6 +65,11 @@ def select_experiment() -> None:
 @handle_exceptions
 def select_experiment_and_run() -> None:
     st.header("Welcome to the CryoSamba Training Runner")
+    st.write("Please note that you *need a GPU to run cryosamba, if you cannot see a graph or a table or GPUs **AFTER YOU CHOOSE YOUR Experiment**, your machine does not support cryosamba.*")
+    st.write("If the table shows a list of 0s, you have compatible hardware but NO GPUs. Please connect to a machine that has GPUs. Instructions to ssh into a machine for cryosamba are as follows:")
+    st.code("# To copy cryosamba, make a zip file of cryosamba and run the following. \n scp cryosamba.zip user_name@remote_server.edu:/path/to/store \n ssh user_name@remote_server.edu && cd /path/to/store \n unzip cryosamba.zip \n \
+        \n cd cryosamba/automate \n pip install streamlit \n streamlit run main.py")
+
     if "folder_found" not in st.session_state:
         select_experiment()
     elif st.session_state.folder_found:
