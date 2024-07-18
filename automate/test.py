@@ -75,20 +75,9 @@ def setup_environment(env_name):
         st.write(f"Creating conda environment: {env_name}")
         subprocess.run(f"conda create --name {env_name} python=3.11 -y", shell=True)
         subprocess.run(cmd, shell=True)
-        # st.write(f"Activating conda environment: {env_name}")
-        # subprocess.run(f"conda activate {env_name}", shell=True)
-        st.write("Installing PyTorch")
-        subprocess.run("pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118", shell=True)
+        st.success("Environment has been created, please copy the command below in the terminal.")
+        cmd =f"conda init && sleep 3 && source ~/.bashrc && conda activate {env_name} && pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118 && pip install tifffile mrcfile easydict loguru tensorboard streamlit pipreqs cupy-cuda11x"
         
-        st.write("Installing other dependencies")
-        subprocess.run("pip install tifffile mrcfile easydict loguru tensorboard streamlit pipreqs cupy-cuda11x", shell=True)
-        get_reqs="pipreqs ../."
-        install_reqs="python3 -m pip install -r ../requirements.txt"
-        subprocess.run(get_reqs, shell=True, check=True)
-        subprocess.run(install_reqs, shell=True, check=True)
-
-        st.write("Environment setup complete.")
-
 @handle_exceptions
 def export_env():
     st.subheader("Exporting Conda Environment")
@@ -111,6 +100,4 @@ def setup_environment_for_cryosamba() -> None:
     
     if st.button('Export Environment'):
         export_env()
-
-
 
