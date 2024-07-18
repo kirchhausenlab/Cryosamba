@@ -93,7 +93,7 @@ cryosamba
 
   _Note: Ensure consistent zero-fill in file names to maintain proper order (e.g., `frame000.tif` instead of `frame0.tif`)._
 
-- Max frame gap: explained in the manuscript. We empirically set values of 3, 6 and 10 for data at voxel resolutions of 15.72Å, 7.86Å and 2.62Å, respectively. For different resolutions, try a reasonable interpolated value between the reference ones.
+- Max frame gap: explained in the manuscript. We empirically set values of 3, 6 and 10 for data at voxel resolutions of 15.72Å, 7.86Å and 2.62Å, respectively. For different resolutions, try a reasonable value interpolated from the reference ones.
 - Number of iterations
 - Batch Size
 
