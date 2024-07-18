@@ -121,7 +121,7 @@ def setup_environment(env_name):
         run_command(f"conda create --name {env_name} python=3.11 -y")
     st.write(f"Activating conda environment: {env_name}")
     run_command(
-        f"conda activate {env_name} && pip install torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118"
+        f"conda activate {env_name} && pip3 install torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118"
     )
     run_command(
         f"conda activate {env_name} && pip install tifffile mrcfile easydict loguru tensorboard streamlit pipreqs cupy-cuda11x"
