@@ -2,18 +2,25 @@
 
 
 make_folder() {
-    echo "What do you want to name your experiment, type below: "
-    read -r input_name
-    if ! [ -z "$input_name" ]; then
-    DEFAULT_NAME=$input_name
-    # echo $DEFAULT_NAME
-    fi
+    while true; do
+      echo "What do you want to name your experiment, type below: "
+      read -r input_name
+      if  [ -z "$input_name" ]; then
+        echo "PLEASE ENTER A NAME, experiment name cannot be empty"
+      elif [ -d "../../$input_name" ]; then
+        echo "Experiment already exists, please choose a different name"
+      else
+        DEFAULT_NAME=$input_name
+        echo "$DEFAULT_NAME folder made"
+        break
+      fi
+    done
 }
 
 # Make train and inference folders
 generate_train_and_test_paths(){ 
-    mkdir -p "../../../$DEFAULT_NAME/train"
-    mkdir -p "../../../$DEFAULT_NAME/inference"
+    mkdir -p "../../$DEFAULT_NAME/train"
+    mkdir -p "../../$DEFAULT_NAME/inference"
 }
 
 
@@ -86,7 +93,7 @@ echo "Enter the batch size (press Enter for default: 32):"
 read -r batch_size
 batch_size=${batch_size:-32}
 
-config_file="../../../$DEFAULT_NAME/config.json"
+config_file="../../$DEFAULT_NAME/config.json"
 
 # Use jq to merge the base config with user inputs
 echo "$base_config" | jq \

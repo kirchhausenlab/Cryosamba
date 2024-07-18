@@ -1,5 +1,3 @@
-Certainly! Here's the formalized README with icons added:
-
 # CryoSamba: Self-Supervised Deep Volumetric Denoising for Cryo-Electron Tomography Data
 
 This repository contains the segmentation pipeline described in the following publication:
@@ -32,7 +30,7 @@ This repository contains the segmentation pipeline described in the following pu
 _Note: The script to create the environment has not been updated. Libraries must be installed one by one._
 
 1. Open a terminal and SSH into one of the DGX machines.
-2. Run `bash conda create --name your-env-name python=3.11 -y` to create the environment (replace `your-env-name` with a desired name).
+2. Run `conda create --name your-env-name python=3.11 -y` to create the environment (replace `your-env-name` with a desired name).
 3. Activate the environment with `conda activate your-env-name`.
 4. Install PyTorch (for CUDA 11.8):
    ```bash
@@ -126,28 +124,109 @@ cd automate
 streamlit run main.py
 ```
 
-<img src="https://github.com/kirchhausenlab/Cryosamba/blob/main/start_cryosamba.gif" width="800"/>
 You can set up the environment, train models, make configs, and run inferences from here.
 
 ## Terminal 💻
 
-### Setup CryoSamba 🛠️
+### CryoSamba Installation 🛠️
 
-Navigate to the `cryosamba` directory, open it in an IDE (e.g., VSCode, PyCharm), and run the following code:
+Open a terminal window (Powershell if on windows or Terminal if on ubuntu) and navigate to directory where you want to save cryosamba via `cd /path/to/dir`. Then run
 
 ```bash
-cd automate/scripts
-chmod -R 755 .
+git clone https://github.com/kirchhausenlab/Cryosamba.git
 ```
 
-This installs necessary packages, generates an `environment.yml` for Conda environments, and activates the environment to run the models.
+in this directory. Once successfully cloned, navigate to the scipts folder via `cd cryosamba/automate/scripts`
+
+##
+
+To setup the environment, run:
+
+```bash
+./startup_script_.sh
+```
+
+```bash
+# In case of permission issues run the command below (OPTIONAL)
+chmod u+x ./name_of_file_ending_with.sh
+```
+
+This creates a conda environment called `cryosamba` and activates it. In the future, you need to run
+
+```bash
+conda activate cryosamba
+```
+
+In case of errors, please run `conda init --all && source ~/.bashrc` in your terminal
 
 ### Training the Model 🚀
 
-Stay in the same directory and run:
+From same directory `automate/scripts`, run:
 
 ```bash
-./setup_experiment.sh
+./setup_experiment_training.sh
+```
+
+When you run this script, it asks you for the name your experiment and if you leave it blank it will generate a default name for you.
+The new experiment will be found in the main cryosamba folder. So if you make an experiment called `exp-name`, it will be stored under
+`cryosamba/runs/exp-name`. So if you made 5 experiments, it should look like the following:
+
+```bash
+cryosamba
+├── runs
+    ├── exp-name
+    ├── exp-2
+    ├── exp-test
+    ├── exp-
+    ├── ...
+```
+
+It will generate a config that looks like the following:
+
+```json
+{
+  "train_data": {
+    "max_frame_gap": 6,
+    "patch_overlap": [16, 16],
+    "split_ratio": 0.95,
+    "num_workers": 4,
+    "batch_size": 32
+  },
+  "train": {
+    "load_ckpt_path": null,
+    "print_freq": 100,
+    "save_freq": 1000,
+    "val_freq": 1000,
+    "warmup_iters": 300,
+    "mixed_precision": true,
+    "num_iters": 200000
+  },
+  "optimizer": {
+    "lr": 0.0002,
+    "lr_decay": 0.99995,
+    "weight_decay": 0.0001,
+    "epsilon": 1e-8,
+    "betas": [0.9, 0.999]
+  },
+  "biflownet": {
+    "pyr_dim": 24,
+    "pyr_level": 3,
+    "corr_radius": 4,
+    "kernel_size": 3,
+    "warp_type": "soft_splat",
+    "padding_mode": "reflect",
+    "fix_params": false
+  },
+  "fusionnet": {
+    "num_channels": 16,
+    "padding_mode": "reflect",
+    "fix_params": false
+  },
+  "train_dir": "/nfs/datasync4/inacio/data/denoising/cryosamba/rota/train/",
+  "data_path": [
+    "/nfs/datasync4/inacio/data/raw_data/cryo/novareconstructions/rotacell_grid1_TS09_ctf_3xBin.rec"
+  ]
+}
 ```
 
 The script will prompt you to configure your model, including specifying the locations of your training data and other parameters. You must provide the `train_dir`, `data_path`, and `max_frame_gap`. Then, run:
