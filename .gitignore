@@ -1,3 +1,9 @@
 *.DS_Store
 venv
 __pycache__
+
+configs
+scripts
+inference_multiple.py
+
+exp-*

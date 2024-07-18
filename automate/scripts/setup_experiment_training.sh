@@ -44,6 +44,7 @@ generate_config() {
             "val_freq": 1000,
             "warmup_iters": 300,
             "mixed_precision": true
+            "compile": false
         },
         "optimizer": {
             "lr": 2e-4,
@@ -93,7 +94,7 @@ echo "Enter the batch size (press Enter for default: 32):"
 read -r batch_size
 batch_size=${batch_size:-32}
 
-config_file="../../$DEFAULT_NAME/config.json"
+config_file="../../$DEFAULT_NAME/test_config.json"
 
 # Use jq to merge the base config with user inputs
 echo "$base_config" | jq \
