@@ -37,7 +37,7 @@ Note: these instructions are designed for machines with a Linux operating system
 
 ### Installation
 
-Open a terminal window (Powershell if on Windows or Terminal if on Ubuntu) and navigate to the directory where you want to save Cryosamba via `cd /path/to/dir`. Then run
+Open a Terminal window and navigate to the directory where you want to save the Cryosamba code via `cd /path/to/dir`. Then run
 
 ```bash
 git clone https://github.com/kirchhausenlab/Cryosamba.git
