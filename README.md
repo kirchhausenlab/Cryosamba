@@ -33,7 +33,7 @@ You can set up the environment, train models, make configs, and run inferences f
 
 ## Terminal
 
-Note: these instructions are designed for machines with a Linux operating system. For Windows, refer to the <br>[manual installation instructions](https://github.com/kirchhausenlab/Cryosamba/blob/main/installation_instructions.md)<br>
+Note: these instructions are designed for machines with a Linux operating system. For Windows, refer to the [manual installation instructions](https://github.com/kirchhausenlab/Cryosamba/blob/main/installation_instructions.md).
 
 ### Installation
 
@@ -145,7 +145,7 @@ The generated `train_config.json` file will contain all parameters for training 
 }
 ```
 
-If you want to change other parameters, edit the `.json` file directly. In <br>[manual installation instructions](https://github.com/kirchhausenlab/Cryosamba/blob/main/installation_instructions.md)<br> we provide a full explanation of all config parameters.
+If you want to change other parameters, edit the `.json` file directly. In [manual installation instructions](https://github.com/kirchhausenlab/Cryosamba/blob/main/installation_instructions.md) we provide a full explanation of all config parameters.
 
 To start training the model, run the command below from the same folder `automate/scripts`
 
