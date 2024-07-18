@@ -1,8 +1,10 @@
 # CryoSamba: Self-Supervised Deep Volumetric Denoising for Cryo-Electron Tomography Data
 
+<img src="https://github.com/kirchhausenlab/Cryosamba/blob/main/denoising_comparison.gif" width="700"/>
+
 This repository contains the segmentation pipeline described in the following publication:
 
-> Jose Inacio Costa-Filho, Liam Theveny, Marilina de Sautu, Tom Kirchhausen<br>[CryoSamba](https://www.biorxiv.org/content/10.1101/2024.07.11.603117v1)<br>
+> Jose Inacio Costa-Filho, Liam Theveny, Marilina de Sautu, Tom Kirchhausen<br>[CryoSamba: Self-Supervised Deep Volumetric Denoising for Cryo-Electron Tomography Data](https://www.biorxiv.org/content/10.1101/2024.07.11.603117v1)<br>
 >
 > Please cite this publication if you are using this code in your research. For installation, UI, and code setup questions, reach out to [Arkash Jain](https://www.linkedin.com/in/arkashj/) at arkash@tklab.hms.harvard.edu
 
