@@ -90,19 +90,15 @@ def setup_environment(env_name):
         st.write(f"Creating conda environment: {env_name}")
         subprocess.run(f"conda create --name {env_name} python=3.11 -y", shell=True)
         subprocess.run(cmd, shell=True)
-        st.success(
-            "Environment has been created"
-            ,icon="✅"
-        )
-    st.success(
-            "**please copy the command below in the terminal.**"
-            ,icon="✅"
-        )
-    st.write("Say you downloaded cryosamba in your downloads folder, open a NEW terminal window and run the following commands:")
+        st.success("Environment has been created", icon="✅")
+    st.success("**please copy the command below in the terminal.**", icon="✅")
+    st.write(
+        "Say you downloaded cryosamba in your downloads folder, open a NEW terminal window and run the following commands:"
+    )
     st.code("cd downloads/cryosamba/automate")
     cmd = f"conda init && sleep 3 && source ~/.bashrc && conda activate {env_name} && pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118 && pip install tifffile mrcfile easydict loguru tensorboard streamlit pipreqs cupy-cuda11x"
     st.code(cmd)
-    
+
 
 @handle_exceptions
 def export_env():
@@ -117,8 +113,14 @@ def setup_environment_for_cryosamba() -> None:
     st.title("Cryosamba Setup Interface")
     st.subheader("Welcome to Cryosamba Setup Interface!")
 
-    st.write("Please take some time to read the instructions and in the case of failures refer to the README for the contact information of relevant parties. *Refer to the video for step by step instructions*")
-    lst = ['|STEP 1| : **Setup Conda** - if already installed, it shows you that its installed', '|STEP 2|: **Make an Environment** - Creates an environment and gives you instructions on which commands to copy', '|STEP 3|: **OPTIONAL, Export the Environment** - for programmers who want to look at installed packages']
+    st.write(
+        "Please take some time to read the instructions and in the case of failures refer to the README for the contact information of relevant parties. *Refer to the video for step by step instructions*"
+    )
+    lst = [
+        "|STEP 1| : **Setup Conda** - if already installed, it shows you that its installed",
+        "|STEP 2|: **Make an Environment** - Creates an environment and gives you instructions on which commands to copy",
+        "|STEP 3|: **OPTIONAL, Export the Environment** - for programmers who want to look at installed packages",
+    ]
     for elem in lst:
         st.markdown(elem)
 
