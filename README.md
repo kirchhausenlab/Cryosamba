@@ -33,7 +33,7 @@ You can set up the environment, train models, make configs, and run inferences f
 
 ## Terminal
 
-Note: these instructions are designed for machines with a Linux operating system. For Windows, refer to the <br>[manual installation instructions](https://github.com/kirchhausenlab/Cryosamba/blob/main/installation_instructions.md)<br>.
+Note: these instructions are designed for machines with a Linux operating system. For Windows, refer to the <br>[manual installation instructions](https://github.com/kirchhausenlab/Cryosamba/blob/main/installation_instructions.md)<br>
 
 ### Installation
 
