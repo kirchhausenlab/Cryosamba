@@ -12,6 +12,7 @@ from logging_config import logger
 
 def handle_exceptions(input_func):
     """Decorator for handling exceptions"""
+
     @wraps(input_func)
     def wrapper(*args, **kwargs):
         try:
