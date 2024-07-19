@@ -45,7 +45,7 @@ def make_folder():
 
         st.write(f"Creating experiment folders for '{DEFAULT_NAME}'...")
         try:
-            base_path = f"../{DEFAULT_NAME}"
+            base_path = f"../runs/{DEFAULT_NAME}"
             os.makedirs(f"{base_path}/train", exist_ok=True)
             os.makedirs(f"{base_path}/inference", exist_ok=True)
             st.success(f"Experiment folders created successfully.")
@@ -318,7 +318,7 @@ def generate_config():
         },
     }
 
-    config_file = f"../{DEFAULT_NAME}/train_config.json"
+    config_file = f"../runs/{DEFAULT_NAME}/train_config.json"
     with open(config_file, "w") as f:
         json.dump(base_config, f, indent=4)
     st.success(f"Config file generated successfully at {config_file}")
