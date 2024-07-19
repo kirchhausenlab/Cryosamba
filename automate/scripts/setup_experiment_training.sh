@@ -26,12 +26,16 @@ generate_train_and_test_paths(){
 
 generate_config() {
     base_config=$(cat << EOL
-    { 
+    {
         "train_data": {      
             "max_frame_gap": 6,
             "patch_overlap": [
                 16,
                 16
+            ],
+            "patch_shape":[
+              256,
+              256
             ],
             "split_ratio": 0.95,
             "num_workers": 4
@@ -96,14 +100,17 @@ EOL
     batch_size=${batch_size:-32}
 
     config_file="../../runs/$DEFAULT_NAME/train_config.json"
+    train_dir="./$DEFAULT_NAME/train"
 
     # Use jq to merge the base config with user inputs
     echo "$base_config" | jq \
         --arg data_path "$data_path" \
+        --arg train_dir "$train_dir"\
         --argjson max_frame_gap "$max_frame_gap" \
         --argjson num_iters "$num_iters" \
         --argjson batch_size "$batch_size" \
         '. + {
+            "train_dir":$train_dir,
             "data_path": [$data_path],
             "train_data": (.train_data + {
                 "max_frame_gap": $max_frame_gap,
