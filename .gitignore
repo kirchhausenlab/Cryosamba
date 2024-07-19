@@ -7,5 +7,7 @@ scripts
 inference_multiple.py
 logs
 exp-*
-
+logs/*
 runs
+
+random_exp
