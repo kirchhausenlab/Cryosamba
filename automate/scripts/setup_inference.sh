@@ -15,7 +15,7 @@ fi
 generate_config() {
     base_config=$(cat << EOL
     {   
-        "inference_dir": "../../runs/$EXP_NAME/inference",
+        "inference_dir": "/$EXP_NAME/inference",
         "inference_data": {
             "patch_shape": [
                 256,
@@ -43,8 +43,7 @@ train_dir=./$EXP_NAME/train
 echo "Enter the data path "
 read -r data_path
 while true; do
-  data_path=${data_path:-""}
-  if [ -z data_path = "" ]; then
+  if [ -z "$data_path" = "" ]; then
     echo "Please enter a valid data path"
     data_path=${data_path:-""}
   else
