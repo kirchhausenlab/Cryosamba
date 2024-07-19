@@ -9,6 +9,7 @@ from file_selector import get_dir, list_directories_in_directory
 from training_setup import handle_exceptions
 from logging_config import logger
 
+
 def folder_exists(folder_path):
     """Check if the given folder path exists."""
     return os.path.exists(folder_path)

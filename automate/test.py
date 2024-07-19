@@ -8,6 +8,7 @@ import streamlit as st
 from training_setup import handle_exceptions
 from logging_config import logger
 
+
 @handle_exceptions
 def is_conda_installed() -> bool:
     """Run a subprocess to see if conda is installled or not"""
