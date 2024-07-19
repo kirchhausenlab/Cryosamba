@@ -6,11 +6,7 @@ import sys
 import streamlit as st
 from training_setup import handle_exceptions
 
-logging.basicConfig(
-    level=logging.INFO, filename="debug_errors_for_environment.log", encoding="utf-8"
-)
-logger = logging.getLogger(__name__)
-
+from logging_config import logger
 
 def run_command(command, shell=True):
     process = subprocess.Popen(
