@@ -97,7 +97,7 @@ def select_experiment_and_run_training():
         "Please note that you *need a GPU to run cryosamba, if you cannot see a graph or a table or GPUs **AFTER YOU CHOOSE YOUR Experiment**, your machine does not support cryosamba.* \
         If you want to run the training on a different machine, please follow the instructions below "
     )
- 
+
     st.code(
         "# To copy cryosamba, make a zip file of cryosamba and run the following. \n scp cryosamba.zip user_name@remote_server.edu:/path/to/store \n ssh user_name@remote_server.edu && cd /path/to/store \n unzip cryosamba.zip \n \
         \n cd cryosamba/automate \n pip install streamlit \n streamlit run main.py"
@@ -106,8 +106,6 @@ def select_experiment_and_run_training():
     st.write(
         "If the table shows a list of 0s, you have compatible hardware but NO GPUs. Please connect to a machine that has GPUs. Instructions to ssh into a machine for cryosamba above:"
     )
-
-
 
     if "folder_found" not in st.session_state:
         select_experiment()
