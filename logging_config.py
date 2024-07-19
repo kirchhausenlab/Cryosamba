@@ -51,8 +51,8 @@ logging_config = {
 logging.config.dictConfig(logging_config)
 logger = logging.getLogger()
 
-logger.debug("❗ For Debugging")
-logger.info("💻 Useful Messages from code ")
-logger.warning("⚠️S Something to be aware of")
-logger.error("💀 Mistake with the process")
-logger.critical("❌ critical error check")
+# logger.debug("❗ For Debugging")
+# logger.info("💻 Useful Messages from code ")
+# logger.warning("⚠️S Something to be aware of")
+# logger.error("💀 Mistake with the process")
+# logger.critical("❌ critical error check")

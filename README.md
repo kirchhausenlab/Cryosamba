@@ -217,7 +217,7 @@ If you want to change other parameters, edit the `.json` file directly.
 To start inference, run the command below from the same folder `automate/scripts`
 
 ```bash
-./inference.sh
+./run_inference.sh
 ```
 
 To interrupt the process, press CTRL + C. You can resume or start from scratch if prompted.

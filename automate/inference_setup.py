@@ -5,9 +5,8 @@ from functools import wraps
 from random import randint
 
 import streamlit as st
-from training_setup import handle_exceptions
-
 from file_selector import get_dir, list_directories_in_directory
+from training_setup import handle_exceptions
 
 logging.basicConfig(level=logging.INFO)
 logging.basicConfig(
@@ -155,8 +154,8 @@ def generate_additional_params():
         output_format = st.radio("Output Format", ["same", "different"])
         load_ckpt_name = st.text_input("Load Checkpoint Name", "")
         pyr_level = st.number_input("Pyr Level", value=3)
-        TTA = st.radio("Test-Time Augmentation (TTA)", ["true", "false"])
-        compile = st.radio("Compile", ["true", "false"])
+        TTA = st.radio("Test-Time Augmentation (TTA)", [True, False])
+        compile = st.radio("Compile", [True, False])
         st.markdown(
             "_If true uses test-time augmentation, which makes results slightly better but takes much longer (around 3x) to run._"
         )
@@ -194,9 +193,9 @@ def generate_config():
         "output_format": "same",
         "load_ckpt_name": None,
         "pyr_level": 3,
-        "TTA": "true",
+        "TTA": True,
         "mixed_precision": True,
-        "compile": "true",
+        "compile": True,
     }
 
     inference_data_params = {

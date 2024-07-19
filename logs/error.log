@@ -1,0 +1,39 @@
+ERROR 2024-07-19 12:03:14,666 [root:logging_config.py:<module>:57]
+💀 Mistake with the process
+
+CRITICAL 2024-07-19 12:03:14,666 [root:logging_config.py:<module>:58]
+❌ critical error check
+
+ERROR 2024-07-19 12:03:17,674 [root:test_export.py:run_command:20]
+Error executing command: conda activate cryosamba && conda list
+Error: usage: conda [-h] [--no-plugins] [-V] COMMAND ...
+conda: error: argument COMMAND: invalid choice: 'activate' (choose from 'clean', 'compare', 'config', 'create', 'info', 'init', 'install', 'list', 'notices', 'package', 'remove', 'uninstall', 'rename', 'run', 'search', 'update', 'upgrade', 'build', 'convert', 'debug', 'develop', 'doctor', 'index', 'inspect', 'metapackage', 'render', 'skeleton', 'content-trust', 'token', 'env', 'server', 'repo', 'verify', 'pack')
+
+
+ERROR 2024-07-19 12:05:24,039 [root:logging_config.py:<module>:57]
+💀 Mistake with the process
+
+CRITICAL 2024-07-19 12:05:24,039 [root:logging_config.py:<module>:58]
+❌ critical error check
+
+ERROR 2024-07-19 12:05:24,045 [root:test_export.py:check_installed_packages:40]
+💀 Error executing command: [Errno 2] No such file or directory: 'conda run -n cryosamba conda list'
+
+ERROR 2024-07-19 12:05:45,437 [root:logging_config.py:<module>:57]
+💀 Mistake with the process
+
+CRITICAL 2024-07-19 12:05:45,437 [root:logging_config.py:<module>:58]
+❌ critical error check
+
+ERROR 2024-07-19 12:05:45,440 [root:test_export.py:check_installed_packages:40]
+💀 Error executing command: [Errno 2] No such file or directory: 'conda run -n cryosamba && conda list'
+
+ERROR 2024-07-19 12:06:26,970 [root:logging_config.py:<module>:57]
+💀 Mistake with the process
+
+CRITICAL 2024-07-19 12:06:26,971 [root:logging_config.py:<module>:58]
+❌ critical error check
+
+ERROR 2024-07-19 12:06:26,974 [root:test_export.py:check_installed_packages:40]
+💀 Error executing command: [Errno 2] No such file or directory: 'conda run -n cryosamba conda list'
+

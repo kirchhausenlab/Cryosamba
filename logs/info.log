@@ -1,0 +1,152 @@
+INFO 2024-07-19 12:03:14,666 [root:logging_config.py:<module>:55]
+💻 Useful Messages from code 
+
+WARNING 2024-07-19 12:03:14,666 [root:logging_config.py:<module>:56]
+⚠️S Something to be aware of
+
+ERROR 2024-07-19 12:03:14,666 [root:logging_config.py:<module>:57]
+💀 Mistake with the process
+
+CRITICAL 2024-07-19 12:03:14,666 [root:logging_config.py:<module>:58]
+❌ critical error check
+
+ERROR 2024-07-19 12:03:17,674 [root:test_export.py:run_command:20]
+Error executing command: conda activate cryosamba && conda list
+Error: usage: conda [-h] [--no-plugins] [-V] COMMAND ...
+conda: error: argument COMMAND: invalid choice: 'activate' (choose from 'clean', 'compare', 'config', 'create', 'info', 'init', 'install', 'list', 'notices', 'package', 'remove', 'uninstall', 'rename', 'run', 'search', 'update', 'upgrade', 'build', 'convert', 'debug', 'develop', 'doctor', 'index', 'inspect', 'metapackage', 'render', 'skeleton', 'content-trust', 'token', 'env', 'server', 'repo', 'verify', 'pack')
+
+
+INFO 2024-07-19 12:05:24,038 [root:logging_config.py:<module>:55]
+💻 Useful Messages from code 
+
+WARNING 2024-07-19 12:05:24,038 [root:logging_config.py:<module>:56]
+⚠️S Something to be aware of
+
+ERROR 2024-07-19 12:05:24,039 [root:logging_config.py:<module>:57]
+💀 Mistake with the process
+
+CRITICAL 2024-07-19 12:05:24,039 [root:logging_config.py:<module>:58]
+❌ critical error check
+
+ERROR 2024-07-19 12:05:24,045 [root:test_export.py:check_installed_packages:40]
+💀 Error executing command: [Errno 2] No such file or directory: 'conda run -n cryosamba conda list'
+
+INFO 2024-07-19 12:05:45,437 [root:logging_config.py:<module>:55]
+💻 Useful Messages from code 
+
+WARNING 2024-07-19 12:05:45,437 [root:logging_config.py:<module>:56]
+⚠️S Something to be aware of
+
+ERROR 2024-07-19 12:05:45,437 [root:logging_config.py:<module>:57]
+💀 Mistake with the process
+
+CRITICAL 2024-07-19 12:05:45,437 [root:logging_config.py:<module>:58]
+❌ critical error check
+
+ERROR 2024-07-19 12:05:45,440 [root:test_export.py:check_installed_packages:40]
+💀 Error executing command: [Errno 2] No such file or directory: 'conda run -n cryosamba && conda list'
+
+INFO 2024-07-19 12:06:26,970 [root:logging_config.py:<module>:55]
+💻 Useful Messages from code 
+
+WARNING 2024-07-19 12:06:26,970 [root:logging_config.py:<module>:56]
+⚠️S Something to be aware of
+
+ERROR 2024-07-19 12:06:26,970 [root:logging_config.py:<module>:57]
+💀 Mistake with the process
+
+CRITICAL 2024-07-19 12:06:26,971 [root:logging_config.py:<module>:58]
+❌ critical error check
+
+ERROR 2024-07-19 12:06:26,974 [root:test_export.py:check_installed_packages:40]
+💀 Error executing command: [Errno 2] No such file or directory: 'conda run -n cryosamba conda list'
+
+INFO 2024-07-19 12:07:37,266 [root:test_export.py:check_installed_packages:66]
+✅ torch is installed
+
+INFO 2024-07-19 12:07:37,266 [root:test_export.py:check_installed_packages:66]
+✅ torchvision is installed
+
+INFO 2024-07-19 12:07:37,266 [root:test_export.py:check_installed_packages:66]
+✅ torchaudio is installed
+
+INFO 2024-07-19 12:07:37,266 [root:test_export.py:check_installed_packages:66]
+✅ tifffile is installed
+
+INFO 2024-07-19 12:07:37,266 [root:test_export.py:check_installed_packages:66]
+✅ mrcfile is installed
+
+INFO 2024-07-19 12:07:37,266 [root:test_export.py:check_installed_packages:66]
+✅ easydict is installed
+
+INFO 2024-07-19 12:07:37,266 [root:test_export.py:check_installed_packages:66]
+✅ loguru is installed
+
+INFO 2024-07-19 12:07:37,266 [root:test_export.py:check_installed_packages:66]
+✅ streamlit is installed
+
+WARNING 2024-07-19 12:07:37,266 [root:test_export.py:check_installed_packages:68]
+⚠️ cupy-cuda11x is not installed
+
+INFO 2024-07-19 12:29:31,476 [root:test_setup_and_installation.py:test_active_env:62]
+Environment cryosamba exists
+
+INFO 2024-07-19 12:29:32,384 [root:test_setup_and_installation.py:test_conda_installation:57]
+Conda version: conda 23.7.2
+
+
+INFO 2024-07-19 12:29:36,166 [root:test_setup_and_installation.py:test_installed_packages:70]
+✅ torch is installed
+
+INFO 2024-07-19 12:29:36,167 [root:test_setup_and_installation.py:test_installed_packages:70]
+✅ torchvision is installed
+
+INFO 2024-07-19 12:29:36,167 [root:test_setup_and_installation.py:test_installed_packages:70]
+✅ torchaudio is installed
+
+INFO 2024-07-19 12:29:36,167 [root:test_setup_and_installation.py:test_installed_packages:70]
+✅ tifffile is installed
+
+INFO 2024-07-19 12:29:36,167 [root:test_setup_and_installation.py:test_installed_packages:70]
+✅ mrcfile is installed
+
+INFO 2024-07-19 12:29:36,167 [root:test_setup_and_installation.py:test_installed_packages:70]
+✅ easydict is installed
+
+INFO 2024-07-19 12:29:36,167 [root:test_setup_and_installation.py:test_installed_packages:70]
+✅ loguru is installed
+
+INFO 2024-07-19 12:29:36,167 [root:test_setup_and_installation.py:test_installed_packages:70]
+✅ streamlit is installed
+
+INFO 2024-07-19 12:31:21,367 [root:test_setup_and_installation.py:test_active_env:62]
+Environment cryosamba exists
+
+INFO 2024-07-19 12:31:22,277 [root:test_setup_and_installation.py:test_conda_installation:57]
+Conda version: conda 23.7.2
+
+
+INFO 2024-07-19 12:31:26,026 [root:test_setup_and_installation.py:test_installed_packages:70]
+✅ torch is installed
+
+INFO 2024-07-19 12:31:26,027 [root:test_setup_and_installation.py:test_installed_packages:70]
+✅ torchvision is installed
+
+INFO 2024-07-19 12:31:26,027 [root:test_setup_and_installation.py:test_installed_packages:70]
+✅ torchaudio is installed
+
+INFO 2024-07-19 12:31:26,027 [root:test_setup_and_installation.py:test_installed_packages:70]
+✅ tifffile is installed
+
+INFO 2024-07-19 12:31:26,027 [root:test_setup_and_installation.py:test_installed_packages:70]
+✅ mrcfile is installed
+
+INFO 2024-07-19 12:31:26,027 [root:test_setup_and_installation.py:test_installed_packages:70]
+✅ easydict is installed
+
+INFO 2024-07-19 12:31:26,027 [root:test_setup_and_installation.py:test_installed_packages:70]
+✅ loguru is installed
+
+INFO 2024-07-19 12:31:26,027 [root:test_setup_and_installation.py:test_installed_packages:70]
+✅ streamlit is installed
+

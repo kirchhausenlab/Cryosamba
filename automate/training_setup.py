@@ -178,7 +178,7 @@ def generate_additional_params():
         val_freq = st.number_input("Val Frequency", value=1000)
         num_iters = st.number_input("Number of Iterations", value=200000)
         warmup_iters = st.number_input("Warmup Iterations", value=300)
-        compile = st.radio("Compile", ["true", "false"])
+        compile = st.radio("Compile", [True, False])
         st.markdown(
             "_If true, uses torch.compile for faster training, which is good but takes some minutes to start running the script and it’s somewhat buggy. Recommend using false until you’re comfortable with the code._"
         )
@@ -220,7 +220,7 @@ def generate_additional_params():
         pyr_level = st.number_input("Pyr Level", value=3)
         corr_radius = st.number_input("Correlation Radius", value=4)
         kernel_size = st.number_input("Kernel Size", value=3)
-        fix_params = st.radio("Fix Params", ["true", "false"])
+        fix_params = st.radio("Fix Params", [True, False])
         if st.button("Save Biflownet Parameters"):
             st.session_state.biflownet_params = {
                 "pyr_dim": pyr_dim,
@@ -262,7 +262,7 @@ def generate_config():
         "val_freq": 1000,
         "num_iters": 200000,
         "warmup_iters": 300,
-        "compile": "false",
+        "compile": False,
     }
 
     optimizer_defaults = {
@@ -278,7 +278,7 @@ def generate_config():
         "pyr_level": 3,
         "corr_radius": 4,
         "kernel_size": 3,
-        "fix_params": "false",
+        "fix_params": False,
     }
 
     fusionnet_defaults = {"num_channels": 16}
@@ -318,7 +318,7 @@ def generate_config():
         "fusionnet": {
             **fusionnet_params,
             "padding_mode": "reflect",
-            "fix_params": "false",
+            "fix_params": False,
         },
     }
 
