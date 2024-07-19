@@ -119,7 +119,7 @@ class TestInferenceConfig(unittest.TestCase):
                 config["inference"]["mixed_precision"],
                 "Incorrect default mixed_precision value",
             )
-            self.assertTrue(
+            self.assertFalse(
                 config["inference"]["compile"], "Incorrect default compile value"
             )
 
