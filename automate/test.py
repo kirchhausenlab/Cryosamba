@@ -13,30 +13,23 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-
+@handle_exceptions
 def is_conda_installed() -> bool:
     """Run a subprocess to see if conda is installled or not"""
-    return (
-        subprocess.run(
-            ["command", "-v", "conda"], capture_output=True, text=True, shell=True
-        ).returncode
-        == 0
-    )
-
-
+    try:
+        subprocess.run(["conda", "--version"], check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        return True
+    except FileNotFoundError:
+        return False
+    except subprocess.CalledProcessError:
+        return False
+ 
+@handle_exceptions
 def is_env_active(env_name) -> bool:
     """Use conda env list to check active environments"""
     cmd = "conda env list"
     result = subprocess.run(cmd, capture_output=True, text=True, shell=True)
     return f"{env_name}" in result.stdout
-
-
-# def is_conda_installed() -> bool:
-#     try:
-#         subprocess.run(["conda", "--version"], capture_output=True, check=True)
-#         return True
-#     except (subprocess.CalledProcessError, FileNotFoundError):
-#         return False
 
 
 def run_command(command, shell=True):
@@ -134,3 +127,4 @@ def setup_environment_for_cryosamba() -> None:
 
     if st.button("3) (Optional) Export Environment"):
         export_env()
+

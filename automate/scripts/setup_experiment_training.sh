@@ -19,8 +19,8 @@ make_folder() {
 
 # Make train and inference folders
 generate_train_and_test_paths(){ 
-    mkdir -p "../../$DEFAULT_NAME/train"
-    mkdir -p "../../$DEFAULT_NAME/inference"
+    mkdir -p "../../runs/$DEFAULT_NAME/train"
+    mkdir -p "../../runs/$DEFAULT_NAME/inference"
 }
 
 
@@ -95,7 +95,7 @@ EOL
     read -r batch_size
     batch_size=${batch_size:-32}
 
-    config_file="../../$DEFAULT_NAME/test_config.json"
+    config_file="../../runs/$DEFAULT_NAME/test_config.json"
 
     # Use jq to merge the base config with user inputs
     echo "$base_config" | jq \

@@ -1,6 +1,6 @@
 #!/bin/bash
 install_requirements(){
     pip3 install pipreqs
-    pipreqs ../../.
+    pipreqs ../.
 }
 install_requirements

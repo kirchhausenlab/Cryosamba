@@ -13,13 +13,13 @@ select_experiment() {
     echo "Enter the name of the experiment you want to run:"
     read -r EXP_NAME
 
-    if [ ! -d "../../$EXP_NAME" ]; then
+    if [ ! -d "../../runs/$EXP_NAME" ]; then
     echo "Experiment does not exist, please make one! You can run setup_experiment.sh to do so"
     exit 1
     fi
 
-    if [ ! -f "../../$EXP_NAME/train_config.json" ]; then
-    echo "../../$EXP_NAME/train_config.json"
+    if [ ! -f "../../runs/$EXP_NAME/train_config.json" ]; then
+    echo "../../runs/$EXP_NAME/train_config.json"
     echo "config does not exist, please make one! You can run setup_experiment.sh to do so"
     exit 1
     fi
@@ -27,7 +27,7 @@ select_experiment() {
 
 command_construct(){
 # Construct the command
-cmd="CUDA_VISIBLE_DEVICES=$gpu_indices torchrun --standalone --nproc_per_node=$(echo $gpu_indices | tr ',' '\n' | wc -l) ../../train.py --config ../../$EXP_NAME/train_config.json"
+cmd="CUDA_VISIBLE_DEVICES=$gpu_indices torchrun --standalone --nproc_per_node=$(echo $gpu_indices | tr ',' '\n' | wc -l) ../../train.py --config ../../runs/$EXP_NAME/train_config.json"
 echo "Do you want to run the command $cmd?"
 echo "--"
 
