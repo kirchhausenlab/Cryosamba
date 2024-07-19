@@ -28,6 +28,7 @@ From `Cryosamba/automate`:
 ```bash
 pip install streamlit
 cd automate
+chmod -R u+x *.sh
 streamlit run main.py
 ```
 
@@ -50,6 +51,7 @@ in this directory. Once successfully cloned, navigate to the scipts folder via `
 To setup the environment, run:
 
 ```bash
+chmod -R u+x *.sh
 ./startup_script_.sh
 ```
 
