@@ -1,8 +1,8 @@
-import os
-import sys
-import subprocess
-import unittest
 import json
+import os
+import subprocess
+import sys
+import unittest
 
 
 def run_bash_script(script_content):
@@ -23,7 +23,7 @@ def run_bash_script(script_content):
     return stdout, stderr, process.returncode
 
 
-class TestRunCreation(unittest.TestCase):
+class TestInferenceRunCreation(unittest.TestCase):
     def setUp(self):
         # Your Bash script content here
         self.bash_script = """#!/bin/bash
