@@ -8,9 +8,7 @@ import streamlit as st
 from file_selector import get_dir, list_directories_in_directory
 from training_setup import handle_exceptions
 
-logger = logging.getLogger(__name__)
-logging.basicConfig(filename="run_inference.log", encoding="utf-8", level=logging.DEBUG)
-
+from logging_config import logger
 
 @handle_exceptions
 def select_gpus() -> List[str]:

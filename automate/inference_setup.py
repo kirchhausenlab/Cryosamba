@@ -7,13 +7,7 @@ from random import randint
 import streamlit as st
 from file_selector import get_dir, list_directories_in_directory
 from training_setup import handle_exceptions
-
-logging.basicConfig(level=logging.INFO)
-logging.basicConfig(
-    filename="debug_errors_for_inference.log", encoding="utf-8", level=logging.DEBUG
-)
-logger = logging.getLogger(__name__)
-
+from logging_config import logger
 
 def folder_exists(folder_path):
     """Check if the given folder path exists."""

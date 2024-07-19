@@ -6,13 +6,7 @@ from functools import wraps
 
 import streamlit as st
 from training_setup import handle_exceptions
-
-logging.basicConfig(level=logging.INFO)
-logging.basicConfig(
-    filename="debug_errors_for_environment.log", encoding="utf-8", level=logging.DEBUG
-)
-logger = logging.getLogger(__name__)
-
+from logging_config import logger
 
 @handle_exceptions
 def is_conda_installed() -> bool:
