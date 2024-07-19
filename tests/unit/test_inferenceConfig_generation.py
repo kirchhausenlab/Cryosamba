@@ -1,5 +1,6 @@
 import json
 import os
+import subprocess
 import unittest
 from pathlib import Path
 
@@ -8,21 +9,53 @@ from logging_config import logger
 
 class TestInferenceConfig(unittest.TestCase):
     def setUp(self):
-        self.folder_name = "random_exp"
-        self.curr_path = Path(__file__).resolve().parent
-        self.path_to_experiments = self.curr_path.parent.parent
-        self.config_path = self.path_to_experiments / self.folder_name / "inference_config.json"
+        curr_path = Path(__name__).resolve().parent
+        path_to_dir = curr_path.parent.parent
+        self.path_to_inference_file = path_to_dir / "random_exp" / "inference_config.json"
+        self.path_to_experiment= path_to_dir / "random_exp"
 
-    def test_generate_test_config(self):
-        try: 
-            self.assertTrue(self.config_path.exists(), "Inference config file was not generated")
+    def test_verify_path(self):
+        try:
+            check_path = self.path_to_experiment.exists()
+            self.assertTrue(check_path, msg=f"Experiment folder with inference config not found")
+
+            check_train_folder = (self.path_to_experiment / "train").exists()
+            self.assertTrue(check_train_folder, msg="Train folder not found")
+            
+
+            check_inference_folder = (self.path_to_experiment / "inference").exists()
+            self.assertTrue(check_inference_folder, msg="Inference folder not found")
+
+            check_inference_json = self.path_to_inference_file.exists()
+            self.assertTrue(check_inference_json, msg="Inference json does not exist")
         except Exception as e:
-            logger.error("❌ Error checking inference config file: %s", str(e))
-            self.fail(f"Inference config file check failed: {str(e)}")
+            logger.error("❌ Error checking folder: %s", str(e))
+            self.fail(f"Folder existence checks failed: {str(e)}")
+
+    def test_valid_json_format(self):
+        try:
+            with open(self.path_to_inference_file, 'r') as INFERENCE_FILE:
+                config=json.load(INFERENCE_FILE)
+            self.assertIsInstance(config, dict, "Config file is not a valid json format")
+        except json.JSONDecodeError as e:
+            logger.error("❌ error not a valid json: %s", str(e))
+            logger.critical("❌ error not a valid json: %s", str(e))
+            self.fail(f"config file is not a valid Json {str(e)}")
+        except Exception as e:
+            logger.error("❌ error checking json format: %s", str(e))
+            self.fail(f"error checking json format {str(e)}")
+
+    def test_read_write_access(self):
+        try:
+            self.assertTrue(os.access(self.path_to_inference_file), os.R_OK), "config file is not readable")
+            self.assertTrue(os.access(self.path_to_inference_file), os.W_OK), "config file is not writable")
+        except Exception as e:
+            logger.error("❌ error checking json format: %s", str(e))
+            self.fail(f"Error reading and writing the JSON", str(e))
 
     def test_verify_config(self):
         try:
-            with open(self.config_path, 'r') as f:
+            with open(self.path_to_inference_file, 'r') as f:
                 config = json.load(f)
             
             # Check for mandatory parameters
@@ -63,36 +96,4 @@ class TestInferenceConfig(unittest.TestCase):
             logger.error("❌ Error verifying inference config: %s", str(e))
             self.fail(f"Inference config verification failed: {str(e)}")
 
-    def test_check_folder_created(self):
-        try:
-            check_path = (self.path_to_experiments / self.folder_name).exists()
-            self.assertTrue(check_path, msg=f"Experiment folder '{self.folder_name}' not found")
 
-            inference_folder = self.path_to_experiments / self.folder_name / "inference"
-            self.assertTrue(inference_folder.exists(), msg="Inference folder not found")
-        except Exception as e:
-            logger.error("❌ Error checking folder creation: %s", str(e))
-            self.fail(f"Folder creation check failed: {str(e)}")
-
-    def test_config_file_permissions(self):
-        try:
-            self.assertTrue(os.access(self.config_path, os.R_OK), "Inference config file is not readable")
-            self.assertTrue(os.access(self.config_path, os.W_OK), "Inference config file is not writable")
-        except Exception as e:
-            logger.error("❌ Error checking inference config file permissions: %s", str(e))
-            self.fail(f"Inference config file permissions check failed: {str(e)}")
-
-    def test_config_file_format(self):
-        try:
-            with open(self.config_path, 'r') as f:
-                config = json.load(f)
-            self.assertIsInstance(config, dict, "Inference config file is not a valid JSON dictionary")
-        except json.JSONDecodeError as e:
-            logger.error("❌ Error parsing JSON: %s", str(e))
-            self.fail(f"Inference config file is not a valid JSON: {str(e)}")
-        except Exception as e:
-            logger.error("❌ Error checking inference config file format: %s", str(e))
-            self.fail(f"Inference config file format check failed: {str(e)}")
-
-if __name__ == "__main__":
-    unittest.main()
