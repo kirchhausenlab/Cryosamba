@@ -13,7 +13,7 @@ class TestInferenceConfig(unittest.TestCase):
         self.curr_path = Path(__file__).resolve().parent
         self.path_to_experiments = self.curr_path.parent.parent / "runs"
         self.config_path = (
-            self.path_to_experiments /  self.folder_name / "inference_config.json"
+            self.path_to_experiments / self.folder_name / "inference_config.json"
         )
 
     
@@ -119,5 +119,6 @@ class TestInferenceConfig(unittest.TestCase):
             logger.error("❌ Error verifying inference config: %s", str(e))
             self.fail("Inference config verification failed: %s", str(e))
 
-if __name__== "__main__":
+
+if __name__ == "__main__":
     unittest.main()
