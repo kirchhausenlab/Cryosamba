@@ -1,6 +1,7 @@
 import logging
 import os
 import subprocess
+import webbrowser
 from functools import wraps
 from typing import List
 
@@ -49,6 +50,25 @@ def run_experiment(gpus: str, folder_path: str) -> None:
         st.code(
             f"SAMPLE COMMAND LOOKS LIKE: \n CUDA_VISIBLE_DEVICES=0,1 torchrun --standalone --nproc_per_node=2 train.py --config configs/your_config_train.json \n: "
         )
+        st.write("If you want a cool way to monitor the losses, try tensorboard, copy paste these commands in a new terminal WHEN the training is \
+        successfully running. Note there is no output, only checkpoints in the training folder. Outputs are produced only for inferences, and can be \
+        viewed using Fiji or ImageJ. **Please have the conda environment active for running the training and opening tensorboard")
+        
+        st.markdown("""
+        TensorBoard can be used to monitor the progress of the training losses.
+
+        1. Open a terminal window inside a graphical interface (e.g., XDesk).
+        2. Activate the environment and run:
+           ```bash
+           tensorboard --logdir /path/to/dir/Cryosamba/runs/exp-name/train
+            ```
+        3. Open localhost:6006 in the browser (Chrome or firefox)
+        4. Use the slide under SCALARS to smooth noise plots
+        """)
+        if st.button("View Training"):
+            cmd=f"tensorboard --logdir ../{folder_path}/train"
+            subprocess.Popen(cmd, shell=True)
+            webbrowser.open("http://localhost:6006")
 
 
 @handle_exceptions
