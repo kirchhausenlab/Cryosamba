@@ -16,15 +16,7 @@ class TestInferenceConfig(unittest.TestCase):
             self.path_to_experiments /  self.folder_name / "inference_config.json"
         )
 
-    def test_generate_test_config(self):
-        try:
-            self.assertTrue(
-                self.config_path.exists(), "Inference config file was not generated"
-            )
-        except Exception as e:
-            logger.error("❌ error checking json format: %s", str(e))
-            self.fail("Error reading and writing the JSON %s", str(e))
-
+    
     def test_verify_config(self):
         try:
             with open(self.config_path, "r") as f:
