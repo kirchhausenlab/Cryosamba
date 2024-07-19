@@ -5,7 +5,7 @@ __pycache__
 configs
 scripts
 inference_multiple.py
-
+logs
 exp-*
 
 runs
