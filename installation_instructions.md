@@ -14,7 +14,7 @@
 ## Installation
 
 1. Open a terminal window and run `conda create --name your-env-name python=3.11 -y` to create the environment (replace `your-env-name` with a desired name).
-2. Activate the environment with `conda activate your-env-name`.
+2. Activate the environment with `conda activate your-env-name`. In the future, you will have to activate the environment anytime you want to use CryoSamba.
 3. Install PyTorch (for CUDA 11.8):
    ```bash
    pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
@@ -23,6 +23,11 @@
    ```bash
    pip install tifffile mrcfile easydict loguru tensorboard cupy-cuda11x
    ```
+5. Navigate to the directory where you want to save the Cryosamba code (via `cd /path/to/dir`). Then run
+```bash
+git clone https://github.com/kirchhausenlab/Cryosamba.git
+```
+in this directory. If you only have access to a Cryosamba `.zip` file instead, simply extract it there.
 
 ## Training
 
