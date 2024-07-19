@@ -52,4 +52,4 @@ if __name__ == "__main__":
         main()
     except Exception as e:
         logger.exception("An error occurred: %s", str(e))
-        raise 
+        raise
