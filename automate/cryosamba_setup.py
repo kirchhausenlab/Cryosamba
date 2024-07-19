@@ -8,6 +8,7 @@ from training_setup import handle_exceptions
 
 from logging_config import logger
 
+
 def run_command(command, shell=True):
     process = subprocess.Popen(
         command,

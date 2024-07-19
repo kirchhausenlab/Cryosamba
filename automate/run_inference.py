@@ -10,6 +10,7 @@ from training_setup import handle_exceptions
 
 from logging_config import logger
 
+
 @handle_exceptions
 def select_gpus() -> List[str]:
     st.text("The following GPUs are not in use, select ones you one want to use! ")
