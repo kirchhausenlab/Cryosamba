@@ -9,11 +9,11 @@ from logging_config import logger
 
 class TestInferenceConfig(unittest.TestCase):
     def setUp(self):
-        self.folder_name = "random_exp"
+        self.folder_name = "exp-random"
         self.curr_path = Path(__file__).resolve().parent
-        self.path_to_experiments = self.curr_path.parent.parent
+        self.path_to_experiments = self.curr_path.parent.parent / "runs"
         self.config_path = (
-            self.path_to_experiments / self.folder_name / "inference_config.json"
+            self.path_to_experiments /  self.folder_name / "inference_config.json"
         )
 
     def test_generate_test_config(self):
@@ -23,7 +23,7 @@ class TestInferenceConfig(unittest.TestCase):
             )
         except Exception as e:
             logger.error("❌ error checking json format: %s", str(e))
-            self.fail(f"Error reading and writing the JSON", str(e))
+            self.fail("Error reading and writing the JSON %s", str(e))
 
     def test_verify_config(self):
         try:
@@ -125,4 +125,7 @@ class TestInferenceConfig(unittest.TestCase):
 
         except Exception as e:
             logger.error("❌ Error verifying inference config: %s", str(e))
-            self.fail(f"Inference config verification failed: {str(e)}")
+            self.fail("Inference config verification failed: %s", str(e))
+
+if __name__== "__main__":
+    unittest.main()

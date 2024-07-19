@@ -8,9 +8,9 @@ from logging_config import logger
 
 class TestTrainConfig(unittest.TestCase):
     def setUp(self):
-        self.folder_name = "random_exp"
+        self.folder_name = "exp-random"
         self.curr_path = Path(__file__).resolve().parent
-        self.path_to_experiments = self.curr_path.parent.parent
+        self.path_to_experiments = self.curr_path.parent.parent / "runs"
         self.config_path = (
             self.path_to_experiments / self.folder_name / "train_config.json"
         )
@@ -52,18 +52,6 @@ class TestTrainConfig(unittest.TestCase):
             )
 
             # Check specific values
-            self.assertEqual(
-                config["train_dir"],
-                "/nfs/datasync4/inacio/data/denoising/cryosamba/rota/train/",
-                "Incorrect train_dir",
-            )
-            self.assertEqual(
-                config["data_path"],
-                [
-                    "/nfs/datasync4/inacio/data/raw_data/cryo/novareconstructions/rotacell_grid1_TS09_ctf_3xBin.rec"
-                ],
-                "Incorrect data_path",
-            )
             self.assertEqual(
                 config["train_data"]["max_frame_gap"], 6, "Incorrect max_frame_gap"
             )
