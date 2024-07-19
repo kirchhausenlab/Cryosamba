@@ -100,7 +100,7 @@ EOL
     batch_size=${batch_size:-32}
 
     config_file="../../runs/$DEFAULT_NAME/train_config.json"
-    train_dir="./$DEFAULT_NAME/train"
+    train_dir="../$DEFAULT_NAME/train"
 
     # Use jq to merge the base config with user inputs
     echo "$base_config" | jq \

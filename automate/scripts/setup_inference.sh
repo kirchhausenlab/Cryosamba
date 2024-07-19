@@ -15,7 +15,7 @@ fi
 generate_config() {
     base_config=$(cat << EOL
     {   
-        "inference_dir": "/$EXP_NAME/inference",
+        "inference_dir": "../$EXP_NAME/inference",
         "inference_data": {
             "patch_shape": [
                 256,
@@ -38,7 +38,7 @@ generate_config() {
 EOL
 )
 
-train_dir=./$EXP_NAME/train
+train_dir=../$EXP_NAME/train
 
 echo "Enter the data path "
 read -r data_path
