@@ -33,7 +33,7 @@ def select_gpus() -> List[str]:
 @handle_exceptions
 def run_experiment(gpus: str, folder_path: str) -> None:
     print(f"{folder_path}")
-    cmd = f"CUDA_VISIBLE_DEVICES={gpus} torchrun --standalone --nproc_per_node=$(echo {gpus} | tr ',' '\n' | wc -l) ../train.py --config ../{folder_path}/inference_config.json"
+    cmd = f"CUDA_VISIBLE_DEVICES={gpus} torchrun --standalone --nproc_per_node=$(echo {gpus} | tr ',' '\n' | wc -l) ../inference.py --config ../{folder_path}/inference_config.json"
     st.text(f"Do you want to run the command: {cmd}?")
     selection = st.radio("Type y/n: ", ["y", "n"], index=None)
     if selection == "n":
@@ -46,6 +46,11 @@ def run_experiment(gpus: str, folder_path: str) -> None:
             "Please open up a new terminal on your machine and navigate to the cryosamba/automate folder. Then run this command"
         )
         st.code(cmd)
+ 
+        st.code(
+            f"SAMPLE COMMAND LOOKS LIKE: \n CUDA_VISIBLE_DEVICES=0,1 torchrun --standalone --nproc_per_node=2 train.py --config configs/your_config_train.json \n: "
+        )
+
 
 
 @handle_exceptions
