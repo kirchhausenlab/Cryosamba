@@ -7,6 +7,7 @@ from random import randint
 import streamlit as st
 from file_selector import get_dir, list_directories_in_directory
 from training_setup import handle_exceptions
+
 from logging_config import logger
 
 
@@ -23,12 +24,12 @@ def make_folder(is_inference=False):
         st.subheader("Inference Folder Check")
         st.write("Enter the name for your experiment:")
         input_name = st.text_input("Experiment Name", "")
-        base_path = f"../{input_name}/inference"
+        base_path = f"../runs/{input_name}/inference"
     else:
         st.subheader("Experiment Folder Check")
         st.write("Enter the name for your experiment:")
         input_name = st.text_input("Experiment Name", "")
-        base_path = f"../{input_name}/train"
+        base_path = f"../runs/{input_name}/train"
 
     if st.button("Check Folder"):
         if folder_exists(base_path):
@@ -36,6 +37,7 @@ def make_folder(is_inference=False):
             st.session_state.folder_found = True
             st.session_state.DEFAULT_NAME = input_name
             st.session_state.step = "mandatory_params"
+            st.session_state.inference_dir=base_path
         else:
             st.error(f"Folder '{base_path}' not found.")
             st.session_state.folder_found = False
@@ -68,7 +70,7 @@ def generate_mandatory_params():
         st.markdown("**Inference Directory Path**")
         inference_dir = st.text_input(
             "inference_dir",
-            "/nfs/datasync4/inacio/data/denoising/cryosamba/rota/inference/",
+            st.session_state.get('inference_dir', "/nfs/datasync4/inacio/data/denoising/cryosamba/rota/inference/"),
         )
         st.markdown(
             "_The name of the folder where the denoised stack will be saved (exp-name/inference)._"
@@ -201,15 +203,6 @@ def generate_config():
         **inference_defaults,
         **st.session_state.get("inference_params", {}),
     }
-    # base_config = {
-    #     "train_dir": mandatory_params["train_dir"],
-    #     "data_path": [mandatory_params["data_path"]],
-    #     "inference_data": {
-    #         "max_frame_gap": mandatory_params["max_frame_gap"],
-    #         **inference_data_params,
-    #     },
-    #     "inference": {**inference_params},
-    # }
     base_config = {
         "train_dir": mandatory_params["train_dir"],
         "data_path": [mandatory_params["data_path"]],
@@ -221,7 +214,7 @@ def generate_config():
         "inference": {**inference_params},
     }
 
-    config_file = f"../{DEFAULT_NAME}/inference_config.json"
+    config_file = f"../runs/{DEFAULT_NAME}/inference_config.json"
     with open(config_file, "w") as f:
         json.dump(base_config, f, indent=4)
     st.success(f"Inference config file generated successfully at {config_file}")
@@ -253,3 +246,6 @@ def setup_inference() -> None:
     else:
         st.error("Please ensure the folder exists before proceeding.")
         make_folder(is_inference=True)
+
+if __name__ == "__main__":
+    setup_inference()

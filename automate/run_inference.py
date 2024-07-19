@@ -32,7 +32,7 @@ def select_gpus() -> List[str]:
 @handle_exceptions
 def run_experiment(gpus: str, folder_path: str) -> None:
     print(f"{folder_path}")
-    cmd = f"CUDA_VISIBLE_DEVICES={gpus} torchrun --standalone --nproc_per_node=$(echo {gpus} | tr ',' '\n' | wc -l) ../inference.py --config ../{folder_path}/inference_config.json"
+    cmd = f"CUDA_VISIBLE_DEVICES={gpus} torchrun --standalone --nproc_per_node=$(echo {gpus} | tr ',' '\n' | wc -l) ../inference.py --config ../runs/{folder_path}/inference_config.json"
     st.text(f"Do you want to run the command: {cmd}?")
     selection = st.radio("Type y/n: ", ["y", "n"], index=None)
     if selection == "n":
@@ -56,7 +56,7 @@ def select_experiment() -> None:
     get_dir()
     st.write("Please enter the experiment you want to run: ")
     input_name = st.text_input("Experiment Name", "")
-    base_path = f"../{input_name}"
+    base_path = f"../runs/{input_name}"
     if st.button("Check folder"):
         if os.path.exists(base_path):
             st.success(f"Folder {base_path} found")
@@ -69,23 +69,25 @@ def select_experiment() -> None:
 
 @handle_exceptions
 def select_experiment_and_run() -> None:
-    st.header("Welcome to the CryoSamba Training Runner")
+    st.header("Welcome to the CryoSamba Training Runner") 
     st.write(
-        "Please note that you *need a GPU to run cryosamba, if you cannot see a graph or a table or GPUs **AFTER YOU CHOOSE YOUR Experiment**, your machine does not support cryosamba.*"
-    )
-    st.write(
-        "If the table shows a list of 0s, you have compatible hardware but NO GPUs. Please connect to a machine that has GPUs. Instructions to ssh into a machine for cryosamba are as follows:"
+        "Please note that you *need a GPU to run cryosamba, if you cannot see a graph or a table or GPUs **AFTER YOU CHOOSE YOUR Experiment**, your machine does not support cryosamba.* \
+        If you want to run the training on a different machine, please follow the instructions below "
     )
     st.code(
         "# To copy cryosamba, make a zip file of cryosamba and run the following. \n scp cryosamba.zip user_name@remote_server.edu:/path/to/store \n ssh user_name@remote_server.edu && cd /path/to/store \n unzip cryosamba.zip \n \
         \n cd cryosamba/automate \n pip install streamlit \n streamlit run main.py"
     )
 
+    options = select_gpus()
+    st.write(
+        "If the table shows a list of 0s, you have compatible hardware but NO GPUs. Please connect to a machine that has GPUs. Instructions to ssh into a machine for cryosamba above:"
+    )
+
     if "folder_found" not in st.session_state:
         select_experiment()
     elif st.session_state.folder_found:
         st.write("We will be running training here:")
-        options = select_gpus()
         if not options or len(options) == 0:
             st.error("you did not select any options!")
             st.stop()
