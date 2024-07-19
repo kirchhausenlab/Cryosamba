@@ -17,9 +17,10 @@ class TestTrainConfig(unittest):
 
         def verify_test_config(self):
             try:
-                print('run')
+                print("run")
             except Exception as e:
                 logger.error("❌ Error executing command: %s ", str(e))
+
 
 if __name__ == "__main__":
     unittest.main()
