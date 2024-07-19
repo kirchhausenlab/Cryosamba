@@ -16,7 +16,6 @@ class TestInferenceConfig(unittest.TestCase):
             self.path_to_experiments / self.folder_name / "inference_config.json"
         )
 
-    
     def test_verify_config(self):
         try:
             with open(self.config_path, "r") as f:
