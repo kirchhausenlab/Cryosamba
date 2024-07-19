@@ -69,7 +69,7 @@ def select_experiment() -> None:
 
 @handle_exceptions
 def select_experiment_and_run() -> None:
-    st.header("Welcome to the CryoSamba Training Runner") 
+    st.header("Welcome to the CryoSamba Training Runner")
     st.write(
         "Please note that you *need a GPU to run cryosamba, if you cannot see a graph or a table or GPUs **AFTER YOU CHOOSE YOUR Experiment**, your machine does not support cryosamba.* \
         If you want to run the training on a different machine, please follow the instructions below "

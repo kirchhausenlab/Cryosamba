@@ -37,7 +37,7 @@ def make_folder(is_inference=False):
             st.session_state.folder_found = True
             st.session_state.DEFAULT_NAME = input_name
             st.session_state.step = "mandatory_params"
-            st.session_state.inference_dir=base_path
+            st.session_state.inference_dir = base_path
         else:
             st.error(f"Folder '{base_path}' not found.")
             st.session_state.folder_found = False
@@ -70,7 +70,10 @@ def generate_mandatory_params():
         st.markdown("**Inference Directory Path**")
         inference_dir = st.text_input(
             "inference_dir",
-            st.session_state.get('inference_dir', "/nfs/datasync4/inacio/data/denoising/cryosamba/rota/inference/"),
+            st.session_state.get(
+                "inference_dir",
+                "/nfs/datasync4/inacio/data/denoising/cryosamba/rota/inference/",
+            ),
         )
         st.markdown(
             "_The name of the folder where the denoised stack will be saved (exp-name/inference)._"
@@ -246,6 +249,7 @@ def setup_inference() -> None:
     else:
         st.error("Please ensure the folder exists before proceeding.")
         make_folder(is_inference=True)
+
 
 if __name__ == "__main__":
     setup_inference()
