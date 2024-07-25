@@ -1,11 +1,12 @@
 #!/usr/bin/env python
 
 import collections
-import cupy
 import os
 import re
-import torch
 import typing
+
+import cupy
+import torch
 
 ##########################################################
 
