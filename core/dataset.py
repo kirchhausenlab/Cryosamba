@@ -86,6 +86,7 @@ class DatasetBase(Dataset):
             coords[2, 0] : coords[2, 1],
         ]
         imgs = np.pad(imgs, border_pad, mode="reflect")
+        imgs = np.array(imgs)
         imgs = torch.from_numpy(imgs).float()
 
         if self.split == "train":
