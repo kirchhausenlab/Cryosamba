@@ -31,29 +31,32 @@ def get_node_count():
 def set_global_seed(seed, rank):
     if seed != -1:
         torch.manual_seed(seed + rank)
-        torch.cuda.manual_seed_all(seed)
+        torch.mps.manual_seed(seed)
         np.random.seed(seed)
         random.seed(seed)
-        torch.backends.cudnn.deterministic = True
-        torch.backends.cudnn.benchmark = False
 
 
 def setup_DDP(seed=-1):
-    torch.backends.cudnn.enabled = True
-    torch.backends.cudnn.benchmark = True
-    torch.backends.cuda.matmul.allow_tf32 = True
-    torch.backends.cudnn.allow_tf32 = True
+    # torch.backends.cudnn.enabled = True
+    # torch.backends.cudnn.benchmark = True
+    # torch.backends.cuda.matmul.allow_tf32 = True
+    # torch.backends.cudnn.allow_tf32 = True
 
     world_size = get_node_count()
     if world_size > 1:
-        dist.init_process_group("nccl")
+        dist.init_process_group("gloo")
+        print(
+            f"{dist.init_process_group("gloo")} is the dist, {world_size} is the node count"
+        )
         rank = dist.get_rank()
-        device = rank % torch.cuda.device_count()
+        # device = rank % torch.cuda.device_count()
+        device = torch.device("mps")
+        print(f"{device:>20} is device and the rank is {rank:^}")
     else:
         rank, device = 0, 0
 
     set_global_seed(seed, rank)
-    torch.cuda.set_device(rank)
+    # torch.cuda.set_device(rank)
 
     return world_size, rank, device
 
