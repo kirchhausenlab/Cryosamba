@@ -226,9 +226,11 @@ def mrc_to_rec(mrc_path, rec_path):
 
 def main():
     input_path = "../../cg1300_L3_ts052_mrc_ali.mrc"
-    output_path='../../outputfile.rec'
-    convert_rec_file_to_type(input_path=input_path, output_path=output_path, dtype=np.dtype(np.int16))
-    #mrc_to_rec(input_path, "output_file.rec")
+    output_path = "../../outputfile.rec"
+    convert_rec_file_to_type(
+        input_path=input_path, output_path=output_path, dtype=np.dtype(np.int16)
+    )
+    # mrc_to_rec(input_path, "output_file.rec")
 
 
 if __name__ == "__main__":
