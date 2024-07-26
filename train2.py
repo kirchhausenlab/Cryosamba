@@ -2,9 +2,9 @@ import os
 
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
 # Disable upper limit for memory allocations (may cause system failure)
-#os.environ['PYTORCH_MPS_HIGH_WATERMARK_RATIO'] = '0.0'
+# os.environ['PYTORCH_MPS_HIGH_WATERMARK_RATIO'] = '0.0'
 # Enable CPU fallback for unimplemented MPS operations
-os.environ['PYTORCH_ENABLE_MPS_FALLBACK'] = '1'
+os.environ["PYTORCH_ENABLE_MPS_FALLBACK"] = "1"
 
 import argparse
 from time import time
