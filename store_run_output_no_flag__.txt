@@ -1,0 +1,19 @@
+Dir ../exp-1/train already exists. Would you like to overwrite it? [y/n]:2024/07/26 19:12:48 | INFO | Starting new training in ../exp-1/train
+2024/07/26 19:12:48 | INFO | No random seed was set
+2024/07/26 19:12:48 | INFO | # of processes = 1
+2024/07/26 19:12:48 | INFO | # of model parameters = 2,932,514
+2024/07/26 19:12:50 | INFO | # of data samples = 1140 (train), 64 (val)
+2024/07/26 19:12:50 | INFO | *** Epoch 0 ***
+2024/07/26 19:14:12 | INFO | Iter 5/200000 :: train loss: 6.506851 (gap 1), 7.591285 (gap 2), 8.023902 (gap 3), 8.034010 (gap 4), 7.979861 (gap 5), 7.959638 (gap 6), E.T.: 81.931s
+2024/07/26 19:15:10 | INFO | Iter 10/200000 :: train loss: 5.215062 (gap 1), 6.158050 (gap 2), 6.567421 (gap 3), 6.609193 (gap 4), 6.560828 (gap 5), 6.526033 (gap 6), E.T.: 58.494s
+2024/07/26 19:16:07 | INFO | Iter 15/200000 :: train loss: 5.083090 (gap 1), 5.945083 (gap 2), 6.333252 (gap 3), 6.392722 (gap 4), 6.376060 (gap 5), 6.366228 (gap 6), E.T.: 57.021s
+2024/07/26 19:17:04 | INFO | Iter 20/200000 :: train loss: 5.239421 (gap 1), 6.151486 (gap 2), 6.570696 (gap 3), 6.627559 (gap 4), 6.595183 (gap 5), 6.571458 (gap 6), E.T.: 56.943s
+2024/07/26 19:18:02 | INFO | Iter 25/200000 :: train loss: 5.263226 (gap 1), 6.138621 (gap 2), 6.534254 (gap 3), 6.579490 (gap 4), 6.540442 (gap 5), 6.518369 (gap 6), E.T.: 57.589s
+2024/07/26 19:18:59 | INFO | Iter 30/200000 :: train loss: 5.161794 (gap 1), 5.998452 (gap 2), 6.379856 (gap 3), 6.432927 (gap 4), 6.406807 (gap 5), 6.394955 (gap 6), E.T.: 56.660s
+2024/07/26 19:19:56 | INFO | Iter 35/200000 :: train loss: 5.257500 (gap 1), 6.102105 (gap 2), 6.491817 (gap 3), 6.536848 (gap 4), 6.495265 (gap 5), 6.475372 (gap 6), E.T.: 57.108s
+2024/07/26 19:20:32 | INFO | Starting new training in ../exp-2/train
+2024/07/26 19:20:32 | INFO | No random seed was set
+2024/07/26 19:20:32 | INFO | # of processes = 1
+2024/07/26 19:20:33 | INFO | # of model parameters = 2,932,514
+2024/07/26 19:20:34 | INFO | # of data samples = 570 (train), 32 (val)
+2024/07/26 19:20:34 | INFO | *** Epoch 0 ***

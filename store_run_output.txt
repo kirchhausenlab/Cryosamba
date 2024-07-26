@@ -1,0 +1,33 @@
+Dir ../exp-1/train already exists. Would you like to overwrite it? [y/n]:2024/07/26 19:03:58 | INFO | Starting new training in ../exp-1/train
+2024/07/26 19:03:58 | INFO | No random seed was set
+2024/07/26 19:03:58 | INFO | # of processes = 1
+2024/07/26 19:04:03 | INFO | # of model parameters = 2,932,514
+2024/07/26 19:04:11 | INFO | # of data samples = 1140 (train), 64 (val)
+2024/07/26 19:04:11 | INFO | *** Epoch 0 ***
+Dir ../exp-1/train already exists. Would you like to overwrite it? [y/n]:2024/07/26 19:05:26 | INFO | Starting new training in ../exp-1/train
+2024/07/26 19:05:26 | INFO | No random seed was set
+2024/07/26 19:05:26 | INFO | # of processes = 1
+2024/07/26 19:05:26 | INFO | # of model parameters = 2,932,514
+2024/07/26 19:05:28 | INFO | # of data samples = 1140 (train), 64 (val)
+2024/07/26 19:05:28 | INFO | *** Epoch 0 ***
+2024/07/26 19:06:58 | INFO | Iter 5/200000 :: train loss: 67.948577 (gap 1), 65.563687 (gap 2), 63.147262 (gap 3), 60.749413 (gap 4), 58.489204 (gap 5), 56.365346 (gap 6), E.T.: 90.271s
+2024/07/26 19:07:58 | INFO | Iter 10/200000 :: train loss: 7.877669 (gap 1), 8.237546 (gap 2), 8.275654 (gap 3), 8.036283 (gap 4), 7.730670 (gap 5), 7.492173 (gap 6), E.T.: 59.976s
+2024/07/26 19:08:58 | INFO | Iter 15/200000 :: train loss: 5.213885 (gap 1), 6.117431 (gap 2), 6.542009 (gap 3), 6.604588 (gap 4), 6.574407 (gap 5), 6.554802 (gap 6), E.T.: 59.540s
+2024/07/26 19:09:56 | INFO | Iter 20/200000 :: train loss: 4.989097 (gap 1), 5.822316 (gap 2), 6.194270 (gap 3), 6.244254 (gap 4), 6.223095 (gap 5), 6.221704 (gap 6), E.T.: 58.388s
+2024/07/26 19:10:54 | INFO | Iter 25/200000 :: train loss: 5.322289 (gap 1), 6.273026 (gap 2), 6.683774 (gap 3), 6.717215 (gap 4), 6.668382 (gap 5), 6.644392 (gap 6), E.T.: 57.711s
+2024/07/26 19:30:17 | INFO | Starting new training in ../exp-max/train
+2024/07/26 19:30:17 | INFO | No random seed was set
+2024/07/26 19:30:17 | INFO | # of processes = 1
+2024/07/26 19:30:17 | INFO | # of model parameters = 2,932,514
+2024/07/26 19:30:20 | INFO | # of data samples = 5 (train), 1 (val)
+2024/07/26 19:30:20 | INFO | *** Epoch 0 ***
+2024/07/26 19:34:54 | INFO | Starting new training in ../exp-3/train
+2024/07/26 19:34:54 | INFO | No random seed was set
+2024/07/26 19:34:54 | INFO | # of processes = 1
+2024/07/26 19:34:55 | INFO | # of model parameters = 2,932,514
+Dir ../exp-2/train already exists. Would you like to overwrite it? [y/n]:2024/07/26 19:35:07 | INFO | Starting new training in ../exp-2/train
+2024/07/26 19:35:07 | INFO | No random seed was set
+2024/07/26 19:35:07 | INFO | # of processes = 1
+2024/07/26 19:35:08 | INFO | # of model parameters = 2,932,514
+2024/07/26 19:35:08 | INFO | # of data samples = 570 (train), 32 (val)
+2024/07/26 19:35:08 | INFO | *** Epoch 0 ***
