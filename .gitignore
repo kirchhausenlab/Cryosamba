@@ -9,5 +9,6 @@ logs
 exp-*
 logs/*
 runs
-
+*.rec
+*.mp4
 random_exp

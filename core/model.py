@@ -3,8 +3,8 @@ import torch.nn as nn
 import torch.nn.functional as F
 from torch.nn.parallel import DistributedDataParallel as DDP
 
-from core.dataset import DatasetBase
 from core.biflownet import BiFlowNet
+from core.dataset import DatasetBase
 from core.fusionnet import FusionNet
 
 
@@ -105,7 +105,7 @@ class CryoSamba(nn.Module):
 
 def get_model(cfg, device, is_ddp, compile):
     model = CryoSamba(cfg).to(device=device)
-    if compile:
-        model = torch.compile(model, dynamic=False)
+    # if compile:
+    #     model = torch.compile(model)
     model = DDP(model, device_ids=[device]) if is_ddp else model
     return model
