@@ -40,13 +40,18 @@ Note: these instructions are designed for machines with a Linux operating system
 
 ### Installation
 
-Open a Terminal window and navigate to the directory where you want to save the Cryosamba code via `cd /path/to/dir`. Then run
+Open a Terminal window and navigate to the directory where you want to save the Cryosamba code via `cd /path/to/dir`.
 
+If you received CryoSamba via a zip file, run
+```bash
+unzip path/to/Cryosamba.zip
+```
+in this directory. Otherwise, run
 ```bash
 git clone https://github.com/kirchhausenlab/Cryosamba.git
 ```
 
-in this directory. Once successfully cloned, navigate to the scipts folder via `cd Cryosamba/automate/scripts`
+Once successfully cloned/unzipped, navigate to the scripts folder via `cd path/to/Cryosamba/automate/scripts`
 
 To setup the environment, run:
 
@@ -66,7 +71,7 @@ This creates a conda environment called `cryosamba` and activates it. In the fut
 conda activate cryosamba
 ```
 
-anytime you want to run the CryoSamba again.
+anytime you want to run CryoSamba again.
 
 In case of errors, try running `conda init --all && source ~/.bashrc` in your terminal.
 
