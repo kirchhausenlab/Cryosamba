@@ -8,7 +8,9 @@ This repository contains the segmentation pipeline described in the following pu
 >
 > Please cite this publication if you are using this code in your research. For installation, UI, and code setup questions, reach out to [Arkash Jain](https://www.linkedin.com/in/arkashj/) at arkash@tklab.hms.harvard.edu
 
-Note: CryoSamba is written for machines with either a Linux or Windows operating system and a CUDA capable GPU. MacOS is not supported.
+❗❗❗**WARNING**❗❗❗ CryoSamba is written for machines with either a **Linux** or **Windows** operating system and a **CUDA capable GPU**. **MacOS is not supported**.
+
+❗❗❗**WARNING**❗❗❗ These instructions are meant to be read carefully and line by line. Arbitrarily skipping lines/words or blindly copy-pasting code snippets will likely lead to errors.
 
 ### PLEASE WATCH THE VIDEOS IN THE GITHUB (move_to_remote_server.mp4, install_and_startup.mp4 and How_to_run.mp4 to see an end-to-end example of running cryosamba)
 
@@ -36,25 +38,30 @@ You can set up the environment, train models, make configs, and run inferences f
 
 ## Terminal
 
-Note: these instructions are designed for machines with a Linux operating system. For Windows, refer to the [manual installation instructions](https://github.com/kirchhausenlab/Cryosamba/blob/main/installation_instructions.md).
+❗❗❗**WARNING**❗❗❗ These instructions require you to know how to open a terminal window on your computer, how to navigate through folders and to copy files around. 
+
+Note: these instructions are designed for machines with a **Linux** operating system. For Windows, refer to the [manual installation instructions](https://github.com/kirchhausenlab/Cryosamba/blob/main/installation_instructions.md).
 
 ### Installation
 
-Open a Terminal window and navigate to the directory where you want to save the Cryosamba code via `cd /path/to/dir`.
+1) Open a Terminal window and navigate to the directory where you want to save the Cryosamba code via `cd /path/to/dir`.
 
-If you received CryoSamba via a zip file, run
+Note: the expression `/path/to/dir` is not meant to be copy-pasted as it is. It is a general expression which means that you should replace it with the actual path to the desired directory in your own computer. Since we do not have access to your computer, we cannot give you the exact expression to copy-paste. This expression will appear several times throughout these instructions.
+
+2a) If you received CryoSamba via a zip file, run
 ```bash
 unzip path/to/Cryosamba.zip
 ```
-in this directory. Otherwise, run
+in this directory. 
+
+2b) Otherwise, run
 ```bash
 git clone https://github.com/kirchhausenlab/Cryosamba.git
 ```
 
-Once successfully cloned/unzipped, navigate to the scripts folder via `cd path/to/Cryosamba/automate/scripts`
+3) Once successfully cloned/unzipped, navigate to the scripts folder via `cd path/to/Cryosamba/automate/scripts`
 
-To setup the environment, run:
-
+4) To setup the environment, run:
 ```bash
 chmod -R u+x *.sh
 ./startup_script_.sh
