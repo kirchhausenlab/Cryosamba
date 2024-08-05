@@ -218,14 +218,16 @@ class Train:
                         train_loss[f"gap {t}"] += (
                             float(loss.detach().item()) / self.print_freq
                         )
-               
+
                     old_scale = self.scaler.get_scale()
                     self.scaler.scale(loss).backward()
                     self.scaler.step(self.optimizer)
                     self.scaler.update()
-                    if (old_scale > self.scaler.get_scale()): skip_lr_sch = True
+                    if old_scale > self.scaler.get_scale():
+                        skip_lr_sch = True
 
-                if not skip_lr_sch: self.scheduler.step()
+                if not skip_lr_sch:
+                    self.scheduler.step()
 
                 if self.rank == 0 and self.iter > 0:
                     if self.iter % self.print_freq == 0:
