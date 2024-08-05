@@ -6,8 +6,8 @@ import argparse
 from time import time
 
 import torch
-from torch.cuda.amp import GradScaler
-from torch.cuda.amp import autocast
+from torch import GradScaler
+from torch import autocast
 
 from core.model import get_model, get_loss
 from core.dataset import get_dataloader
@@ -74,7 +74,7 @@ class Train:
         self.scheduler = get_scheduler(
             self.optimizer, cfg.train.warmup_iters, cfg.optimizer.lr_decay
         )
-        self.scaler = GradScaler(enabled=cfg.train.mixed_precision)
+        self.scaler = GradScaler("cuda", enabled=cfg.train.mixed_precision)
         self.loss_fn = get_loss()
 
         self.log(f"# of model parameters = {count_model_params(self.model)[1]}")
@@ -203,13 +203,14 @@ class Train:
 
                 for t in range(1, self.max_frame_gap + 1):
                     self.optimizer.zero_grad(set_to_none=True)
+                    skip_lr_sch = False
 
                     img0, imgT, img1 = (
                         imgs[self.max_frame_gap - t].contiguous(),
                         imgs[self.max_frame_gap].contiguous(),
                         imgs[self.max_frame_gap + t].contiguous(),
                     )
-                    with autocast(enabled=self.mixed_precision):
+                    with autocast("cuda", enabled=self.mixed_precision):
                         rec = self.model(img0, img1)
                         loss = self.loss_fn(rec, imgT)
 
@@ -217,12 +218,14 @@ class Train:
                         train_loss[f"gap {t}"] += (
                             float(loss.detach().item()) / self.print_freq
                         )
-
+               
+                    old_scale = self.scaler.get_scale()
                     self.scaler.scale(loss).backward()
                     self.scaler.step(self.optimizer)
                     self.scaler.update()
+                    if (old_scale > self.scaler.get_scale()): skip_lr_sch = True
 
-                self.scheduler.step()
+                if not skip_lr_sch: self.scheduler.step()
 
                 if self.rank == 0 and self.iter > 0:
                     if self.iter % self.print_freq == 0:
