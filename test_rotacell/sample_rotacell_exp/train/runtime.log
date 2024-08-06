@@ -1,0 +1,23 @@
+2024/08/06 18:00:50 | INFO | Starting new training in ../exp-1/train
+2024/08/06 18:00:54 | INFO | No random seed was set
+2024/08/06 18:00:54 | INFO | # of processes = 7
+2024/08/06 18:00:57 | INFO | # of model parameters = 2,932,514
+2024/08/06 18:01:06 | INFO | # of data samples = 42 (train), 16 (val)
+2024/08/06 18:01:06 | INFO | *** Epoch 0 ***
+2024/08/06 18:01:48 | INFO | *** Epoch 1 ***
+2024/08/06 18:02:22 | INFO | *** Epoch 2 ***
+2024/08/06 18:02:36 | INFO | Iter 100/500 :: train loss: 4.840896 (gap 1), 6.145553 (gap 2), 6.625758 (gap 3), E.T.: 90.302s
+2024/08/06 18:02:56 | INFO | *** Epoch 3 ***
+2024/08/06 18:03:29 | INFO | *** Epoch 4 ***
+2024/08/06 18:03:56 | INFO | Iter 200/500 :: train loss: 4.393170 (gap 1), 6.088324 (gap 2), 6.648792 (gap 3), E.T.: 79.857s
+2024/08/06 18:04:03 | INFO | *** Epoch 5 ***
+2024/08/06 18:04:36 | INFO | *** Epoch 6 ***
+2024/08/06 18:05:10 | INFO | *** Epoch 7 ***
+2024/08/06 18:05:16 | INFO | Iter 300/500 :: train loss: 4.392477 (gap 1), 6.101907 (gap 2), 6.660063 (gap 3), E.T.: 79.752s
+2024/08/06 18:05:43 | INFO | *** Epoch 8 ***
+2024/08/06 18:06:17 | INFO | *** Epoch 9 ***
+2024/08/06 18:06:36 | INFO | Iter 400/500 :: train loss: 4.403374 (gap 1), 6.087437 (gap 2), 6.641955 (gap 3), E.T.: 79.737s
+2024/08/06 18:06:50 | INFO | *** Epoch 10 ***
+2024/08/06 18:07:24 | INFO | *** Epoch 11 ***
+2024/08/06 18:07:55 | INFO | Iter 500/500 :: train loss: 4.401143 (gap 1), 6.070903 (gap 2), 6.625355 (gap 3), E.T.: 79.679s
+2024/08/06 18:07:57 | INFO | Training completed successfully. Total training time = 432.236s

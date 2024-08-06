@@ -1,0 +1,38 @@
+2024/08/06 18:10:00 | INFO | Starting new inference in ../exp-1/inference
+2024/08/06 18:10:03 | INFO | No random seed was set
+2024/08/06 18:10:03 | INFO | # of processes = 5
+2024/08/06 18:10:06 | INFO | # of model parameters = 2,932,514
+2024/08/06 18:10:06 | INFO | Using trained weights from ../exp-1/train/last.pt
+2024/08/06 18:10:06 | INFO | # of data samples = 31
+2024/08/06 18:10:24 | INFO | Iter 0/31, Elapsed time = 16.593
+2024/08/06 18:10:37 | INFO | Iter 1/31, Elapsed time = 12.730
+2024/08/06 18:10:50 | INFO | Iter 2/31, Elapsed time = 12.728
+2024/08/06 18:11:03 | INFO | Iter 3/31, Elapsed time = 12.736
+2024/08/06 18:11:16 | INFO | Iter 4/31, Elapsed time = 12.728
+2024/08/06 18:11:29 | INFO | Iter 5/31, Elapsed time = 12.952
+2024/08/06 18:11:42 | INFO | Iter 6/31, Elapsed time = 12.859
+2024/08/06 18:11:55 | INFO | Iter 7/31, Elapsed time = 12.836
+2024/08/06 18:12:08 | INFO | Iter 8/31, Elapsed time = 13.134
+2024/08/06 18:12:21 | INFO | Iter 9/31, Elapsed time = 12.776
+2024/08/06 18:12:35 | INFO | Iter 10/31, Elapsed time = 13.141
+2024/08/06 18:12:48 | INFO | Iter 11/31, Elapsed time = 12.752
+2024/08/06 18:13:01 | INFO | Iter 12/31, Elapsed time = 12.778
+2024/08/06 18:13:14 | INFO | Iter 13/31, Elapsed time = 12.774
+2024/08/06 18:13:27 | INFO | Iter 14/31, Elapsed time = 12.778
+2024/08/06 18:13:40 | INFO | Iter 15/31, Elapsed time = 12.780
+2024/08/06 18:13:53 | INFO | Iter 16/31, Elapsed time = 13.006
+2024/08/06 18:14:06 | INFO | Iter 17/31, Elapsed time = 12.965
+2024/08/06 18:14:19 | INFO | Iter 18/31, Elapsed time = 12.757
+2024/08/06 18:14:32 | INFO | Iter 19/31, Elapsed time = 13.025
+2024/08/06 18:14:45 | INFO | Iter 20/31, Elapsed time = 12.749
+2024/08/06 18:14:58 | INFO | Iter 21/31, Elapsed time = 13.003
+2024/08/06 18:15:11 | INFO | Iter 22/31, Elapsed time = 12.743
+2024/08/06 18:15:25 | INFO | Iter 23/31, Elapsed time = 12.982
+2024/08/06 18:15:38 | INFO | Iter 24/31, Elapsed time = 12.986
+2024/08/06 18:15:51 | INFO | Iter 25/31, Elapsed time = 12.959
+2024/08/06 18:16:04 | INFO | Iter 26/31, Elapsed time = 12.964
+2024/08/06 18:16:17 | INFO | Iter 27/31, Elapsed time = 12.751
+2024/08/06 18:16:30 | INFO | Iter 28/31, Elapsed time = 12.930
+2024/08/06 18:16:43 | INFO | Iter 29/31, Elapsed time = 12.774
+2024/08/06 18:16:44 | INFO | Saving results
+2024/08/06 18:16:53 | INFO | Inference completed successfully. Total inference time = 415.669s

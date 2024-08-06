@@ -12,6 +12,17 @@ Note: CryoSamba is written for machines with either a Linux or Windows operating
 
 ### PLEASE WATCH THE VIDEOS IN THE GITHUB (move_to_remote_server.mp4, install_and_startup.mp4 and How_to_run.mp4 to see an end-to-end example of running cryosamba)
 
+### Warnings
+
+1. Please use smaller binnings (between 1-3) for denoising
+2. Ensure that you can run `nvcc --version`, and have CUDA 11.8 installed on your machine in the `/usr/local` path
+3. Please make sure you have an update to date GPU and machine to run CryoSamba
+4. Please use a tmux session to run a training. Tmux can be complicated so we recommend not turning off your connection while running a sample training
+5. To see a test of cryosamba, please run our `tests/integration/denoise.py` file, which takes a rotacell mrc file with sample train and inference configs and returns an output
+6. Ensure that the format of your mrc files is valid!
+7. You dont need to run 200,000 iterations of cryosamba, if losses stabilize, kindly exits (typically around 35k iterations are good)
+8. If you get disappearing losses, reduce the binning of your data and the batch size of the config
+
 ## Table of Contents
 
 1. [UI](#ui) 🖥️
