@@ -130,7 +130,7 @@ class Train:
         message += f", E.T.: {(time()-print_time):.3f}s"
         print(f"\r{message}", end="")
         sys.stdout.flush()
-        self.log(message+"\n")
+        self.log(message + "\n")
 
     def save_model(self):
         self.zfill = len(str(self.num_iters))
@@ -197,7 +197,7 @@ class Train:
         print_time = time()
 
         while self.iter <= self.num_iters:
-            #print(f"*** Epoch {epoch} ***")
+            # print(f"*** Epoch {epoch} ***")
             sys.stdout.flush()
             self.log(f"*** Epoch {epoch} ***")
 
