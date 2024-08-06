@@ -1,0 +1,54 @@
+{
+  "train_data": {
+    "max_frame_gap": 3,
+    "patch_overlap": [
+      16,
+      16
+    ],
+    "patch_shape": [
+      256,
+      256
+    ],
+    "split_ratio": 0.95,
+    "num_workers": 4,
+    "batch_size": 16
+  },
+  "train": {
+    "load_ckpt_path": null,
+    "print_freq": 100,
+    "save_freq": 1000,
+    "val_freq": 1000,
+    "warmup_iters": 300,
+    "mixed_precision": true,
+    "compile": false,
+    "num_iters": 500
+  },
+  "optimizer": {
+    "lr": 0.0002,
+    "lr_decay": 0.99995,
+    "weight_decay": 0.0001,
+    "epsilon": 1e-08,
+    "betas": [
+      0.9,
+      0.999
+    ]
+  },
+  "biflownet": {
+    "pyr_dim": 24,
+    "pyr_level": 3,
+    "corr_radius": 4,
+    "kernel_size": 3,
+    "warp_type": "soft_splat",
+    "padding_mode": "reflect",
+    "fix_params": false
+  },
+  "fusionnet": {
+    "num_channels": 16,
+    "padding_mode": "reflect",
+    "fix_params": false
+  },
+  "train_dir": "../test_sample/train",
+  "data_path": [
+    "."
+  ]
+}

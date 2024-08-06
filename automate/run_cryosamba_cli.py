@@ -173,7 +173,7 @@ def setup_environment(
         typer.echo("Environment has been created")
         typer.echo("**please copy the command below in the terminal.**")
 
-        cmd = f"conda init && sleep 3 && source ~/.bashrc && conda activate {env_name} && pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118 && pip install tifffile mrcfile easydict loguru tensorboard streamlit pipreqs cupy-cuda11x"
+        cmd = f"conda init && sleep 3 && source ~/.bashrc && conda activate {env_name} && pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118 && pip install tifffile mrcfile easydict loguru tensorboard streamlit pipreqs cupy-cuda11x typer webbrowser"
         typer.echo(
             "Say you downloaded cryosamba in your downloads folder, open a NEW terminal window and run the following commands or hit yes to run it here: \n\n{cmd} "
         )

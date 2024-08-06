@@ -1,9 +1,10 @@
 """
-The test_rotacell folder has some sample data produced by running 500 iterations of cryosamba on a DGX A100 GPU with a batch size of 
+The test_sample folder has some sample data produced by running 500 iterations of cryosamba on a DGX A100 GPU with a batch size of 
 16 and max frame gap of 3. The following test recreates that scenario for users and will take around 15 minutes to run (both train and inference)
 Once you have the training and inference done, navigate to the test_rotacell folder, where you will find our sample results. Compare
 what you get by running this test to our sample as a sanity check for cryosamba's validity
 
+Download the ndc10gfp_g7_l1_ts_002_ctf_6xBin.rec file from dropbox and put it in the cryosamba folder before running the tests
 """
 
 import json
@@ -21,7 +22,7 @@ def main():
     test_file = f"{curr_path}/ndc10gfp_g7_l1_ts_002_ctf_6xBin.rec"
 
     train_config = {
-        "train_dir": "test_rotacell/train",
+        "train_dir": "test_sample/train",
         "data_path": test_file,
         "train_data": {
             "max_frame_gap": 3,
@@ -66,9 +67,9 @@ def main():
 
     # Generate inference config
     inference_config = {
-        "train_dir": ".",
+        "train_dir": "test_sample/train",
         "data_path": test_file,
-        "inference_dir": "test_rotacell/inference",
+        "inference_dir": "test_sample/inference",
         "inference_data": {
             "max_frame_gap": 6,
             "patch_shape": [256, 256],

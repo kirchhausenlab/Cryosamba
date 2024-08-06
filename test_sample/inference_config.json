@@ -1,0 +1,28 @@
+{
+  "inference_dir": "../test_sample/inference",
+  "inference_data": {
+    "patch_shape": [
+      256,
+      256
+    ],
+    "patch_overlap": [
+      16,
+      16
+    ],
+    "batch_size": 32,
+    "num_workers": 4,
+    "max_frame_gap": 6
+  },
+  "inference": {
+    "output_format": "same",
+    "load_ckpt_name": null,
+    "pyr_level": 3,
+    "mixed_precision": true,
+    "TTA": true,
+    "compile": false
+  },
+  "train_dir": "../test_sample/train",
+  "data_path": [
+    "."
+  ]
+}
