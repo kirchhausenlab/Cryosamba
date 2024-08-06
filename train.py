@@ -1,4 +1,5 @@
 import os
+import sys
 
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
 # Disable upper limit for memory allocations (may cause system failure)
@@ -114,7 +115,9 @@ class Train:
             f"{value:.6f} ({key})" for key, value in train_loss.items()
         )
         message += f", E.T.: {(time()-print_time):.3f}s"
-        self.log(message)
+        print(f"\r{message}", end="")
+        sys.stdout.flush()
+        self.log(message+"\n")
 
     def save_model(self):
         self.zfill = len(str(self.num_iters))
@@ -181,6 +184,8 @@ class Train:
         print_time = time()
 
         while self.iter <= self.num_iters:
+            #print(f"*** Epoch {epoch} ***")
+            sys.stdout.flush()
             self.log(f"*** Epoch {epoch} ***")
 
             self.model.train()
