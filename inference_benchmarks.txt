@@ -1,0 +1,13 @@
+Dir ../exp-1/train already exists. Would you like to overwrite it? [y/n]:2024/07/29 19:18:54 | INFO | Starting new training in ../exp-1/train
+2024/07/29 19:18:54 | INFO | No random seed was set
+2024/07/29 19:18:54 | INFO | # of processes = 1
+2024/07/29 19:18:55 | INFO | # of model parameters = 2,932,514
+2024/07/29 19:18:56 | INFO | # of data samples = 1140 (train), 64 (val)
+2024/07/29 19:18:56 | INFO | *** Epoch 0 ***
+2024/07/29 19:21:39 | INFO | Iter 10/200000 :: train loss: 6.395169 (gap 1), 7.132173 (gap 2), 7.438912 (gap 3), 7.446446 (gap 4), 7.384342 (gap 5), 7.339831 (gap 6), E.T.: 162.370s
+Dir ../exp-1/inference already exists. Would you like to overwrite it? [y/n]:2024/07/29 19:25:09 | INFO | Starting new inference in ../exp-1/inference
+2024/07/29 19:25:09 | INFO | No random seed was set
+2024/07/29 19:25:09 | INFO | # of processes = 1
+2024/07/29 19:25:09 | INFO | # of model parameters = 2,932,514
+2024/07/29 19:25:09 | INFO | Using trained weights from ../exp-1/train/last.pt
+2024/07/29 19:25:10 | INFO | # of data samples = 145

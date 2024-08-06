@@ -10,30 +10,16 @@ import argparse
 from time import time
 
 import torch
-from torch.cuda.amp import GradScaler
-from torch.cuda.amp import autocast
+from torch.cuda.amp import GradScaler, autocast
 
-from core.model import get_model, get_loss
 from core.dataset import get_dataloader
-from core.utils.utils import (
-    setup_run,
-    load_json,
-    logger_info,
-    set_writer_train,
-    listify,
-)
+from core.model import get_loss, get_model
 from core.utils.data_utils import get_data
-from core.utils.torch_utils import (
-    count_model_params,
-    setup_DDP,
-    sync_nodes,
-    cleanup,
-    save_ckpt,
-    load_ckpt,
-    get_lr,
-    get_optimizer,
-    get_scheduler,
-)
+from core.utils.torch_utils import (cleanup, count_model_params, get_lr,
+                                    get_optimizer, get_scheduler, load_ckpt,
+                                    save_ckpt, setup_DDP, sync_nodes)
+from core.utils.utils import (listify, load_json, logger_info,
+                              set_writer_train, setup_run)
 
 
 class Train:

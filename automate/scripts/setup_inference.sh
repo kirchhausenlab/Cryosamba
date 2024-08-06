@@ -45,7 +45,6 @@ read -r data_path
 while true; do
   if [ -z "$data_path" = "" ]; then
     echo "Please enter a valid data path"
-    data_path=${data_path:-""}
   else
     break
   fi

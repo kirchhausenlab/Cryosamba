@@ -31,3 +31,7 @@ Dir ../exp-2/train already exists. Would you like to overwrite it? [y/n]:2024/07
 2024/07/26 19:35:08 | INFO | # of model parameters = 2,932,514
 2024/07/26 19:35:08 | INFO | # of data samples = 570 (train), 32 (val)
 2024/07/26 19:35:08 | INFO | *** Epoch 0 ***
+2024/07/29 19:02:35 | INFO | Starting new training in ../exp-new_1/train
+2024/07/29 19:02:35 | INFO | No random seed was set
+2024/07/29 19:02:35 | INFO | # of processes = 1
+2024/07/29 19:02:37 | INFO | # of model parameters = 2,932,514

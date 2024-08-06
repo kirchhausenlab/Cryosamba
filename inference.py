@@ -2,6 +2,10 @@ import os
 
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
 
+os.environ["PYTORCH_MPS_HIGH_WATERMARK_RATIO"] = "0.0"
+# Enable CPU fallback for unimplemented MPS operations
+os.environ["PYTORCH_ENABLE_MPS_FALLBACK"] = "1"
+
 import argparse
 from time import time
 
