@@ -87,12 +87,12 @@ def main():
     }
 
     # Save train config to JSON
-    train_config_path = curr_path / "train_config.json"
+    train_config_path = curr_path / "test_sample" / "train_config.json"
     with open(train_config_path, "w") as f:
         json.dump(train_config, f, indent=4)
 
     # Save inference config to JSON
-    inference_config_path = curr_path / "inference_config.json"
+    inference_config_path = curr_path / "test_sample" / "inference_config.json"
     with open(inference_config_path, "w") as f:
         json.dump(inference_config, f, indent=4)
 
