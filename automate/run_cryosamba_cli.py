@@ -1,16 +1,15 @@
 import json
-import webbrowser
 import os
 import subprocess
+import webbrowser
 from functools import wraps
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
 import typer
+from loguru import logger
 from rich import print as rprint
 from rich.console import Console
-
-from logging_config import logger
 
 app = typer.Typer()
 

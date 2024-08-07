@@ -22,6 +22,7 @@ This repository contains the segmentation pipeline described in the following pu
    - [Training](#training) 🚀
    - [Visualization with TensorBoard](#visualization-with-tensorboard) 📈
    - [Inference](#inference) 🔍
+3. [CLI](#cli)
 
 ## UI
 
@@ -38,30 +39,34 @@ You can set up the environment, train models, make configs, and run inferences f
 
 ## Terminal
 
-❗❗❗**WARNING**❗❗❗ These instructions require you to know how to open a terminal window on your computer, how to navigate through folders and to copy files around. 
+❗❗❗**WARNING**❗❗❗ These instructions require you to know how to open a terminal window on your computer, how to navigate through folders and to copy files around.
 
 Note: these instructions are designed for machines with a **Linux** operating system. For Windows, refer to the [manual installation instructions](https://github.com/kirchhausenlab/Cryosamba/blob/main/installation_instructions.md).
 
 ### Installation
 
-1) Open a Terminal window and navigate to the directory where you want to save the Cryosamba code via `cd /path/to/dir`.
+1. Open a Terminal window and navigate to the directory where you want to save the Cryosamba code via `cd /path/to/dir`.
 
 Note: the expression `/path/to/dir` is not meant to be copy-pasted as it is. It is a general expression which means that you should replace it with the actual path to the desired directory in your own computer. Since we do not have access to your computer, we cannot give you the exact expression to copy-paste. This expression will appear several times throughout these instructions.
 
 2a) If you received CryoSamba via a zip file, run
+
 ```bash
 unzip path/to/Cryosamba.zip
 ```
-in this directory. 
+
+in this directory.
 
 2b) Otherwise, run
+
 ```bash
 git clone https://github.com/kirchhausenlab/Cryosamba.git
 ```
 
-3) Once successfully cloned/unzipped, navigate to the scripts folder via `cd path/to/Cryosamba/automate/scripts`
+3. Once successfully cloned/unzipped, navigate to the scripts folder via `cd path/to/Cryosamba/automate/scripts`
 
-4) To setup the environment, run:
+4. To setup the environment, run:
+
 ```bash
 chmod -R u+x *.sh
 ./startup_script_.sh
@@ -235,3 +240,37 @@ To start inference, run the command below from the same folder `automate/scripts
 To interrupt the process, press CTRL + C. You can resume or start from scratch if prompted.
 
 The final denoised volume will be located at `/path/to/dir/runs/exp-name/inference`. It will be either a file named `result.tif`, `result.mrc`, `result.rec` or a folder named `result`.
+
+## Instructions for Setting Up CUDA
+
+If it appears that your machine is unable to locate the CUDA driver, which is typically found under `/usr/bin/`. To resolve this issue, please follow the steps below after identifying the path for CUDA on your machine:
+
+1. **Set the CUDA Home Environment Variable**
+
+   Run the following command, replacing the path with the correct one for your CUDA installation:
+
+   ```bash
+   export CUDA_HOME=/path/to/your/cuda
+
+   ```
+
+   For example:
+
+   ```bash
+   export CUDA_HOME=/uufs/pathto_/sys/modulefiles/CHPC-r8/Core/cuda/12.2.0.lua
+
+   ```
+
+2. **Ensure CUDA 11.8 is Installed**
+
+   Verify that CUDA version 11.8 is installed on your system. If it is not, please install it according to the official NVIDIA documentation.
+
+3. **Load the CUDA Module**
+
+   Load the CUDA module by running:
+
+   ```bash
+   module load cuda/11.8.0
+   ```
+
+By following these steps, your machine should be able to locate and use the CUDA driver, allowing you to proceed with your work.
