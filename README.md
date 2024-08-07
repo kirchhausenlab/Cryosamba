@@ -265,12 +265,4 @@ If it appears that your machine is unable to locate the CUDA driver, which is ty
 
    Verify that CUDA version 11.8 is installed on your system. If it is not, please install it according to the official NVIDIA documentation.
 
-3. **Load the CUDA Module**
-
-   Load the CUDA module by running:
-
-   ```bash
-   module load cuda/11.8.0
-   ```
-
 By following these steps, your machine should be able to locate and use the CUDA driver, allowing you to proceed with your work.
