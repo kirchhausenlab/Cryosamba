@@ -43,9 +43,9 @@ Our goal is to make CryoSamba as accessible as possible.
 
 ## CLI Tool
 
-❗**WARNING**❗ These instructions require you to know how to open a terminal window on your computer, how to navigate through folders and to copy files around.
+❗**WARNING**❗ These instructions require you to know how to open a terminal window on your computer, how to navigate through folders and how to copy files around.
 
-Note: these instructions are designed for machines with a **Linux** operating system. For Windows, refer to the [advanced instructions](https://github.com/kirchhausenlab/Cryosamba/blob/main/advanced_instructions.md).
+Note: these instructions are designed for machines with a **Linux** operating system. For **Windows**, refer to the [advanced instructions](https://github.com/kirchhausenlab/Cryosamba/blob/main/advanced_instructions.md).
 
 ### Installation
 
@@ -53,19 +53,15 @@ Note: these instructions are designed for machines with a **Linux** operating sy
 
 Note: the expression `/path/to/dir` is not meant to be copy-pasted as it is. It is a general expression which means that you should replace it with the actual path to the desired directory in your own computer. Since we do not have access to your computer, we cannot give you the exact expression to copy-paste. This expression will appear several times throughout these instructions.
 
-2a) If you received CryoSamba via a zip file, run
-
+2) If you received CryoSamba via a zip file, run
 ```bash
 unzip path/to/Cryosamba.zip
 ```
-
-in this directory.
-
-2b) Otherwise, run
-
+in this directory. **Otherwise**, run
 ```bash
 git clone https://github.com/kirchhausenlab/Cryosamba.git
 ```
+These two options are **mutually exclusive**. 
 
 3. Once successfully cloned/unzipped, navigate to the scripts folder via `cd path/to/Cryosamba/automate/scripts`
 
