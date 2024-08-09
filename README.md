@@ -18,7 +18,9 @@ This repository contains the denoising pipeline described in the following publi
 
 1. [Overview](#overview) 🌐
 2. [CLI Tool](#cli-tool) 📟
-3. [Terminal](#terminal) 💻
+   - [Installation](#installation) 🛠️
+   - [Using the tool](#using-the-tool)
+4. [Terminal](#terminal) 💻
    - [Installation](#installation) 🛠️
    - [Training](#training) 🚀
    - [Visualization with TensorBoard](#visualization-with-tensorboard) 📈
@@ -35,24 +37,67 @@ If you do not have access to a graphical interface, try the [CLI Tool](#cli-tool
 
 If you are a more experience programmer and comfortable with using the Terminal, try our "raw" [Terminal](#terminal) instructions.
 
-Our goal is to make CryoSamba as accessible as possible. Let us know if neither of our offered options suit you.
+Finally, if you want to use CryoSamba on Windows, have a deeper understanding of the source code, change the optional parameters, or alter/use the code for your research, refer to the [advanced instructions](https://github.com/kirchhausenlab/Cryosamba/blob/main/advanced_instructions.md).
+
+Our goal is to make CryoSamba as accessible as possible.
 
 ## CLI Tool
 
-## UI
+❗**WARNING**❗ These instructions require you to know how to open a terminal window on your computer, how to navigate through folders and to copy files around.
 
-### PLEASE WATCH THE VIDEOS IN THE GITHUB (move_to_remote_server.mp4, install_and_startup.mp4 and How_to_run.mp4 to see an end-to-end example of running CryoSamba)
+Note: these instructions are designed for machines with a **Linux** operating system. For Windows, refer to the [advanced instructions](https://github.com/kirchhausenlab/Cryosamba/blob/main/advanced_instructions.md).
 
-From `Cryosamba/automate`:
+### Installation
+
+1. Open a Terminal window and navigate to the directory where you want to save the Cryosamba code via `cd /path/to/dir`.
+
+Note: the expression `/path/to/dir` is not meant to be copy-pasted as it is. It is a general expression which means that you should replace it with the actual path to the desired directory in your own computer. Since we do not have access to your computer, we cannot give you the exact expression to copy-paste. This expression will appear several times throughout these instructions.
+
+2a) If you received CryoSamba via a zip file, run
 
 ```bash
-pip install streamlit
-cd automate
-chmod -R u+x *.sh
-streamlit run main.py
+unzip path/to/Cryosamba.zip
 ```
 
-You can set up the environment, train models, make configs, and run inferences from here.
+in this directory.
+
+2b) Otherwise, run
+
+```bash
+git clone https://github.com/kirchhausenlab/Cryosamba.git
+```
+
+3. Once successfully cloned/unzipped, navigate to the scripts folder via `cd path/to/Cryosamba/automate/scripts`
+
+4. To setup the environment, run:
+
+```bash
+chmod -R u+x *.sh
+./startup_script_.sh
+```
+
+```bash
+# In case of permission issues run the command below (OPTIONAL)
+chmod u+x ./name_of_file_ending_with.sh
+```
+
+This creates a conda environment called `cryosamba` and activates it. In the future, you will need to run
+
+```bash
+conda activate cryosamba
+```
+
+anytime you want to run CryoSamba again.
+
+In case of errors, try running `conda init --all && source ~/.bashrc` in your terminal.
+
+### Using the Tool
+
+From the directory `CryoSamba/automate`, run
+```bash
+python run_cryosamba_cli.py
+```
+and follow the instructions that appear on the Terminal window.
 
 ## Terminal
 
@@ -283,3 +328,18 @@ If it appears that your machine is unable to locate the CUDA driver, which is ty
    Verify that CUDA version 11.8 is installed on your system. If it is not, please install it according to the official NVIDIA documentation.
 
 By following these steps, your machine should be able to locate and use the CUDA driver, allowing you to proceed with your work.
+
+## UI
+
+### PLEASE WATCH THE VIDEOS IN THE GITHUB (move_to_remote_server.mp4, install_and_startup.mp4 and How_to_run.mp4 to see an end-to-end example of running CryoSamba)
+
+From `Cryosamba/automate`:
+
+```bash
+pip install streamlit
+cd automate
+chmod -R u+x *.sh
+streamlit run main.py
+```
+
+You can set up the environment, train models, make configs, and run inferences from here.
