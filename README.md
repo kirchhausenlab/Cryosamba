@@ -27,7 +27,7 @@ This repository contains the denoising pipeline described in the following publi
 
 ## Overview
 
-CryoSamba can be run via Terminal, via a CLI Tool and via a UI (work in progress).
+CryoSamba can be run via Terminal, via a CLI Tool or via a UI (work in progress).
 
 If you have access to a graphical interface, try the [UI](#ui).
 
@@ -58,7 +58,7 @@ You can set up the environment, train models, make configs, and run inferences f
 
 ❗**WARNING**❗ These instructions require you to know how to open a terminal window on your computer, how to navigate through folders and to copy files around.
 
-Note: these instructions are designed for machines with a **Linux** operating system. For Windows, refer to the [manual installation instructions](https://github.com/kirchhausenlab/Cryosamba/blob/main/installation_instructions.md).
+Note: these instructions are designed for machines with a **Linux** operating system. For Windows, refer to the [advanced instructions](https://github.com/kirchhausenlab/Cryosamba/blob/main/advanced_instructions.md).
 
 ### Installation
 
@@ -184,7 +184,7 @@ The generated `train_config.json` file will contain all parameters for training 
 }
 ```
 
-If you want to change other parameters, edit the `.json` file directly. In [manual installation instructions](https://github.com/kirchhausenlab/Cryosamba/blob/main/installation_instructions.md) we provide a full explanation of all config parameters.
+If you want to change other parameters, edit the `.json` file directly. In [advanced instructions](https://github.com/kirchhausenlab/Cryosamba/blob/main/advanced_instructions.md) we provide a full explanation of all config parameters.
 
 To start training the model, run the command below from the same folder `automate/scripts`
 
