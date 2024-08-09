@@ -27,9 +27,15 @@ This repository contains the segmentation pipeline described in the following pu
 
 ## Overview
 
-CryoSamba can be run via Terminal, via a CLI Tool and via a UI (experimental).
+CryoSamba can be run via Terminal, via a CLI Tool and via a UI (work in progress).
 
-If you have access to a graphical interface, try the [UI](#ui)
+If you have access to a graphical interface, try the [UI](#ui).
+
+If you do not have access to a graphical interface, try the [CLI Tool](#cli-tool). This is usually the case if you want to run CryoSamba on your university's HPC.
+
+If you are a more experience programmer and comfortable with using the Terminal, try our "raw" [Terminal](#terminal) instructions.
+
+Our goal is to make CryoSamba as accessible as possible. Let us know if neither of our offered options suit you.
 
 ## CLI Tool
 
@@ -50,7 +56,7 @@ You can set up the environment, train models, make configs, and run inferences f
 
 ## Terminal
 
-❗❗❗**WARNING**❗❗❗ These instructions require you to know how to open a terminal window on your computer, how to navigate through folders and to copy files around.
+❗**WARNING**❗ These instructions require you to know how to open a terminal window on your computer, how to navigate through folders and to copy files around.
 
 Note: these instructions are designed for machines with a **Linux** operating system. For Windows, refer to the [manual installation instructions](https://github.com/kirchhausenlab/Cryosamba/blob/main/installation_instructions.md).
 
