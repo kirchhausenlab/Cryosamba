@@ -14,18 +14,21 @@ This repository contains the denoising pipeline described in the following publi
 
 ❗**WARNING**❗ These instructions are meant to be read **carefully**, **line by line** and **word by word**. Arbitrarily skipping lines/words or blindly copy-pasting code snippets will likely lead to errors. If possible, for each copied command try to understand **what you're doing** and **why you're doing it**. 
 
+❗**WARNING**❗Make sure you have **CUDA** installed on your machine. CryoSamba requires **CUDA 11** to run. Support for CUDA 12 will be added soon. Refer to [Instructions for Setting Up CUDA](#instructions-for-setting-up-cuda) for more support.
+
 ## Table of Contents
 
 1. [Overview](#overview) 🌐
 2. [CLI Tool](#cli-tool) 📟
    - [Installation](#installation) 🛠️
    - [Using the tool](#using-the-tool) 🔨
-4. [Terminal](#terminal) 💻
+3. [Terminal](#terminal) 💻
    - [Installation](#installation) 🛠️
    - [Training](#training) 🚀
    - [Visualization with TensorBoard](#visualization-with-tensorboard) 📈
    - [Inference](#inference) 🔍
-1. [UI](#ui) 🎮
+4. [UI](#ui) 🎮
+5. [Instructions for Setting Up CUDA](#instructions-for-setting-up-cuda)
 
 ## Overview
 
@@ -289,9 +292,24 @@ To interrupt the process, press CTRL + C. You can resume or start from scratch i
 
 The final denoised volume will be located at `/path/to/dir/runs/exp-name/inference`. It will be either a file named `result.tif`, `result.mrc`, `result.rec` or a folder named `result`.
 
+## UI
+
+### PLEASE WATCH THE VIDEOS IN THE GITHUB (move_to_remote_server.mp4, install_and_startup.mp4 and How_to_run.mp4 to see an end-to-end example of running CryoSamba)
+
+From `Cryosamba/automate`:
+
+```bash
+pip install streamlit
+cd automate
+chmod -R u+x *.sh
+streamlit run main.py
+```
+
+You can set up the environment, train models, make configs, and run inferences from here.
+
 ## Instructions for Setting Up CUDA
 
-If it appears that your machine is unable to locate the CUDA driver, which is typically found under `/usr/bin/`. To resolve this issue, please follow the steps below after identifying the path for CUDA on your machine:
+If it appears that your machine is unable to locate the CUDA driver, which is typically found under `/usr/bin/`, please follow the steps below after identifying the path for CUDA on your machine:
 
 1. **Set the CUDA Home Environment Variable**
 
@@ -309,23 +327,8 @@ If it appears that your machine is unable to locate the CUDA driver, which is ty
 
    ```
 
-2. **Ensure CUDA 11.8 is Installed**
+2. **Ensure CUDA 11 is Installed**
 
-   Verify that CUDA version 11.8 is installed on your system. If it is not, please install it according to the official NVIDIA documentation.
+   Verify that CUDA version 11 is installed on your system. If it is not, please install it according to the official NVIDIA documentation.
 
 By following these steps, your machine should be able to locate and use the CUDA driver, allowing you to proceed with your work.
-
-## UI
-
-### PLEASE WATCH THE VIDEOS IN THE GITHUB (move_to_remote_server.mp4, install_and_startup.mp4 and How_to_run.mp4 to see an end-to-end example of running CryoSamba)
-
-From `Cryosamba/automate`:
-
-```bash
-pip install streamlit
-cd automate
-chmod -R u+x *.sh
-streamlit run main.py
-```
-
-You can set up the environment, train models, make configs, and run inferences from here.
