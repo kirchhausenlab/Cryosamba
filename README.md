@@ -16,6 +16,8 @@ This repository contains the denoising pipeline described in the following publi
 
 ❗**WARNING**❗Make sure you have **CUDA** installed on your machine. CryoSamba requires **CUDA 11** to run. Support for CUDA 12 will be added soon. Refer to [Instructions for Setting Up CUDA](#instructions-for-setting-up-cuda) for more support.
 
+❗**WARNING**❗CryoSamba is based on the **Python** programming language. Prior experience with Python is desirable but not strictly required.
+
 ## Table of Contents
 
 1. [Overview](#overview) 🌐
@@ -167,58 +169,10 @@ cryosamba
   _Note: Ensure consistent zero-fill in file names to maintain proper order (e.g., `frame000.tif` instead of `frame0.tif`)._
 
 - Max frame gap: explained in the manuscript. We empirically set values of 3, 6 and 10 for data at voxel resolutions of 15.72Å, 7.86Å and 2.62Å, respectively. For different resolutions, try a reasonable value interpolated from the reference ones.
-- Number of iterations
-- Batch Size
+- Number of iterations: for how many iterations the training session will run
+- Batch Size: number of data points passed at once to the GPUs. Higher number leads to faster training, but the whole batch might not fit into your GPU's memory, leading to **out-of-memory errors**. If you're getting these, try to decrease the batch size until they disappear. This number should be a multiple of two.
 
-The generated `train_config.json` file will contain all parameters for training the model and will look like the following:
-
-```json
-{
-  "train_dir": "/path/to/dir/Cryosamba/runs/exp-name/train",
-  "data_path": ["/path/to/file/volume.mrc"],
-  "train_data": {
-    "max_frame_gap": 6,
-    "patch_shape": [256, 256],
-    "patch_overlap": [16, 16],
-    "split_ratio": 0.95,
-    "batch_size": 32,
-    "num_workers": 4
-  },
-  "train": {
-    "load_ckpt_path": null,
-    "print_freq": 100,
-    "save_freq": 1000,
-    "val_freq": 1000,
-    "num_iters": 200000,
-    "warmup_iters": 300,
-    "mixed_precision": true,
-    "compile": false
-  },
-  "optimizer": {
-    "lr": 2e-4,
-    "lr_decay": 0.99995,
-    "weight_decay": 0.0001,
-    "epsilon": 1e-8,
-    "betas": [0.9, 0.999]
-  },
-  "biflownet": {
-    "pyr_dim": 24,
-    "pyr_level": 3,
-    "corr_radius": 4,
-    "kernel_size": 3,
-    "warp_type": "soft_splat",
-    "padding_mode": "reflect",
-    "fix_params": false
-  },
-  "fusionnet": {
-    "num_channels": 16,
-    "padding_mode": "reflect",
-    "fix_params": false
-  }
-}
-```
-
-If you want to change other parameters, edit the `.json` file directly. In [advanced instructions](https://github.com/kirchhausenlab/Cryosamba/blob/main/advanced_instructions.md) we provide a full explanation of all config parameters.
+The generated `train_config.json` file will contain all parameters for training the model. If you want to change other parameters, edit the `.json` file directly. In [advanced instructions](https://github.com/kirchhausenlab/Cryosamba/blob/main/advanced_instructions.md) we provide a full explanation of all config parameters.
 
 To start training the model, run the command below from the same folder `automate/scripts`
 
@@ -228,7 +182,11 @@ To start training the model, run the command below from the same folder `automat
 
 To interrupt training, press CTRL + C. You can resume training or start from scratch if prompted.
 
-### Visualization with TensorBoard
+Training will run until the maximum number of iterations is reached. However, training and validation losses might converge/stabilize before that, at which point you can safely halt the process and save time and money on your electricity bill. In order to monitor the losses' progress you can: 1) see the logs printed on your screen, 2) see the `runtime.log` file inside your training folder, or 3) visualize their plots with TensorBoard. 
+
+**The output of the training run will be checkpoint files containing the trained model weights**. There is no denoised data output at this point yet. You can used the trained model weights to run inference on your data and then get the denoised outputs.
+
+### Visualization with TensorBoard (OPTIONAL)
 
 TensorBoard can be used to monitor the progress of the training losses.
 
@@ -255,32 +213,7 @@ The script asks you to enter the following parameters:
 - Max frame gap: usually twice the value used for training
 - TTA: whether to use Test-Time Augmentation or not (see manuscript)
 
-The generated `inference_config.json` file will contain all parameters for running inference and will look like the following:
-
-```json
-{
-  "train_dir": "/path/to/dir/Cryosamba/runs/exp-name/train",
-  "data_path": "/path/to/file/volume.mrc",
-  "inference_dir": "/path/to/dir/Cryosamba/runs/exp-name/inference",
-  "inference_data": {
-    "max_frame_gap": 12,
-    "patch_shape": [256, 256],
-    "patch_overlap": [16, 16],
-    "batch_size": 32,
-    "num_workers": 4
-  },
-  "inference": {
-    "output_format": "same",
-    "load_ckpt_name": null,
-    "pyr_level": 3,
-    "TTA": true,
-    "mixed_precision": true,
-    "compile": false
-  }
-}
-```
-
-If you want to change other parameters, edit the `.json` file directly.
+The generated `inference_config.json` file will contain all parameters for running inference. If you want to change other parameters, edit the `.json` file directly.
 
 To start inference, run the command below from the same folder `automate/scripts`
 
@@ -290,7 +223,9 @@ To start inference, run the command below from the same folder `automate/scripts
 
 To interrupt the process, press CTRL + C. You can resume or start from scratch if prompted.
 
-The final denoised volume will be located at `/path/to/dir/runs/exp-name/inference`. It will be either a file named `result.tif`, `result.mrc`, `result.rec` or a folder named `result`.
+**The output of the inference run will be the final denoised volume**, located at `/path/to/dir/runs/exp-name/inference`. It will be either a file named `result.tif`, `result.mrc`, `result.rec` or a folder named `result`.
+
+You can simply open the final denoised volume in your preferred data visualization/processing software and check how it looks like.
 
 ## UI
 
