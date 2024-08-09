@@ -82,6 +82,9 @@ def run_training(gpus: str, folder_path: str) -> None:
     rprint(
         f"[bold]* You can monitor the losses through here, through the .log file in the experiment training folder, or through TensorBoard (see README on how to run it) *[/bold] \n"
     )
+    rprint(
+        f"[bold]* The output of the training run will be checkpoint files containing the trained model weights. There is no denoised data output at this point yet. You can used the trained model weights to run inference on your data and then get the denoised outputs. *[/bold] \n"
+    )
     if typer.confirm("Do you want to start training?"):
         rprint(f"\n[blue]***********************************************[/blue]\n")
         subprocess.run(cmd, shell=True, text=True)
@@ -276,11 +279,10 @@ def generate_experiment(exp_name: str) -> None:
     inference_dir = f"{exp_path}/inference"
 
     while True:
-        # curr_path = Path(__name__).resolve().parent.parent
-        # data_path = ask_user("Enter your data full path", f"{curr_path}/rotacell_grid1_TS09_ctf_3xBin.rec")
+        rprint(f"[bold]DATA PATH[/bold]: The path to a single (3D) .tif, .mrc or .rec file, or the path to a folder containing a sequence of (2D) .tif files, ordered alphanumerically matching the Z-stack order. You can use the full path or a path relative from this script's folder.")
         data_path = ask_user(
-            "Enter your data full path",
-            f"/nfs/datasync4/inacio/data/raw_data/fib/2024_05_15_269_IPSC_test/2x2x1nm/InLens_reg_small",
+            "Enter your data path",
+            f"",
         )
         if not os.path.exists(data_path):
             rprint(f"[red]Data path is invalid. Try again.[/red]")
@@ -303,15 +305,20 @@ def generate_experiment(exp_name: str) -> None:
                     break
 
     # Training specific parameters
+    rprint(f"[bold]MAXIMUM FRAME GAP FOR TRAINING[/bold]: explained in the manuscript. We empirically set values of 3, 6 and 10 for data at voxel resolutions of 15.72, 7.86 and 2.62 angstroms, respectively. For different resolutions, try a reasonable value interpolated from the reference ones.")
     train_max_frame_gap = ask_user_int("Enter Maximum Frame Gap for Training", 1, 40, 3)
+    rprint(f"[bold]NUMBER OF ITERATIONS[/bold]: for how many iterations the training session will run. This is an upper limit, and you can halt training before that.")
     num_iters = ask_user_int(
         "Enter the number of iterations you want to run", 10000, 200000, 100000
     )
-    batch_size = ask_user_int("Enter the training batch size", 2, 256, 8)
+    rprint(f"BATCH SIZE: number of data points passed at once to the GPUs. Higher number leads to faster training, but the whole batch might not fit into your GPU's memory, leading to out-of-memory errors. If you're getting these, try to decrease the batch size until they disappear. This number should be a multiple of two.")
+    batch_size = ask_user_int("Enter the batch size", 2, 256, 8)
     # Inference specific parameters
+    rprint(f"[bold]MAXIMUM FRAME GAP FOR INFERENCE[/bold]: explained in the manuscript. We recommend using twice the value used for training.")
     inference_max_frame_gap = ask_user_int(
-        "Enter Maximum Frame Gap for Inference", 1, 80, 6
+        "Enter Maximum Frame Gap for Inference", 1, 80, train_max_frame_gap*2
     )
+    rprint(f"[bold]TTA[/bold]: whether to use Test-Time Augmentation or not (see manuscript) during inference.")
     tta = typer.confirm(
         "Enable Test Time Augmentation (TTA) for inference?", default=False
     )
@@ -437,7 +444,7 @@ def title_screen() -> None:
     )
     print("")
     typer.echo(
-        "Please take some time to read the instructions and in the case of failures refer to the README for the contact information of relevant parties. *Refer to the video for step by step instructions*"
+        "Please read the instructions carefully. If you experience any issues reach out to Jose Costa-Filho at joseinacio@tklab.hms.harvard.edu or Arkash Jain at arkash@tklab.hms.harvard.edu".
     )
 
 
