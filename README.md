@@ -2,7 +2,7 @@
 
 <img src="https://github.com/kirchhausenlab/Cryosamba/blob/main/denoising_comparison.gif" width="800"/>
 
-This repository contains the segmentation pipeline described in the following publication:
+This repository contains the denoising pipeline described in the following publication:
 
 > Jose Inacio Costa-Filho, Liam Theveny, Marilina de Sautu, Tom Kirchhausen<br>[CryoSamba: Self-Supervised Deep Volumetric Denoising for Cryo-Electron Tomography Data](https://www.biorxiv.org/content/10.1101/2024.07.11.603117v1)<br>
 >
@@ -12,7 +12,7 @@ This repository contains the segmentation pipeline described in the following pu
 
 ❗**WARNING**❗**MacOS is not supported**.
 
-❗**WARNING**❗ These instructions are meant to be read **carefully**, **line by line** and **word by word**. Arbitrarily skipping lines/words or blindly copy-pasting code snippets will likely lead to errors. If possible, for each copied command try to understand **what** you're doing and **why** you're doing it. 
+❗**WARNING**❗ These instructions are meant to be read **carefully**, **line by line** and **word by word**. Arbitrarily skipping lines/words or blindly copy-pasting code snippets will likely lead to errors. If possible, for each copied command try to understand **what you're doing** and **why you're doing it**. 
 
 ## Table of Contents
 
