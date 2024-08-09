@@ -1,4 +1,4 @@
-# Manual installation instructions
+# Advanced instructions
 
 ## Table of Contents
 
