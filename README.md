@@ -8,23 +8,34 @@ This repository contains the segmentation pipeline described in the following pu
 >
 > Please cite this publication if you are using this code in your research. For installation, UI, and code setup questions, reach out to [Arkash Jain](https://www.linkedin.com/in/arkashj/) at arkash@tklab.hms.harvard.edu
 
-❗❗❗**WARNING**❗❗❗ CryoSamba is written for machines with either a **Linux** or **Windows** operating system and a **CUDA capable GPU**. **MacOS is not supported**.
+❗**WARNING**❗ CryoSamba is written for machines with either a **Linux** or **Windows** operating system and a **CUDA capable GPU**. 
 
-❗❗❗**WARNING**❗❗❗ These instructions are meant to be read carefully and line by line. Arbitrarily skipping lines/words or blindly copy-pasting code snippets will likely lead to errors.
+❗**WARNING**❗**MacOS is not supported**.
 
-### PLEASE WATCH THE VIDEOS IN THE GITHUB (move_to_remote_server.mp4, install_and_startup.mp4 and How_to_run.mp4 to see an end-to-end example of running cryosamba)
+❗**WARNING**❗ These instructions are meant to be read **carefully**, **line by line** and **word by word**. Arbitrarily skipping lines/words or blindly copy-pasting code snippets will likely lead to errors. If possible, for each copied command try to understand **what** you're doing and **why** you're doing it. 
 
 ## Table of Contents
 
-1. [UI](#ui) 🖥️
-2. [Terminal](#terminal) 💻
+1. [Overview](#overview) 🌐
+2. [CLI Tool](#cli-tool) 📟
+3. [Terminal](#terminal) 💻
    - [Installation](#installation) 🛠️
    - [Training](#training) 🚀
    - [Visualization with TensorBoard](#visualization-with-tensorboard) 📈
    - [Inference](#inference) 🔍
-3. [CLI](#cli)
+1. [UI](#ui) 🎮
+
+## Overview
+
+CryoSamba can be run via Terminal, via a CLI Tool and via a UI (experimental).
+
+If you have access to a graphical interface, try the [UI](#ui)
+
+## CLI Tool
 
 ## UI
+
+### PLEASE WATCH THE VIDEOS IN THE GITHUB (move_to_remote_server.mp4, install_and_startup.mp4 and How_to_run.mp4 to see an end-to-end example of running CryoSamba)
 
 From `Cryosamba/automate`:
 
