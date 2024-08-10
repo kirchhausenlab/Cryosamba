@@ -8,11 +8,9 @@ This repository contains the denoising pipeline described in the following publi
 >
 > Please cite this publication if you are using this code in your research. For installation, UI, and code setup questions, reach out to [Arkash Jain](https://www.linkedin.com/in/arkashj/) at arkash@tklab.hms.harvard.edu
 
-❗**WARNING**❗ CryoSamba is written for machines with either a **Linux** or **Windows** operating system and a **CUDA capable GPU**. 
+❗**WARNING**❗ CryoSamba is written for machines with either a **Linux** or **Windows** operating system and a **CUDA capable GPU**. **MacOS is not supported**.
 
-❗**WARNING**❗**MacOS is not supported**.
-
-❗**WARNING**❗Make sure you have **CUDA** installed on your machine. CryoSamba requires **CUDA 11** to run. Support for CUDA 12 will be added soon. Refer to [Instructions for Setting Up CUDA](#instructions-for-setting-up-cuda) for more support.
+❗**WARNING**❗Make sure you have **CUDA** drivers installed and updated on your machine. CryoSamba requires **CUDA 11** to run. Support for CUDA 12 will be added soon. Refer to [Instructions for Setting Up CUDA](#instructions-for-setting-up-cuda) for more support.
 
 ❗**WARNING**❗CryoSamba is based on the **Python** programming language. Prior experience with Python is desirable but not strictly required.
 
