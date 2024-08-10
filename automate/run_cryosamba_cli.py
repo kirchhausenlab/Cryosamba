@@ -444,7 +444,7 @@ def title_screen() -> None:
     )
     print("")
     typer.echo(
-        "Please read the instructions carefully. If you experience any issues reach out to Jose Costa-Filho at joseinacio@tklab.hms.harvard.edu or Arkash Jain at arkash@tklab.hms.harvard.edu".
+        "Please read the instructions carefully. If you experience any issues reach out to Jose Costa-Filho at joseinacio@tklab.hms.harvard.edu or Arkash Jain at arkash@tklab.hms.harvard.edu"
     )
 
 
