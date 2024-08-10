@@ -279,7 +279,9 @@ def generate_experiment(exp_name: str) -> None:
     inference_dir = f"{exp_path}/inference"
 
     while True:
-        rprint(f"[bold]DATA PATH[/bold]: The path to a single (3D) .tif, .mrc or .rec file, or the path to a folder containing a sequence of (2D) .tif files, ordered alphanumerically matching the Z-stack order. You can use the full path or a path relative from this script's folder.")
+        rprint(
+            f"[bold]DATA PATH[/bold]: The path to a single (3D) .tif, .mrc or .rec file, or the path to a folder containing a sequence of (2D) .tif files, ordered alphanumerically matching the Z-stack order. You can use the full path or a path relative from this script's folder."
+        )
         data_path = ask_user(
             "Enter your data path",
             f"",
@@ -305,20 +307,30 @@ def generate_experiment(exp_name: str) -> None:
                     break
 
     # Training specific parameters
-    rprint(f"[bold]MAXIMUM FRAME GAP FOR TRAINING[/bold]: explained in the manuscript. We empirically set values of 3, 6 and 10 for data at voxel resolutions of 15.72, 7.86 and 2.62 angstroms, respectively. For different resolutions, try a reasonable value interpolated from the reference ones.")
+    rprint(
+        f"[bold]MAXIMUM FRAME GAP FOR TRAINING[/bold]: explained in the manuscript. We empirically set values of 3, 6 and 10 for data at voxel resolutions of 15.72, 7.86 and 2.62 angstroms, respectively. For different resolutions, try a reasonable value interpolated from the reference ones."
+    )
     train_max_frame_gap = ask_user_int("Enter Maximum Frame Gap for Training", 1, 40, 3)
-    rprint(f"[bold]NUMBER OF ITERATIONS[/bold]: for how many iterations the training session will run. This is an upper limit, and you can halt training before that.")
+    rprint(
+        f"[bold]NUMBER OF ITERATIONS[/bold]: for how many iterations the training session will run. This is an upper limit, and you can halt training before that."
+    )
     num_iters = ask_user_int(
         "Enter the number of iterations you want to run", 10000, 200000, 100000
     )
-    rprint(f"BATCH SIZE: number of data points passed at once to the GPUs. Higher number leads to faster training, but the whole batch might not fit into your GPU's memory, leading to out-of-memory errors. If you're getting these, try to decrease the batch size until they disappear. This number should be a multiple of two.")
+    rprint(
+        f"BATCH SIZE: number of data points passed at once to the GPUs. Higher number leads to faster training, but the whole batch might not fit into your GPU's memory, leading to out-of-memory errors. If you're getting these, try to decrease the batch size until they disappear. This number should be a multiple of two."
+    )
     batch_size = ask_user_int("Enter the batch size", 2, 256, 8)
     # Inference specific parameters
-    rprint(f"[bold]MAXIMUM FRAME GAP FOR INFERENCE[/bold]: explained in the manuscript. We recommend using twice the value used for training.")
-    inference_max_frame_gap = ask_user_int(
-        "Enter Maximum Frame Gap for Inference", 1, 80, train_max_frame_gap*2
+    rprint(
+        f"[bold]MAXIMUM FRAME GAP FOR INFERENCE[/bold]: explained in the manuscript. We recommend using twice the value used for training."
     )
-    rprint(f"[bold]TTA[/bold]: whether to use Test-Time Augmentation or not (see manuscript) during inference.")
+    inference_max_frame_gap = ask_user_int(
+        "Enter Maximum Frame Gap for Inference", 1, 80, train_max_frame_gap * 2
+    )
+    rprint(
+        f"[bold]TTA[/bold]: whether to use Test-Time Augmentation or not (see manuscript) during inference."
+    )
     tta = typer.confirm(
         "Enable Test Time Augmentation (TTA) for inference?", default=False
     )
