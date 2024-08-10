@@ -45,7 +45,7 @@ activate_env() {
     pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
     
     echo "Installing other dependencies"
-    pip install tifffile mrcfile easydict loguru tensorboard cupy-cuda11x streamlit
+    pip install tifffile mrcfile easydict loguru tensorboard cupy-cuda11x streamlit typer
     echo "Environment setup complete"
 
 }
