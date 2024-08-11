@@ -16,6 +16,9 @@ This repository contains the denoising pipeline described in the following publi
 
 These instructions are meant to be read **carefully** and **line by line**. Arbitrarily skipping lines or blindly copy-pasting code snippets will likely lead to errors.
 
+💥**IMPORTANT**💥 CryoSamba accepts as input (.mrc, .rec, .tif) single 3D files or sequences of 2D (.tif) files. For single files, the "data path" must directly reference the files, while for tif sequences the "data path" should reference the folder containing the sequence. For example, use `path/to/sample_data.rec` or `path/to/tif_folder". Not referencing the input data properly will lead to errors.
+
+
 ## Table of Contents
 
 1. [Overview](#overview) 🌐
@@ -36,7 +39,7 @@ CryoSamba can be run via Terminal, via a CLI Tool or via a UI (work in progress)
 
 If you have access to a graphical interface, try the [UI](#ui).
 
-If you do not have access to a graphical interface, try the [CLI Tool](#cli-tool). This is usually the case if you want to run CryoSamba on your university's HPC.
+If you do not have access to a graphical interface, try the [CLI Tool](#cli-tool). This is usually the case if you want to run CryoSamba on your university's HPC. **This the recommended option!**.
 
 If you are a more experience programmer and comfortable with using the Terminal, try our "raw" [Terminal](#terminal) instructions.
 
