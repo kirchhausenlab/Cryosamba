@@ -12,12 +12,9 @@ This repository contains the denoising pipeline described in the following publi
 
 ❗**WARNING**❗Make sure you have **CUDA** drivers installed and updated on your machine. CryoSamba requires **CUDA 11** to run. Support for CUDA 12 will be added soon. Refer to [Instructions for Setting Up CUDA](#instructions-for-setting-up-cuda) for more support.
 
-❗**WARNING**❗CryoSamba is based on the **Python** programming language. Prior experience with Python is desirable but not strictly required.
-
 These instructions are meant to be read **carefully** and **line by line**. Arbitrarily skipping lines or blindly copy-pasting code snippets will likely lead to errors.
 
 💥**IMPORTANT**💥 CryoSamba accepts as input (.mrc, .rec, .tif) single 3D files or sequences of 2D (.tif) files. For single files, the "data path" must directly reference the files, while for tif sequences the "data path" should reference the folder containing the sequence. For example, use `path/to/sample_data.rec` or `path/to/tif_folder`. Not referencing the input data properly will lead to errors.
-
 
 ## Table of Contents
 
@@ -32,16 +29,17 @@ These instructions are meant to be read **carefully** and **line by line**. Arbi
    - [Inference](#inference) 🔍
 4. [UI](#ui) 🎮
 5. [Instructions for Setting Up CUDA](#instructions-for-setting-up-cuda)
+6. [FAQ](#faq)
 
 ## Overview
 
-CryoSamba can be run via Terminal, via a CLI Tool or via a UI (work in progress).
+CryoSamba can be run via Terminal, via a CLI Tool or via a UI (**work in progress**).
 
 If you have access to a graphical interface, try the [UI](#ui).
 
-If you do not have access to a graphical interface, try the [CLI Tool](#cli-tool). This is usually the case if you want to run CryoSamba on your university's HPC. **This the recommended option!**.
+If you do not have access to a graphical interface, try the [CLI Tool](#cli-tool). This is usually the case if you want to run CryoSamba on your university's HPC. **This the recommended option!**
 
-If you are a more experience programmer and comfortable with using the Terminal, try our "raw" [Terminal](#terminal) instructions.
+If you are a more experience programmer and comfortable with using the Terminal, try our "raw" [Terminal](#terminal) instructions. **We recommend using this only if you were already able to run CryoSamba via one of the previous options**.
 
 Finally, if you want to use CryoSamba on Windows, have a deeper understanding of the source code, change the optional parameters, or alter/use the code for your research, refer to the [advanced instructions](https://github.com/kirchhausenlab/Cryosamba/blob/main/advanced_instructions.md).
 
