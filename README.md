@@ -25,7 +25,7 @@ These instructions are meant to be read **carefully** and **line by line**. Arbi
 3. [Terminal](#terminal) 💻
    - [Installation](#installation) 🛠️
    - [Training](#training) 🚀
-   - [Visualization with TensorBoard](#visualization-with-tensorboard) 📈
+   - [(OPTIONAL) Visualization with TensorBoard](#visualization-with-tensorboard) 📈
    - [Inference](#inference) 🔍
 4. [UI](#ui) 🎮
 5. [Instructions for Setting Up CUDA](#instructions-for-setting-up-cuda)
@@ -169,7 +169,7 @@ cryosamba
 
 - Max frame gap: explained in the manuscript. We empirically set values of 3, 6 and 10 for data at voxel resolutions of 15.72Å, 7.86Å and 2.62Å, respectively. For different resolutions, try a reasonable value interpolated from the reference ones.
 - Number of iterations: for how many iterations the training session will run
-- Batch Size: number of data points passed at once to the GPUs. Higher number leads to faster training, but the whole batch might not fit into your GPU's memory, leading to **out-of-memory errors**. If you're getting these, try to decrease the batch size until they disappear. This number should be a multiple of two.
+- Batch Size: number of data points passed at once to the GPUs. Higher number leads to faster training, but the whole batch might not fit into your GPU's memory, leading to **out-of-memory errors**. If you're getting these, try decreasing the batch size until they disappear. This number should be a multiple of two.
 
 The generated `train_config.json` file will contain all parameters for training the model. If you want to change other parameters, edit the `.json` file directly. In [advanced instructions](https://github.com/kirchhausenlab/Cryosamba/blob/main/advanced_instructions.md) we provide a full explanation of all config parameters.
 
@@ -185,7 +185,9 @@ Training will run until the maximum number of iterations is reached. However, tr
 
 **The output of the training run will be checkpoint files containing the trained model weights**. There is no denoised data output at this point yet. You can used the trained model weights to run inference on your data and then get the denoised outputs.
 
-### Visualization with TensorBoard (OPTIONAL)
+### Visualization with TensorBoard
+
+**This step is OPTIONAL**
 
 TensorBoard can be used to monitor the progress of the training losses.
 
