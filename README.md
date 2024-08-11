@@ -16,7 +16,7 @@ This repository contains the denoising pipeline described in the following publi
 
 These instructions are meant to be read **carefully** and **line by line**. Arbitrarily skipping lines or blindly copy-pasting code snippets will likely lead to errors.
 
-💥**IMPORTANT**💥 CryoSamba accepts as input (.mrc, .rec, .tif) single 3D files or sequences of 2D (.tif) files. For single files, the "data path" must directly reference the files, while for tif sequences the "data path" should reference the folder containing the sequence. For example, use `path/to/sample_data.rec` or `path/to/tif_folder". Not referencing the input data properly will lead to errors.
+💥**IMPORTANT**💥 CryoSamba accepts as input (.mrc, .rec, .tif) single 3D files or sequences of 2D (.tif) files. For single files, the "data path" must directly reference the files, while for tif sequences the "data path" should reference the folder containing the sequence. For example, use `path/to/sample_data.rec` or `path/to/tif_folder`. Not referencing the input data properly will lead to errors.
 
 
 ## Table of Contents
