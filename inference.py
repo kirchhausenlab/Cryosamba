@@ -7,7 +7,7 @@ from time import time
 
 import numpy as np
 import torch
-from torch.cuda.amp import GradScaler, autocast
+from torch import autocast
 
 from core.dataset import get_dataloader
 from core.model import get_model
@@ -213,7 +213,7 @@ class Inference:
                     imgs[self.max_frame_gap + t].contiguous(),
                 )
 
-                with autocast(enabled=self.mixed_precision):
+                with autocast("cuda", enabled=self.mixed_precision)
                     with torch.inference_mode():
                         rec = self.inference_fn(img0, imgT, img1)
                 recs.append(rec)
