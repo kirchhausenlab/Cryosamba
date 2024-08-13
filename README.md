@@ -55,7 +55,7 @@ These two options are **mutually exclusive**.
 
 3. Once successfully cloned/unzipped, navigate to the CryoSamba folder via `cd Cryosamba` and run
 ```bash
-automate/scripts/startup_script.sh
+automate/scripts/startup_script_.sh
 ```
 
 ```bash
