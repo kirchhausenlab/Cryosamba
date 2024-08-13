@@ -9,6 +9,7 @@ logs
 exp-*
 logs/*
 runs
+data
 
 random_exp
 

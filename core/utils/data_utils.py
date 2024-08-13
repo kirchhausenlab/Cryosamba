@@ -199,39 +199,3 @@ def save_data(path, name, data, metadata, output_format="same"):
                 mrc.voxel_size = metadata["voxel_size"].copy()
                 mrc.update_header_from_data()
                 mrc.update_header_stats()
-
-
-def convert_rec_file_to_type(input_path: str, output_path: str, dtype: np.dtype):
-    with mrcfile.open(input_path, mode="r") as mrc:
-        data = mrc.data.astype(dtype)
-        voxel_size = mrc.voxel_size.copy()
-    with mrcfile.new(output_path, overwrite=True) as mrc:
-        mrc.set_data(data)
-        mrc.voxel_size = voxel_size
-        mrc.update_header_from_data()
-        mrc.update_header_stats()
-
-
-def mrc_to_rec(mrc_path, rec_path):
-    with mrcfile.open(mrc_path, mode="r") as mrc:
-        data = mrc.data
-        header = mrc.header
-
-        # Implement REC format specifications here
-        with open(rec_path, "wb") as rec_file:
-            # Write header information if needed
-            # Write data
-            rec_file.write(data.tobytes())
-
-
-def main():
-    input_path = "../../cg1300_L3_ts052_mrc_ali.mrc"
-    output_path = "../../outputfile.rec"
-    convert_rec_file_to_type(
-        input_path=input_path, output_path=output_path, dtype=np.dtype(np.int16)
-    )
-    # mrc_to_rec(input_path, "output_file.rec")
-
-
-if __name__ == "__main__":
-    main()
