@@ -24,7 +24,7 @@ This repository contains the denoising pipeline described in the following publi
 
 ## Overview
 
-CryoSamba can be run via [Terminal](#terminal). We also provide a [User Interface](#ui) implementation, which is currently **experimental**.
+CryoSamba can be run via [Terminal](#terminal). We also provide a [User Interface (UI)](#ui) implementation, which is currently **experimental**.
 
 If you want to use CryoSamba on Windows, have a deeper understanding of the source code, change the optional parameters, or alter/use the code for your research, refer to the [advanced instructions](https://github.com/kirchhausenlab/Cryosamba/blob/main/advanced_instructions.md).
 
@@ -65,7 +65,7 @@ chmod -R u+x automate/scripts/*.sh
 
 This creates a conda environment called `cryosamba` and activates it. 
 
-4. In the future, you will need to navigate to the CryoSamba folder (via `cd /path/to/dir/Cryosamba and activate the environment
+4. In the future, you will need to navigate to the CryoSamba folder (via `cd /path/to/dir/Cryosamba`) and activate the environment
 ```bash
 conda activate cryosamba
 ```
