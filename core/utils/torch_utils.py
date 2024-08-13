@@ -160,7 +160,7 @@ def save_ckpt(model, optimizer, scheduler, iter, path):
 def load_ckpt(
     path, model=None, optimizer=None, scheduler=None, is_ddp=False, compile=False
 ):
-    if os.path.exists(path):
+    if os.path.exists(path, weights_only=False):
         ckpt = torch.load(path)
         if model is not None:
             model.load_state_dict(
