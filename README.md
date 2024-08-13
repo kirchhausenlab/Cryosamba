@@ -97,7 +97,7 @@ TensorBoard can be used to monitor the progress of the training losses.
 
 ## UI
 
-🚧**(Work in Progress)**🚧
+🚧**Work in Progress**🚧
 
 ### PLEASE WATCH THE VIDEOS IN THE GITHUB (move_to_remote_server.mp4, install_and_startup.mp4 and How_to_run.mp4 to see an end-to-end example of running CryoSamba)
 
