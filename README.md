@@ -28,6 +28,8 @@ CryoSamba can be run via [Terminal](#terminal). We also provide a [User Interfac
 
 If you want to use CryoSamba on Windows, have a deeper understanding of the source code, change the optional parameters, or alter/use the code for your research, refer to the [advanced instructions](https://github.com/kirchhausenlab/Cryosamba/blob/main/advanced_instructions.md).
 
+**Before trying CryoSamba on your own data, we recommend you first make sure it works with the sample data we provide.**
+
 ## Terminal
 
 ❗**WARNING**❗ These instructions require you to know how to open a terminal window on your computer, how to navigate through folders and how to copy files around.
@@ -77,7 +79,7 @@ In case of errors, try running `conda init --all && source ~/.bashrc` in your te
 
 From the CryoSamba directory, run
 ```bash
-python automate/run_cryosamba_cli.py
+python run_cryosamba.py
 ```
 and follow the instructions that appear on the Terminal window.
 
@@ -114,6 +116,29 @@ You can set up the environment, train models, make configs, and run inferences f
 
 ## Troubleshooting
 
+1. [Setting up the data path](#setting-up-the-data-path)
+2. [General guidelines for different pixel resolutions](#General-guidelines-for-different-pixel-resolutions)
+3. [Instructions for Setting Up CUDA](#instructions-for-setting-up-cuda)
+
+### Setting up the data path
+
+In order to use CryoSamba on your own data, you have to tell it where that data is located on your computer. For that, you will need to provide the path to its file/folder. That path can be an absolute path from your root folder, or a relative path from the CryoSamba folder.
+
+CryoSamba accepts as input (.mrc, .rec, .tif) single 3D files or sequences of 2D (.tif) files. For single files, the "data path" must directly reference the files, while for tif sequences the "data path" should reference the folder containing the sequence. For example, use `path/to/sample_data.rec` or `path/to/tif_folder`. Not referencing the input data properly will lead to errors.
+
+### General guidelines for different pixel resolutions
+
+CryoSamba's fully self-supervised nature allows it to work on data at various voxel resolutions/binnings.
+
+**In order to make CryoSamba work at different resolutions, the only parameter you have to change is the `maximum_frame_gap` for training and inference**. In our manuscript, we used data at 2.62 (unbinned), 7.86 (3x binned) and 15.72 (6x binned) Angstrom/voxel resolution, for which we set the parameter at 10 (20), 6 (12), and 3 (6), respectively, for training (inference). These values (as well as the 2x ratio between inference and training values) were empirically verified to provide reasonable results for our data. 
+
+Since the impact of the frame gap can be verified only a posteriori, it is a time/energy-consuming process and we do not suggest testing it on your own. **For your own data, we recommend that you use a value interpolated from our empirical values**. For example, for data at 3.4A/voxel, you could use a value of 8 (16) for training (inference). Note also that the impact of `maximum_frame_gap` is not very noticeable over a relatively small range of values: for a 7.86A/voxel volume, for example, you probably wouldn't notice the difference between denoising at `maximum_frame_gap=6` and `maximum_frame_gap=8`. This fact makes this choice less "nerve-wracking".
+
+As shown on our manuscript, **CryoSamba's results are more striking for higher resolution data**. However, high resolution cryoET volumes are usually extremely large and running CryoSamba on them might take a very long time. In that case, we suggest running it on a smaller, cropped region of interest (ROI) of the full volume. It could be a central 3D crop of the whole volume (since cryoET data is mostly pure noise far from the center) or a specific ROI that you want to investigate. For the latter, since direct visual inspection on the raw high-resolution volume is not usually feasible (that's why you're trying CryoSamba anyways!), we suggest choosing the ROI on a binned version of it and rescaling its boundary coordinates appropriately.
+
+Finally, **we do not guarantee CryoSamba will work for resolutions higher than 2.62A/voxel**, as we only have tested it with resolutions up to that value. 
+
+
 ### Instructions for Setting Up CUDA
 
 If it appears that your machine is unable to locate the CUDA driver, which is typically found under `/usr/bin/`, please follow the steps below after identifying the path for CUDA on your machine:
@@ -139,7 +164,3 @@ If it appears that your machine is unable to locate the CUDA driver, which is ty
    Verify that CUDA version 11 or higher is installed on your system. If it is not, please install it according to the official NVIDIA documentation.
 
 By following these steps, your machine should be able to locate and use the CUDA driver, allowing you to proceed with your work.
-
-
-
-💥**IMPORTANT**💥 CryoSamba accepts as input (.mrc, .rec, .tif) single 3D files or sequences of 2D (.tif) files. For single files, the "data path" must directly reference the files, while for tif sequences the "data path" should reference the folder containing the sequence. For example, use `path/to/sample_data.rec` or `path/to/tif_folder`. Not referencing the input data properly will lead to errors.

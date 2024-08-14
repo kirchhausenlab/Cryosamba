@@ -1,15 +1,7 @@
 import os
 import sys
-
-# current_dir = os.path.dirname(os.path.realpath(__file__))
-# parent_dir = os.path.dirname(current_dir)
-# sys.path.insert(0, parent_dir)
-
 import json
-import webbrowser
-import os
 import subprocess
-import webbrowser
 from functools import wraps
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Union
@@ -21,6 +13,7 @@ from rich.console import Console
 
 app = typer.Typer()
 
+RUNS_DIR = os.path.join(os.getcwd(), "runs")
 
 def select_gpus() -> Optional[Union[List[str], int]]:
     simple_header("GPU Selection")
@@ -68,8 +61,9 @@ def select_gpus() -> Optional[Union[List[str], int]]:
     return select_gpus
 
 
-def run_training(gpus: str, folder_path: str) -> None:
-    cmd = f"OMP_NUM_THREADS=1 CUDA_VISIBLE_DEVICES={gpus} torchrun --standalone --nproc_per_node=$(echo {gpus} | tr ',' '\\n' | wc -l) ../train.py --config ../runs/{folder_path}/train_config.json"
+def run_training(gpus: str, exp_name: str) -> None:
+    config_path = os.path.join(RUNS_DIR, exp_name, "train_config.json")
+    cmd = f"OMP_NUM_THREADS=1 CUDA_VISIBLE_DEVICES={gpus} torchrun --standalone --nproc_per_node=$(echo {gpus} | tr ',' '\\n' | wc -l) train.py --config {config_path}"
     rprint(
         f"[yellow][bold]!!! Training instructions, read before proceeding !!![/bold][/yellow]"
     )
@@ -93,8 +87,9 @@ def run_training(gpus: str, folder_path: str) -> None:
         return_screen()
 
 
-def run_inference(gpus: str, folder_path: str) -> None:
-    cmd = f"OMP_NUM_THREADS=1 CUDA_VISIBLE_DEVICES={gpus} torchrun --standalone --nproc_per_node=$(echo {gpus} | tr ',' '\\n' | wc -l) ../inference.py --config ../runs/{folder_path}/inference_config.json"
+def run_inference(gpus: str, exp_name: str) -> None:
+    config_path = os.path.join(RUNS_DIR, exp_name, "inference_config.json")
+    cmd = f"OMP_NUM_THREADS=1 CUDA_VISIBLE_DEVICES={gpus} torchrun --standalone --nproc_per_node=$(echo {gpus} | tr ',' '\\n' | wc -l) inference.py --config {config_path}"
     rprint(
         f"[yellow][bold]!!! Inference instructions, read before proceeding !!![/bold][/yellow]"
     )
@@ -167,7 +162,6 @@ def run_command(command, shell=True):
         logger.error(f"Error executing command: {command}\nError: {error}")
     return output, error
 
-
 @app.command()
 @handle_exceptions
 def setup_conda():
@@ -233,7 +227,7 @@ def export_env():
     """Export Conda environment"""
     typer.echo("Exporting Conda Environment")
     subprocess.run("conda env export > environment.yml", shell=True)
-    subprocess.run("mv environment.yml ../", shell=True)
+    subprocess.run("mv environment.yml ", shell=True)
     typer.echo("Environment exported and moved to root directory.")
 
 
@@ -247,6 +241,24 @@ def ask_user_int(prompt: str, min_value: int, max_value: int, default: int) -> i
             value = int(ask_user(prompt, default))
             if min_value <= value <= max_value:
                 return value
+            else:
+                rprint(
+                    f"[red]Please enter a value between [bold]{min_value}[/bold] and [bold]{max_value}[/bold].[/red]"
+                )
+        except ValueError:
+            rprint(f"[red]Please enter a valid integer.[/red]")
+
+def ask_user_int_even(prompt: str, min_value: int, max_value: int, default: int) -> int:
+    while True:
+        try:
+            value = int(ask_user(prompt, default))
+            if min_value <= value <= max_value:
+                if value % 2 != 0:
+                    rprint(
+                        f"[red]Please enter an even integer value.[/red]"
+                    )
+                else:
+                    return value
             else:
                 rprint(
                     f"[red]Please enter a value between [bold]{min_value}[/bold] and [bold]{max_value}[/bold].[/red]"
@@ -272,7 +284,7 @@ def generate_experiment(exp_name: str) -> None:
 
     rprint(f"Setting up new experiment [green]{exp_name}[/green]")
 
-    exp_path = f"../runs/{exp_name}"
+    exp_path = os.path.join(RUNS_DIR, exp_name)
 
     # Common parameters
     train_dir = f"{exp_path}/train"
@@ -280,11 +292,11 @@ def generate_experiment(exp_name: str) -> None:
 
     while True:
         rprint(
-            f"[bold]DATA PATH[/bold]: The path to a single (3D) .tif, .mrc or .rec file, or the path to a folder containing a sequence of (2D) .tif files, ordered alphanumerically matching the Z-stack order. You can use the full path or a path relative from the CryoSamba folder."
+            f"\n[bold]DATA PATH[/bold]: The path to a single (3D) .tif, .mrc or .rec file, or the path to a folder containing a sequence of (2D) .tif files, ordered alphanumerically matching the Z-stack order. You can use the full path or a path relative from the CryoSamba folder."
         )
         data_path = ask_user(
             "Enter your data path",
-            f"data/",
+            f"data/sample_data.rec",
         )
         if not os.path.exists(data_path):
             rprint(f"[red]Data path is invalid. Try again.[/red]")
@@ -308,28 +320,28 @@ def generate_experiment(exp_name: str) -> None:
 
     # Training specific parameters
     rprint(
-        f"[bold]MAXIMUM FRAME GAP FOR TRAINING[/bold]: explained in the manuscript. We empirically set values of 3, 6 and 10 for data at voxel resolutions of 15.72, 7.86 and 2.62 angstroms, respectively. For different resolutions, try a reasonable value interpolated from the reference ones."
+        f"\n[bold]MAXIMUM FRAME GAP FOR TRAINING[/bold]: explained in the manuscript. We empirically set values of 3, 6 and 10 for data at resolutions of 15.72, 7.86 and 2.62 Angstroms/voxel, respectively. For different resolutions, try a reasonable value interpolated from the reference ones."
     )
     train_max_frame_gap = ask_user_int("Enter Maximum Frame Gap for Training", 1, 40, 3)
     rprint(
-        f"[bold]NUMBER OF ITERATIONS[/bold]: for how many iterations the training session will run. This is an upper limit, and you can halt training before that."
+        f"\n[bold]NUMBER OF ITERATIONS[/bold]: for how many iterations the training session will run. This is an upper limit, and you can halt training before that."
     )
     num_iters = ask_user_int(
-        "Enter the number of iterations you want to run", 10000, 200000, 100000
+        "Enter the number of iterations you want to run", 1000, 200000, 50000
     )
     rprint(
-        f"BATCH SIZE: number of data points passed at once to the GPUs. Higher number leads to faster training, but the whole batch might not fit into your GPU's memory, leading to out-of-memory errors. If you're getting these, try to decrease the batch size until they disappear. This number should be a multiple of two."
+        f"\n[bold]BATCH SIZE[/bold]: number of data points passed at once to the GPUs. A higher number leads to faster training, but the whole batch might not fit into your GPU's memory, leading to out-of-memory errors or severe slowdowns. If you're getting these, try to decrease the batch size until they disappear. This number should be an even integer."
     )
-    batch_size = ask_user_int("Enter the batch size", 2, 256, 8)
+    batch_size = ask_user_int_even("Enter the batch size", 2, 256, 8)
     # Inference specific parameters
     rprint(
-        f"[bold]MAXIMUM FRAME GAP FOR INFERENCE[/bold]: explained in the manuscript. We recommend using twice the value used for training."
+        f"\n[bold]MAXIMUM FRAME GAP FOR INFERENCE[/bold]: explained in the manuscript. We recommend using twice the value used for training."
     )
     inference_max_frame_gap = ask_user_int(
         "Enter Maximum Frame Gap for Inference", 1, 80, train_max_frame_gap * 2
     )
     rprint(
-        f"[bold]TTA[/bold]: whether to use Test-Time Augmentation or not (see manuscript) during inference."
+        f"\n[bold]TTA[/bold]: whether to use Test-Time Augmentation or not (see manuscript) during inference."
     )
     tta = typer.confirm(
         "Enable Test Time Augmentation (TTA) for inference?", default=False
@@ -402,9 +414,7 @@ def generate_experiment(exp_name: str) -> None:
         },
     }
 
-    os.makedirs(f"../runs/{exp_name}", exist_ok=True)
-    # os.makedirs(f"../runs/{exp_name}/train", exist_ok=True)
-    # os.makedirs(f"../runs/{exp_name}/inference", exist_ok=True)
+    os.makedirs(f"runs/{exp_name}", exist_ok=True)
 
     # Save configs to files
     with open(f"{exp_path}/train_config.json", "w") as f:
@@ -525,13 +535,11 @@ def setup_cryosamba() -> None:
 def setup_experiment() -> None:
     simple_header("New Experiment Setup")
 
-    if not os.path.exists("../runs"):
-        os.makedirs("../runs")
-    path = "../runs"
+    if not os.path.exists(RUNS_DIR):
+        os.makedirs(RUNS_DIR)
 
-    exp_parent_dir = os.path.join(os.path.dirname(os.getcwd()), "runs")
-    rprint(f"Your experiments are stored at [bold]{exp_parent_dir}[/bold]")
-    exp_list = list_non_hidden_files(path)
+    rprint(f"Your experiments are stored at [bold]{RUNS_DIR}[/bold]")
+    exp_list = list_non_hidden_files(RUNS_DIR)
     if len(exp_list) == 0:
         rprint(f"You have no existing experiments.")
     else:
@@ -540,7 +548,7 @@ def setup_experiment() -> None:
     if typer.confirm("Do you want to create a new experiment?"):
         while True:
             exp_name = typer.prompt("Please enter the experiment name")
-            exp_path = f"../runs/{exp_name}"
+            exp_path = os.path.join(RUNS_DIR, exp_name)
             if os.path.exists(exp_path):
                 rprint(
                     f"[red]Experiment [bold]{exp_name}[/bold] already exists. Please choose a new name.[/red]"
@@ -563,13 +571,11 @@ def list_non_hidden_files(path):
 def run_cryosamba(mode) -> None:
     simple_header(f"CryoSamba {mode}")
 
-    if not os.path.exists("../runs"):
-        os.makedirs("../runs")
-    path = "../runs"
+    if not os.path.exists(RUNS_DIR):
+        os.makedirs(RUNS_DIR)
 
-    exp_parent_dir = os.path.join(os.path.dirname(os.getcwd()), "runs")
-    rprint(f"Your experiments are stored at [bold]{exp_parent_dir}[/bold]")
-    exp_list = list_non_hidden_files(path)
+    rprint(f"Your experiments are stored at [bold]{RUNS_DIR}[/bold]")
+    exp_list = list_non_hidden_files(RUNS_DIR)
     if len(exp_list) == 0:
         rprint(
             f"[red]You have no existing experiments. Set up a new experiment via the main menu.[/red]"
@@ -580,7 +586,7 @@ def run_cryosamba(mode) -> None:
 
     while True:
         exp_name = typer.prompt("Please enter the experiment name")
-        exp_path = f"../runs/{exp_name}"
+        exp_path = os.path.join(RUNS_DIR, exp_name)
         if os.path.exists(exp_path):
             rprint(f"* Experiment [green]{exp_name}[/green] selected *")
             break

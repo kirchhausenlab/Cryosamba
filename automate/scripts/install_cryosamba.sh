@@ -3,8 +3,8 @@
 check_conda() {
     STR="Conda installation not found"
     if command -v conda &> /dev/null; then
-    STR="Conda is already installed"
-    echo $STR
+        STR="Conda is already installed"
+        echo $STR
     fi
 
     if [ "$STR" = "Conda installation not found" ]; then
@@ -23,23 +23,21 @@ check_conda() {
 
 # Function to create and set up the conda environment
 setup_environment() {
-    env_name="cryosamba"
-    
-    echo "Creating conda environment: $env_name"
-    conda create --name $env_name python=3.11 -y
-   
-    echo "running conda init"
-    conda init --all 
+    env_name="cryosamba "
 
-    sleep 5
-    echo "update shell"
-    source ~/.bashrc
-    }
+    # Check if the environment already exists
+    if conda env list | grep -q "^$env_name\s"; then
+        echo "Conda environment '$env_name' already exists. Skipping creation."
+    else
+        echo "Creating conda environment: $env_name"
+        conda create --name $env_name python=3.11 -y
+    fi
+}
 
 activate_env() {
     env_name="cryosamba"
     echo "Activating conda environment: $env_name"
-    conda activate $env_name
+    source ~/miniconda3/bin/activate $env_name
     
     echo "Installing PyTorch"
     pip3 install torch==2.3.1 torchvision==0.18.1 torchaudio==2.3.1 --index-url https://download.pytorch.org/whl/cu118
@@ -60,13 +58,12 @@ main(){
 echo "*** CRYOSAMBA INSTALLATION ***"
 echo "* Installing Conda"
 check_conda
-echo "* Setting up the CryoSamba environment"
+echo "* Creating the CryoSamba environment *"
 setup_environment
 
+echo "* Installing required libraries *"
 activate_env
-# update bash path
-source ~/.bashrc     
-# make a yml and move it
+echo "* Exporting environment file *"
 export_env
 }
 main

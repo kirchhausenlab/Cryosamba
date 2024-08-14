@@ -1,35 +1,40 @@
 import os
 import sys
-current_dir = os.path.dirname(os.path.realpath(__file__))
-parent_dir = os.path.dirname(current_dir)
-sys.path.insert(0, parent_dir)
+
+# current_dir = os.path.dirname(os.path.realpath(__file__))
+# parent_dir = os.path.dirname(current_dir)
+# sys.path.insert(0, parent_dir)
 
 import json
 import webbrowser
+import os
 import subprocess
+import webbrowser
 from functools import wraps
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Union
 
 import typer
+from loguru import logger
 from rich import print as rprint
 from rich.console import Console
 
-from logging_config import logger
-
 app = typer.Typer()
+
 
 def select_gpus() -> Optional[Union[List[str], int]]:
     simple_header("GPU Selection")
 
-    rprint(f"[yellow]Please note that you need a nvidia GPU to run CryoSamba. If you cannot see GPU information, your machine may not support CryoSamba.[/yellow]")
+    rprint(
+        f"[yellow]Please note that you need a nvidia GPU to run CryoSamba. If you cannot see GPU information, your machine may not support CryoSamba.[/yellow]"
+    )
 
     if typer.confirm("Do you want to see detailed GPU information?"):
         command1 = "nvidia-smi"
         res = subprocess.run(command1, shell=True, capture_output=True, text=True)
         print("")
         print(res.stdout)
-    
+
     command2 = "nvidia-smi --query-gpu=index,utilization.gpu,memory.free,memory.total,memory.used --format=csv"
     res2 = subprocess.run(command2, shell=True, capture_output=True, text=True)
 
@@ -52,23 +57,34 @@ def select_gpus() -> Optional[Union[List[str], int]]:
             lst_available_gpus.remove(gpus)
         else:
             rprint(f"[red]Invalid choice![/red]")
-    
+
     print("")
     if len(select_gpus) == 0:
         rprint(f"[red]You didn't select any GPUs[/red]")
         return -1
     else:
         rprint(f"You have selected the following GPUs: [blue]{select_gpus}[/blue]\n")
-    
+
     return select_gpus
 
 
 def run_training(gpus: str, folder_path: str) -> None:
     cmd = f"OMP_NUM_THREADS=1 CUDA_VISIBLE_DEVICES={gpus} torchrun --standalone --nproc_per_node=$(echo {gpus} | tr ',' '\\n' | wc -l) ../train.py --config ../runs/{folder_path}/train_config.json"
-    rprint(f"[yellow][bold]!!! Training instructions, read before proceeding !!![/bold][/yellow]")
-    rprint(f"[bold]* You can interrupt training at any time by pressing CTRL + C, and you can resume it later by running CryoSamba again *[/bold]")
-    rprint(f"[bold]* Training will run until your specified maximum number of iterations is reached. However, you can monitor the training and validation losses and halt training when you think they have converged/stabilized * [/bold]")
-    rprint(f"[bold]* You can monitor the losses through here, through the .log file in the experiment training folder, or through TensorBoard (see README on how to run it) *[/bold] \n") 
+    rprint(
+        f"[yellow][bold]!!! Training instructions, read before proceeding !!![/bold][/yellow]"
+    )
+    rprint(
+        f"[bold]* You can interrupt training at any time by pressing CTRL + C, and you can resume it later by running CryoSamba again *[/bold]"
+    )
+    rprint(
+        f"[bold]* Training will run until your specified maximum number of iterations is reached. However, you can monitor the training and validation losses and halt training when you think they have converged/stabilized * [/bold]"
+    )
+    rprint(
+        f"[bold]* You can monitor the losses through here, through the .log file in the experiment training folder, or through TensorBoard (see README on how to run it) *[/bold] \n"
+    )
+    rprint(
+        f"[bold]* The output of the training run will be checkpoint files containing the trained model weights. There is no denoised data output at this point yet. You can used the trained model weights to run inference on your data and then get the denoised outputs. *[/bold] \n"
+    )
     if typer.confirm("Do you want to start training?"):
         rprint(f"\n[blue]***********************************************[/blue]\n")
         subprocess.run(cmd, shell=True, text=True)
@@ -76,18 +92,28 @@ def run_training(gpus: str, folder_path: str) -> None:
         rprint(f"[red]Training aborted[/red]")
         return_screen()
 
+
 def run_inference(gpus: str, folder_path: str) -> None:
     cmd = f"OMP_NUM_THREADS=1 CUDA_VISIBLE_DEVICES={gpus} torchrun --standalone --nproc_per_node=$(echo {gpus} | tr ',' '\\n' | wc -l) ../inference.py --config ../runs/{folder_path}/inference_config.json"
-    rprint(f"[yellow][bold]!!! Inference instructions, read before proceeding !!![/bold][/yellow]")
-    rprint(f"[bold]* You can interrupt inference at any time by pressing CTRL + C, and you can resume it later by running CryoSamba again *[/bold]")
-    rprint(f"[bold]* You should have previously run a training session on this experiment in order to run inference * [/bold]")
-    rprint(f"[bold]* The denoised volume will be generated after the final iteration * [/bold] \n")
+    rprint(
+        f"[yellow][bold]!!! Inference instructions, read before proceeding !!![/bold][/yellow]"
+    )
+    rprint(
+        f"[bold]* You can interrupt inference at any time by pressing CTRL + C, and you can resume it later by running CryoSamba again *[/bold]"
+    )
+    rprint(
+        f"[bold]* You should have previously run a training session on this experiment in order to run inference * [/bold]"
+    )
+    rprint(
+        f"[bold]* The denoised volume will be generated after the final iteration * [/bold] \n"
+    )
     if typer.confirm("Do you want to start inference?"):
         rprint(f"\n[blue]***********************************************[/blue]\n")
         subprocess.run(cmd, shell=True, text=True)
     else:
         rprint(f"[red]Inference aborted[/red]")
         return_screen()
+
 
 def handle_exceptions(func):
     @wraps(func)
@@ -210,6 +236,7 @@ def export_env():
     subprocess.run("mv environment.yml ../", shell=True)
     typer.echo("Environment exported and moved to root directory.")
 
+
 def ask_user(prompt: str, default: Any = None) -> Any:
     return typer.prompt(prompt, default=default)
 
@@ -221,9 +248,12 @@ def ask_user_int(prompt: str, min_value: int, max_value: int, default: int) -> i
             if min_value <= value <= max_value:
                 return value
             else:
-                rprint(f"[red]Please enter a value between [bold]{min_value}[/bold] and [bold]{max_value}[/bold].[/red]")
+                rprint(
+                    f"[red]Please enter a value between [bold]{min_value}[/bold] and [bold]{max_value}[/bold].[/red]"
+                )
         except ValueError:
             rprint(f"[red]Please enter a valid integer.[/red]")
+
 
 def list_tif_files(path):
     files = []
@@ -232,7 +262,7 @@ def list_tif_files(path):
         # Construct the full path of the entry
         full_path = os.path.join(path, entry)
         # Check if the entry is a file and ends with '.tif'
-        if os.path.isfile(full_path) and entry.endswith('.tif'):
+        if os.path.isfile(full_path) and entry.endswith(".tif"):
             files.append(full_path)
     return files
 
@@ -246,37 +276,60 @@ def generate_experiment(exp_name: str) -> None:
 
     # Common parameters
     train_dir = f"{exp_path}/train"
-    inference_dir = f"{exp_path}/inference"  
+    inference_dir = f"{exp_path}/inference"
 
     while True:
-        # curr_path = Path(__name__).resolve().parent.parent
-        # data_path = ask_user("Enter your data full path", f"{curr_path}/rotacell_grid1_TS09_ctf_3xBin.rec")
-        data_path = ask_user("Enter your data full path", f"/nfs/datasync4/inacio/data/raw_data/fib/2024_05_15_269_IPSC_test/2x2x1nm/InLens_reg_small")
+        rprint(
+            f"[bold]DATA PATH[/bold]: The path to a single (3D) .tif, .mrc or .rec file, or the path to a folder containing a sequence of (2D) .tif files, ordered alphanumerically matching the Z-stack order. You can use the full path or a path relative from the CryoSamba folder."
+        )
+        data_path = ask_user(
+            "Enter your data path",
+            f"data/",
+        )
         if not os.path.exists(data_path):
             rprint(f"[red]Data path is invalid. Try again.[/red]")
         else:
             if os.path.isfile(data_path):
                 extension = os.path.splitext(data_path)[1]
-                if extension not in ['.mrc', '.rec', '.tif', '.tiff']:
-                    rprint(f"[red]Extension [bold]{extension}[/bold] is not supported. Try another path.[/red]")
+                if extension not in [".mrc", ".rec", ".tif", ".tiff"]:
+                    rprint(
+                        f"[red]Extension [bold]{extension}[/bold] is not supported. Try another path.[/red]"
+                    )
                 else:
                     break
             elif os.path.isdir(data_path):
                 files = list_tif_files(data_path)
-                if len(files)==0:
-                    rprint(f"[red]Your folder does not contain any tif files. Only sequences of tif files are currently supported. Try another path.[/red]")
+                if len(files) == 0:
+                    rprint(
+                        f"[red]Your folder does not contain any tif files. Only sequences of tif files are currently supported. Try another path.[/red]"
+                    )
                 else:
                     break
 
     # Training specific parameters
+    rprint(
+        f"[bold]MAXIMUM FRAME GAP FOR TRAINING[/bold]: explained in the manuscript. We empirically set values of 3, 6 and 10 for data at voxel resolutions of 15.72, 7.86 and 2.62 angstroms, respectively. For different resolutions, try a reasonable value interpolated from the reference ones."
+    )
     train_max_frame_gap = ask_user_int("Enter Maximum Frame Gap for Training", 1, 40, 3)
+    rprint(
+        f"[bold]NUMBER OF ITERATIONS[/bold]: for how many iterations the training session will run. This is an upper limit, and you can halt training before that."
+    )
     num_iters = ask_user_int(
         "Enter the number of iterations you want to run", 10000, 200000, 100000
     )
-    batch_size = ask_user_int("Enter the training batch size", 2, 256, 8)
+    rprint(
+        f"BATCH SIZE: number of data points passed at once to the GPUs. Higher number leads to faster training, but the whole batch might not fit into your GPU's memory, leading to out-of-memory errors. If you're getting these, try to decrease the batch size until they disappear. This number should be a multiple of two."
+    )
+    batch_size = ask_user_int("Enter the batch size", 2, 256, 8)
     # Inference specific parameters
+    rprint(
+        f"[bold]MAXIMUM FRAME GAP FOR INFERENCE[/bold]: explained in the manuscript. We recommend using twice the value used for training."
+    )
     inference_max_frame_gap = ask_user_int(
-        "Enter Maximum Frame Gap for Inference", 1, 80, 6
+        "Enter Maximum Frame Gap for Inference", 1, 80, train_max_frame_gap * 2
+    )
+    rprint(
+        f"[bold]TTA[/bold]: whether to use Test-Time Augmentation or not (see manuscript) during inference."
     )
     tta = typer.confirm(
         "Enable Test Time Augmentation (TTA) for inference?", default=False
@@ -363,31 +416,49 @@ def generate_experiment(exp_name: str) -> None:
     simple_header(f"Experiment [green]{exp_name}[/green] created")
     return_screen()
 
+
 def return_screen() -> None:
     if typer.confirm("Return to main menu?"):
         main_menu()
     else:
         exit_screen()
 
+
 def exit_screen() -> None:
     rprint("[bold]Thank you for using CryoSamba. Goodbye![/bold]")
     quit()
 
+
 def title_screen() -> None:
     rprint("")
-    rprint("[green] ██████╗██████╗ ██╗   ██╗ ██████╗[/green] [yellow]███████╗ █████╗ ███╗   ███╗██████╗  █████╗[/yellow]")
-    rprint("[green]██╔════╝██╔══██╗╚██╗ ██╔╝██╔═══██╗[/green][yellow]██╔════╝██╔══██╗████╗ ████║██╔══██╗██╔══██╗[/yellow]")
-    rprint("[green]██║     ██████╔╝ ╚████╔╝ ██║   ██║[/green][yellow]███████╗███████║██╔████╔██║██████╔╝███████║[/yellow]")
-    rprint("[green]██║     ██╔══██╗  ╚██╔╝  ██║   ██║[/green][yellow]╚════██║██╔══██║██║╚██╔╝██║██╔══██╗██╔══██║[/yellow]")
-    rprint("[green]╚██████╗██║  ██║   ██║   ╚██████╔╝[/green][yellow]███████║██║  ██║██║ ╚═╝ ██║██████╔╝██║  ██║[/yellow]")
-    rprint("[green] ╚═════╝╚═╝  ╚═╝   ╚═╝    ╚═════╝ [/green][yellow]╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝╚═════╝ ╚═╝  ╚═╝[/yellow]")
-    rprint("")                                                                     
+    rprint(
+        "[green] ██████╗██████╗ ██╗   ██╗ ██████╗[/green] [yellow]███████╗ █████╗ ███╗   ███╗██████╗  █████╗[/yellow]"
+    )
+    rprint(
+        "[green]██╔════╝██╔══██╗╚██╗ ██╔╝██╔═══██╗[/green][yellow]██╔════╝██╔══██╗████╗ ████║██╔══██╗██╔══██╗[/yellow]"
+    )
+    rprint(
+        "[green]██║     ██████╔╝ ╚████╔╝ ██║   ██║[/green][yellow]███████╗███████║██╔████╔██║██████╔╝███████║[/yellow]"
+    )
+    rprint(
+        "[green]██║     ██╔══██╗  ╚██╔╝  ██║   ██║[/green][yellow]╚════██║██╔══██║██║╚██╔╝██║██╔══██╗██╔══██║[/yellow]"
+    )
+    rprint(
+        "[green]╚██████╗██║  ██║   ██║   ╚██████╔╝[/green][yellow]███████║██║  ██║██║ ╚═╝ ██║██████╔╝██║  ██║[/yellow]"
+    )
+    rprint(
+        "[green] ╚═════╝╚═╝  ╚═╝   ╚═╝    ╚═════╝ [/green][yellow]╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝╚═════╝ ╚═╝  ╚═╝[/yellow]"
+    )
+    rprint("")
     rprint("[bold]Welcome to CryoSamba [white]v1.0[/white] [/bold]")
-    rprint("[bold]by Kirchhausen Lab [blue](https://kirchhausen.hms.harvard.edu/)[/blue][/bold]")
+    rprint(
+        "[bold]by Kirchhausen Lab [blue](https://kirchhausen.hms.harvard.edu/)[/blue][/bold]"
+    )
     print("")
     typer.echo(
-        "Please take some time to read the instructions and in the case of failures refer to the README for the contact information of relevant parties. *Refer to the video for step by step instructions*"
+        "Please read the instructions carefully. If you experience any issues reach out to Jose Costa-Filho at joseinacio@tklab.hms.harvard.edu or Arkash Jain at arkash@tklab.hms.harvard.edu"
     )
+
 
 @app.command()
 def main():
@@ -395,6 +466,7 @@ def main():
     title_screen()
 
     main_menu()
+
 
 def main_menu() -> None:
 
@@ -428,12 +500,14 @@ def main_menu() -> None:
         else:
             rprint("[red]Invalid option. Please choose either 1, 2, 3 or 4.[/red]")
 
+
 def simple_header(message) -> None:
     rprint(f"\n[bold]*** {message} ***[/bold]\n")
 
+
 def setup_cryosamba() -> None:
     simple_header("CryoSamba Setup")
-    
+
     if typer.confirm("Do you want to setup Conda?"):
         setup_conda()
 
@@ -446,6 +520,7 @@ def setup_cryosamba() -> None:
 
     rprint("[green]CryoSamba setup finished[/green]")
     return_screen()
+
 
 def setup_experiment() -> None:
     simple_header("New Experiment Setup")
@@ -467,7 +542,9 @@ def setup_experiment() -> None:
             exp_name = typer.prompt("Please enter the experiment name")
             exp_path = f"../runs/{exp_name}"
             if os.path.exists(exp_path):
-                rprint(f"[red]Experiment [bold]{exp_name}[/bold] already exists. Please choose a new name.[/red]")
+                rprint(
+                    f"[red]Experiment [bold]{exp_name}[/bold] already exists. Please choose a new name.[/red]"
+                )
             else:
                 break
         generate_experiment(exp_name)
@@ -479,8 +556,9 @@ def setup_experiment() -> None:
 
 
 def list_non_hidden_files(path):
-    non_hidden_files = [file for file in os.listdir(path) if not file.startswith('.')]
+    non_hidden_files = [file for file in os.listdir(path) if not file.startswith(".")]
     return non_hidden_files
+
 
 def run_cryosamba(mode) -> None:
     simple_header(f"CryoSamba {mode}")
@@ -493,7 +571,9 @@ def run_cryosamba(mode) -> None:
     rprint(f"Your experiments are stored at [bold]{exp_parent_dir}[/bold]")
     exp_list = list_non_hidden_files(path)
     if len(exp_list) == 0:
-        rprint(f"[red]You have no existing experiments. Set up a new experiment via the main menu.[/red]")
+        rprint(
+            f"[red]You have no existing experiments. Set up a new experiment via the main menu.[/red]"
+        )
         return_screen()
     else:
         rprint(f"You have the following experiments: [bold]{exp_list}[/bold]")
@@ -505,15 +585,17 @@ def run_cryosamba(mode) -> None:
             rprint(f"* Experiment [green]{exp_name}[/green] selected *")
             break
         else:
-            rprint(f"[red]Experiment [bold]{exp_name}[/bold] not found. Please check the experiment name and try again.[/red]")
-    
+            rprint(
+                f"[red]Experiment [bold]{exp_name}[/bold] not found. Please check the experiment name and try again.[/red]"
+            )
+
     selected_gpus = select_gpus()
-    if selected_gpus==-1:
+    if selected_gpus == -1:
         return_screen()
 
-    if mode=="Training":
+    if mode == "Training":
         run_training(",".join(selected_gpus), exp_name)
-    elif mode=="Inference":
+    elif mode == "Inference":
         run_inference(",".join(selected_gpus), exp_name)
 
 
