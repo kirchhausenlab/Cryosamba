@@ -6,6 +6,8 @@ import numpy as np
 import tifffile as tif
 import torch
 
+import warnings
+
 from core.utils.utils import make_dir
 
 
@@ -136,7 +138,8 @@ def memmap_data(path, data_format):
     if data_format == "tif_file":
         data = tif.memmap(path)
     elif data_format == "mrc_file" or data_format == "rec_file":
-        memmap = mrcfile.mmap(path, mode="r")
+        with warnings.catch_warnings(record=True) as w:
+            memmap = mrcfile.mmap(path, mode='r', permissive=False)
         data = memmap.data
         extra_params = {"voxel_size": memmap.voxel_size.copy()}
     elif data_format == "tif_sequence":

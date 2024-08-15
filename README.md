@@ -16,11 +16,17 @@ This repository contains the denoising pipeline described in the following publi
 
 1. [Overview](#overview) 🌐
 2. [Terminal](#terminal) 💻
-   - [Installation](#installation) 🛠️
-   - [Usage](#usage) 🔨
+   - [Installation](#installation)
+   - [Usage](#usage)
 3. [(OPTIONAL) Visualization with TensorBoard](#visualization-with-tensorboard) 📈
 4. [(Work in Progress) UI](#ui) 🎮
-5. [Troubleshooting](#troubleshooting) 🎯
+5. [Guides](#guides) 📚
+   - [Setting up the data path](#setting-up-the-data-path)
+   - [Working with different pixel resolutions](#working-with-different-pixel-resolutions)
+   - [Batches, iterations and epochs](#batches-iterations-and-epochs)
+   - [Multi GPU runs](#multi-gpu-runs)
+   - [Training duration and monitoring](#training-duration-and-monitoring)
+7. [Troubleshooting](#troubleshooting) 🎯
 
 ## Overview
 
@@ -29,6 +35,8 @@ CryoSamba can be run via [Terminal](#terminal). We also provide a [User Interfac
 If you want to use CryoSamba on Windows, have a deeper understanding of the source code, change the optional parameters, or alter/use the code for your research, refer to the [advanced instructions](https://github.com/kirchhausenlab/Cryosamba/blob/main/advanced_instructions.md).
 
 **Before trying CryoSamba on your own data, we recommend you first make sure it works with the sample data we provide.**
+
+Feel free to contact us about any issues or questions related to the code. We also suggest reading our [Guides](#guides) and the [Troubleshooting](#troubleshooting) section. Our goal is to make sure everyone (with a capable hardware) is able to run CryoSamba.
 
 ## Terminal
 
@@ -114,11 +122,7 @@ streamlit run main.py
 
 You can set up the environment, train models, make configs, and run inferences from here.
 
-## Troubleshooting
-
-1. [Setting up the data path](#setting-up-the-data-path)
-2. [General guidelines for different pixel resolutions](#General-guidelines-for-different-pixel-resolutions)
-3. [Instructions for Setting Up CUDA](#instructions-for-setting-up-cuda)
+## Guides
 
 ### Setting up the data path
 
@@ -126,7 +130,7 @@ In order to use CryoSamba on your own data, you have to tell it where that data 
 
 CryoSamba accepts as input (.mrc, .rec, .tif) single 3D files or sequences of 2D (.tif) files. For single files, the "data path" must directly reference the files, while for tif sequences the "data path" should reference the folder containing the sequence. For example, use `path/to/sample_data.rec` or `path/to/tif_folder`. Not referencing the input data properly will lead to errors.
 
-### General guidelines for different pixel resolutions
+### Working with different pixel resolutions
 
 CryoSamba's fully self-supervised nature allows it to work on data at various voxel resolutions/binnings.
 
@@ -138,29 +142,83 @@ As shown on our manuscript, **CryoSamba's results are more striking for higher r
 
 Finally, **we do not guarantee CryoSamba will work for resolutions higher than 2.62A/voxel**, as we only have tested it with resolutions up to that value. 
 
+### Batches, iterations and epochs
 
-### Instructions for Setting Up CUDA
+In CryoSamba, the input data volume is split into small 3D blocks which are then fed to the deep learning model. In order to leverage the parallelization capabilities of GPUs (that's why we use them!), we feed the model not with individual blocks but with a **batch** of blocks at each time, which speeds up training and inference. The size of these batches is controlled by the `batch_size` parameter in the config files.
 
-If it appears that your machine is unable to locate the CUDA driver, which is typically found under `/usr/bin/`, please follow the steps below after identifying the path for CUDA on your machine:
+In deep learning, passing each batch through the model consists of an **iteration**, and passing all batches consists of an **epoch**. For total training and inference times, **epoch times are what really matters**. Typical CryoSamba trainings last several epochs, and inference through the whole input volume lasts, trivially, one epoch.
 
-1. **Set the CUDA Home Environment Variable**
+If you increase the batch size, iterations will last longer, but epochs will be shorter (albeit with diminishing returns). Therefore, CryoSamba will run faster (even though you might initially think it is slower, because of the iteratio times!). However, larger batch sizes require more GPU memory. If you use a too large batch size, CryoSamba might require more memory than what your GPU provides, and the code will crash with the following line somewhere inside the error message:
+```bash
+torch.cuda.OutOfMemoryError: CUDA out of memory
+```
+In some cases, you might not get an error, but CryoSamba will be extremely slow. In both cases, try decreasing the batch size and running CryoSamba again. Note: disabling `mixed_precision` might slightly increase GPU memory usage.
 
-   Run the following command, replacing the path with the correct one for your CUDA installation:
+### Multi GPU runs
 
-   ```bash
-   export CUDA_HOME=/path/to/your/cuda
+When you run CryoSamba with more than one GPU device, the model weights are copied to all devices and what's actually distributed between them is the batch of data. In a run with N gpus, you pass a batch of `batch_size` to each of them, so in total you are running with an effective batch of size `N * batch_size`. If you compare your iteration times with 1 vs 2 GPUs, for example, they will be very similar to each other (with the latter being slightly longer due to the GPU communication overhead), but in practice your code is running 2x faster in the latter. This will be reflected in the epoch times, not in the inference times, as explained in [Batches, iterations and epochs](#batches-iterations-and-epochs).
 
-   ```
+### Training duration and monitoring
 
-   For example:
+A CryoSamba training session will run until you reach a total number of iterations equal to the `num_iters` parameter. The default value is high enough to guarantee most training runs will achieve convergence before that, but in practice you don't need to wait until it happens. In most cases, convergence will happen long before that, and training after that is mostly a waste of time and energy.
 
-   ```bash
-   export CUDA_HOME=/usr/local/cuda-11.8
+A training run converges when all its training losses (for all frame gaps) and the validation loss converge/stabilize. You can monitor their behaviour through the print statements in the command line where CryoSamba is running, through the `runtime.log` file inside your experiment's training folder (it records the aforementioned print statements), or via [TensorBoard](#visualization-with-tensorboard). TensorBoard offers a nice visualization scheme with plots of all the losses, but it requires extra steps to be run (as well as access to a graphical interface), which some users might not think it's worth the effort. Alternatively, a good rule of thumb is to simply wait for 30 epochs, which is a reasonable value we found for which most of our training runs converged. 
 
-   ```
+## Troubleshooting
 
-2. **Ensure CUDA is Installed and Updated**
+1. [CUDA installation issues](#cuda-installation-issues)
+2. [CUDA out of memory](#cuda-out-of-memory)
+3. [CryoSamba too slow](#cryosamba-too-slow)
 
-   Verify that CUDA version 11 or higher is installed on your system. If it is not, please install it according to the official NVIDIA documentation.
+❗**IMPORTANT**❗CryoSamba error messages tend to be very long, and the real cause of the error is usually buried deep in the middle of the wall of text. Feel free to send us your whole error message and we will try to find a solution. However, if you do not want to wait for our feedback, you can try identifying your issue by yourself through this Troubleshooting. 
 
+### CUDA installation issues
+
+**CryoSamba requires CUDA 11 or higher to run**. If you don't have CUDA installed, or its version is older than 11, you will not be able to run CryoSamba. This is the most common issue among our users.
+
+If you find the following lines inside your error message, you're most likely having CUDA issues:
+```bash
+(...)
+os.environ["CUDA_HOME"] = cupy.cuda.get_cuda_path()
+(...)
+TypeError: str expected, not NoneType
+```
+
+First of all, go to your command line and run
+```bash
+nvcc --version
+```
+You should get something **similar** to this:
+```bash
+nvcc: NVIDIA (R) Cuda compiler driver
+Copyright (c) 2005-2022 NVIDIA Corporation
+Built on Wed_Sep_21_10:33:58_PDT_2022
+Cuda compilation tools, release 11.8, V11.8.89
+Build cuda_11.8.r11.8/compiler.31833905_0
+```
+If you get a CUDA version below 11.0, update it (or ask your system admin to do it) according to the official NVIDIA documentation. If you get nothing, `command not found` or something else, you probably don't have CUDA installed or the machine is unable to locate the CUDA driver.
+
+If you installed CUDA but your machine is still unable to locate the CUDA driver, which is typically found under `/usr/bin/`, run the following command, replacing the path with the correct one for your CUDA installation:
+```bash
+export CUDA_HOME=/path/to/your/cuda
+
+```
+For example:
+
+```bash
+export CUDA_HOME=/usr/local/cuda-11.8
+
+```
 By following these steps, your machine should be able to locate and use the CUDA driver, allowing you to proceed with your work.
+
+### CUDA out of memory
+
+If you get the following line somewhere inside your error message:
+```bash
+torch.cuda.OutOfMemoryError: CUDA out of memory
+```
+You don't have enough GPU memory to run CryoSamba at the current configuration. This is likely caused by a too large batch size. Try decreasing it and see if the error persists. This is explained in more details in [Batches, iterations and epochs](#batches-iterations-and-epochs).
+
+### CryoSamba too slow
+
+Refer to [Batches, iterations and epochs](#batches-iterations-and-epochs) and [Multi GPU runs](#multi-gpu-runs).
