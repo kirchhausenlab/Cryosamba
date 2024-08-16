@@ -99,11 +99,24 @@ TensorBoard can be used to monitor the progress of the training losses.
 
 1. Open a terminal window inside a graphical interface (e.g., your desktop computer, or XDesk).
 2. Activate the environment and run:
-   ```bash
-   tensorboard --logdir /path/to/dir/Cryosamba/runs/exp-name/train
-   ```
-3. In a browser, open `localhost:6006`.
+```bash
+tensorboard --logdir /path/to/dir/Cryosamba/runs/exp-name/train
+```
+3. In a browser, open the link shown in the output message (probably `http://localhost:6006/`).
 4. Use the slider under `SCALARS` to smooth noisy plots.
+
+If you are using Terminal inside a remote server you will have to do a double tunnel:
+
+1. Suppose you SSH into `cluster.my_university.edu` with your `username` and afterwards SSH into `specific_machine`. In your terminal, activate the environment and run
+```bash
+tensorboard --logdir /path/to/dir/Cryosamba/runs/exp-name/train --bind_all
+```
+2. The output message will contain a link most likely in the form of `http://specific_machine:6006/`. Then, in your machine, open a new terminal window and run
+```bash
+ssh -L 16006:specific_machine:6006 username@cluster.my_university.edu
+```
+The port number `16006` is arbitrary and can be any number.
+3. In a browser, go to `http://localhost:6006/` or `http://127.0.0.1:6006/`.
 
 ## UI
 
@@ -162,7 +175,9 @@ When you run CryoSamba with more than one GPU device, the model weights are copi
 
 A CryoSamba training session will run until you reach a total number of iterations equal to the `num_iters` parameter. The default value is high enough to guarantee most training runs will achieve convergence before that, but in practice you don't need to wait until it happens. In most cases, convergence will happen long before that, and training after that is mostly a waste of time and energy.
 
-A training run converges when all its training losses (for all frame gaps) and the validation loss converge/stabilize. You can monitor their behaviour through the print statements in the command line where CryoSamba is running, through the `runtime.log` file inside your experiment's training folder (it records the aforementioned print statements), or via [TensorBoard](#visualization-with-tensorboard). TensorBoard offers a nice visualization scheme with plots of all the losses, but it requires extra steps to be run (as well as access to a graphical interface), which some users might not think it's worth the effort. Alternatively, a good rule of thumb is to simply wait for 30 epochs, which is a reasonable value we found for which most of our training runs converged. 
+A training run converges when all its training losses (for all frame gaps) and the validation loss converge/stabilize. You can monitor their behaviour through the print statements in the command line where CryoSamba is running, through the `runtime.log` file inside your experiment's training folder (it records the aforementioned print statements), or via [TensorBoard](#visualization-with-tensorboard). TensorBoard offers a nice visualization scheme with plots of all the losses, but it requires extra steps to be run (as well as access to a graphical interface), which some users might not think it's worth the effort. Alternatively, a good rule of thumb is to simply wait for 30 epochs, which is a reasonable value we found for which most of our training runs converged.
+
+We also include a functionality called `Early Stopping`, which automates the training halting via a simplified heuristic. After 20 training epochs, if the validation loss doesn't decrease for at least 3 consecutive epochs then training is automatically halted. This functionality can be turned on or off in the training config file.
 
 ## Troubleshooting
 

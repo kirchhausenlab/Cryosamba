@@ -21,7 +21,7 @@
    ```
 4. Install the remaining libraries:
    ```bash
-   pip install tifffile mrcfile easydict loguru tensorboard cupy-cuda11x
+   pip install tifffile mrcfile easydict loguru tensorboard cupy-cuda11x typer
    ```
 5. Navigate to the directory where you want to save the Cryosamba code (via `cd /path/to/dir`). Then run
 ```bash
@@ -55,7 +55,8 @@ Create a `your_train_config.json` config file somewhere. Use as default the temp
     "num_iters": 200000,
     "warmup_iters": 300,
     "mixed_precision": true,
-    "compile": false
+    "compile": false,
+    "do_early_stopping": false
   },
   "optimizer": {
     "lr": 2e-4,
@@ -101,6 +102,7 @@ Explanation of parameters:
    - `warmup_iters`: number of iterations for the learning rate warmu-up.
    - `mixed_precision`: if `true`, uses mixed precision training.
    - `compile`: If `true`, uses `torch.compile` for faster training (might lead to errors, and has a few-minutes overhead time before the training iterations).
+   - `do_early_stopping`: If activated, training will be halted if, starting after 20 epochs, the validation loss doesn't decrease for at least 3 consecutive epochs.
 - `optimizer`: parameters related to the optimization algorithm
    - `lr`: base learning rate.
    - `lr_decay`: multiplicative factor for the learning rate decay.

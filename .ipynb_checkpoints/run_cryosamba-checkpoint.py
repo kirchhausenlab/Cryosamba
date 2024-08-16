@@ -346,6 +346,12 @@ def generate_experiment(exp_name: str) -> None:
         "Enable Test Time Augmentation (TTA) for inference (disabled by default)?", default=False
     )
     rprint(
+        f"\n[bold]TRAINING EARLY STOPPING[/bold]: If activated, training will be halted if, starting after 20 epochs, the validation loss doesn't decrease for at least 3 consecutive epochs."
+    )
+    early_stopping = typer.confirm(
+        "Enable Early Stopping (disabled by default)?", default=False
+    )
+    rprint(
         f"\n[yellow][bold]ADVANCED PARAMETERS[/bold]: only recommended for experienced users.[/yellow]"
     )
     advanced = typer.confirm(
@@ -471,6 +477,7 @@ def generate_experiment(exp_name: str) -> None:
             "warmup_iters": train_warmup_iters,
             "mixed_precision": train_mixed_precision,
             "compile": train_compile,
+            "do_early_stopping": early_stopping,
         },
         "optimizer": {
             "lr": optimizer_lr,
