@@ -213,7 +213,7 @@ class Inference:
                     imgs[self.max_frame_gap + t].contiguous(),
                 )
 
-                with autocast("cuda", enabled=self.mixed_precision)
+                with autocast("cuda", enabled=self.mixed_precision):
                     with torch.inference_mode():
                         rec = self.inference_fn(img0, imgT, img1)
                 recs.append(rec)

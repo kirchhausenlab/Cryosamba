@@ -416,7 +416,6 @@ def generate_experiment(exp_name: str) -> None:
         train_data_split_ratio = 0.95
         train_data_num_workers = ask_user_int("Enter train_data.num_workers", 0, 512, 4)
         
-        train_load_ckpt_path = ask_user("Enter train.load_ckpt_path (type None for default)", None)
         train_print_freq = ask_user_int("Enter train.print_freq", 1, 10000, 100)
         train_save_freq = ask_user_int("Enter train.save_freq", 1, 10000, 1000)
         train_val_freq = ask_user_int("Enter train.val_freq", 1, 10000, 500)
@@ -439,7 +438,7 @@ def generate_experiment(exp_name: str) -> None:
         biflownet_padding_mode = ask_user("Enter biflownet.padding_mode", "reflect")
         biflownet_fix_params = ask_user("Enter biflownet.fix_params", False)
         
-        fusionnet_num_channels = ask_user_int_multiple("Enter fusionnet.num_channels", 4, 128, 4, 16),
+        fusionnet_num_channels = ask_user_int_multiple("Enter fusionnet.num_channels", 4, 128, 4, 16)
         fusionnet_padding_mode = ask_user("Enter fusionnet.padding_mode", "reflect")
         fusionnet_fix_params = ask_user("Enter fusionnet.fix_params", False)
     
@@ -450,7 +449,6 @@ def generate_experiment(exp_name: str) -> None:
         inference_data_num_workers = ask_user_int("Enter inference_data.num_workers", 0, 512, 4)
         
         inference_output_format = ask_user("Enter inference.output_format", "same")
-        inference_load_ckpt_name = ask_user("Enter inference.load_ckpt_name (type None for default)", None)
         inference_pyr_level = ask_user_int("Enter inference.pyr_level", 1, 20, 3)
         inference_mixed_precision = ask_user("Enter inference.mixed_precision", True)
         inference_compile = ask_user("Enter inference.compile", False)
