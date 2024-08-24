@@ -3,12 +3,12 @@ venv
 __pycache__
 
 configs
-scripts
-inference_multiple.py
 logs
+/scripts/
 exp-*
 logs/*
-runs
+/runs/
+/data/
 
 random_exp
 

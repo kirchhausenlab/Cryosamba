@@ -1,4 +1,4 @@
-import os
+import os, sys
 
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
 
@@ -30,6 +30,24 @@ from core.utils.torch_utils import (
     get_optimizer,
     get_scheduler,
 )
+
+
+class EarlyStopper:
+    def __init__(self, patience=1, min_delta=0):
+        self.patience = patience
+        self.min_delta = min_delta
+        self.counter = 0
+        self.min_validation_loss = float("inf")
+
+    def early_stop(self, validation_loss):
+        if validation_loss < self.min_validation_loss:
+            self.min_validation_loss = validation_loss
+            self.counter = 0
+        elif validation_loss > (self.min_validation_loss + self.min_delta):
+            self.counter += 1
+            if self.counter >= self.patience:
+                return True
+        return False
 
 
 class Train:
@@ -64,6 +82,10 @@ class Train:
         self.val_freq = cfg.train.val_freq
         self.save_freq = cfg.train.save_freq
         self.compile = cfg.train.compile
+        if hasattr(cfg.train, "do_early_stopping"):
+            self.do_early_stopping = cfg.train.do_early_stopping
+        else:
+            self.do_early_stopping = False
 
         # Init model
 
@@ -106,6 +128,8 @@ class Train:
             f"# of data samples = {len(self.train_loader)} (train), {len(self.val_loader)} (val)"
         )
 
+        self.early_stopper = EarlyStopper(patience=3, min_delta=0)
+
     def log(self, message):
         return logger_info(self.rank, message)
 
@@ -134,7 +158,7 @@ class Train:
         save_ckpt(self.model, self.optimizer, self.scheduler, self.iter, save_ckpt_path)
 
     @torch.inference_mode()
-    def validation(self):
+    def validation(self, write=True):
         val_stamp = time()
         self.model.eval()
         val_loss = 0
@@ -157,12 +181,15 @@ class Train:
         val_time = time() - val_stamp
         self.model.train()
 
-        self.writer.add_scalar("val_loss/val", val_loss, self.iter)
-        self.writer.flush()
+        if write == True:
+            self.writer.add_scalar("val_loss/val", val_loss, self.iter)
+            self.writer.flush()
 
         self.log(
             f"Iter {self.iter}/{self.num_iters} :: val loss: {val_loss:.6f}, E.T.: {val_time:.3f}s"
         )
+
+        return val_loss
 
     def run_training(self):
         # Load checkpoint
@@ -235,7 +262,7 @@ class Train:
                         train_loss = {key: 0 for key in train_loss.keys()}
 
                     if self.iter % self.val_freq == 0:
-                        self.validation()
+                        val_loss = self.validation()
 
                     if self.iter % self.save_freq == 0:
                         self.save_model()
@@ -244,7 +271,16 @@ class Train:
                         print_time = time()
 
                 self.iter += 1
+
             epoch += 1
+
+            if self.do_early_stopping and epoch >= 20:
+                if self.rank == 0:
+                    val_loss = self.validation(write=False)
+                    if self.early_stopper.early_stop(val_loss):
+                        self.log(f"Early stopping training at epoch {epoch}.")
+                        break
+                sync_nodes(self.is_ddp)
 
         sync_nodes(self.is_ddp)
 
@@ -253,6 +289,8 @@ class Train:
         )
 
         cleanup(self.is_ddp)
+
+        sys.exit()
 
 
 if __name__ == "__main__":

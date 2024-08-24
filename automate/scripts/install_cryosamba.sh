@@ -1,13 +1,13 @@
 #!/bin/bash
 
 check_conda() {
-    STR="no"
+    STR="Conda installation not found"
     if command -v conda &> /dev/null; then
-    STR="conda is installed no need to install it"
-    echo $STR
+        STR="Conda is already installed"
+        echo $STR
     fi
 
-    if [ "$STR" = "no" ]; then
+    if [ "$STR" = "Conda installation not found" ]; then
         echo "Installing conda, please hit yes and enter to install (this may take 3-4 minutes)"
         # Get anaconda
         wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
@@ -16,33 +16,31 @@ check_conda() {
         # evaluating conda
         export PATH=~/miniconda3/bin:$PATH 
         rm Miniconda3-latest-Linux-x86_64.*
-        source ~/.bashrc     
+        source ~/.bashrc
+        echo "Conda successfully installed"
     fi
 }
 
 # Function to create and set up the conda environment
 setup_environment() {
-    env_name="cryosamba"
-    
-    echo "Creating conda environment: $env_name"
-    conda create --name $env_name python=3.11 -y
-   
-    echo "running conda init"
-    conda init --all 
-   
+    env_name="cryosamba "
 
-    sleep 5
-    echo "update shell"
-    source ~/.bashrc
-    }
+    # Check if the environment already exists
+    if conda env list | grep -q "^$env_name\s"; then
+        echo "Conda environment '$env_name' already exists. Skipping creation."
+    else
+        echo "Creating conda environment: $env_name"
+        conda create --name $env_name python=3.11 -y
+    fi
+}
 
 activate_env() {
     env_name="cryosamba"
     echo "Activating conda environment: $env_name"
-    conda activate $env_name
+    source ~/miniconda3/bin/activate $env_name
     
     echo "Installing PyTorch"
-    pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+    pip3 install torch==2.3.1 torchvision==0.18.1 torchaudio==2.3.1 --index-url https://download.pytorch.org/whl/cu118
     
     echo "Installing other dependencies"
     pip install tifffile mrcfile easydict loguru tensorboard cupy-cuda11x streamlit typer
@@ -57,16 +55,15 @@ export_env(){
 
 main(){
 # check conda, if it doesnt exist install it
-echo "Hello User, we are intialling cryosamba"
+echo "*** CRYOSAMBA INSTALLATION ***"
+echo "* Installing Conda"
 check_conda
-echo "conda installed"
-# install necessary dependencies 
+echo "* Creating the CryoSamba environment *"
 setup_environment
 
+echo "* Installing required libraries *"
 activate_env
-# update bash path
-source ~/.bashrc     
-# make a yml and move it
+echo "* Exporting environment file *"
 export_env
 }
 main
