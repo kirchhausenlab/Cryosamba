@@ -139,7 +139,7 @@ def memmap_data(path, data_format):
         data = tif.memmap(path)
     elif data_format == "mrc_file" or data_format == "rec_file":
         with warnings.catch_warnings(record=True) as w:
-            memmap = mrcfile.mmap(path, mode='r', permissive=False)
+            memmap = mrcfile.mmap(path, mode="r", permissive=False)
         data = memmap.data
         extra_params = {"voxel_size": memmap.voxel_size.copy()}
     elif data_format == "tif_sequence":

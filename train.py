@@ -31,12 +31,13 @@ from core.utils.torch_utils import (
     get_scheduler,
 )
 
+
 class EarlyStopper:
     def __init__(self, patience=1, min_delta=0):
         self.patience = patience
         self.min_delta = min_delta
         self.counter = 0
-        self.min_validation_loss = float('inf')
+        self.min_validation_loss = float("inf")
 
     def early_stop(self, validation_loss):
         if validation_loss < self.min_validation_loss:
@@ -47,6 +48,7 @@ class EarlyStopper:
             if self.counter >= self.patience:
                 return True
         return False
+
 
 class Train:
     def __init__(self, args):
@@ -179,7 +181,7 @@ class Train:
         val_time = time() - val_stamp
         self.model.train()
 
-        if write==True:
+        if write == True:
             self.writer.add_scalar("val_loss/val", val_loss, self.iter)
             self.writer.flush()
 
@@ -266,19 +268,17 @@ class Train:
                         self.save_model()
 
                     if self.iter % self.print_freq == 0:
-                        print_time = time()           
+                        print_time = time()
 
                 self.iter += 1
-                
+
             epoch += 1
-            
-            if self.do_early_stopping and epoch>=20:
-                if self.rank==0:
+
+            if self.do_early_stopping and epoch >= 20:
+                if self.rank == 0:
                     val_loss = self.validation(write=False)
                     if self.early_stopper.early_stop(val_loss):
-                        self.log(
-                            f"Early stopping training at epoch {epoch}."
-                        )
+                        self.log(f"Early stopping training at epoch {epoch}.")
                         break
                 sync_nodes(self.is_ddp)
 
