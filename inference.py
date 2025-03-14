@@ -37,7 +37,7 @@ class Inference:
         cfg = load_json(args.config)
 
         if self.rank == 0:
-            setup_run(cfg, mode="inference")
+            setup_run(cfg, mode="inference", non_interactive = args.non_interactive, restart = args.restart)
         sync_nodes(self.is_ddp)
 
         self.log(
@@ -260,6 +260,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("-c", "--config", default="configs/default_inference.json")
     parser.add_argument("-s", "--seed", type=int, default=-1)
+    parser.add_argument("-i", "--non_interactive", default=False, action=argparse.BooleanOptionalAction)
+    parser.add_argument("-r", "--restart", type=bool, action=argparse.BooleanOptionalAction)
     args = parser.parse_args()
 
     task = Inference(args)
