@@ -3,6 +3,7 @@ import torch
 import torch.distributed as dist
 import numpy as np
 import random
+import datetime
 
 from core.utils.utils import make_dir, load_json, save_json
 
@@ -11,10 +12,12 @@ from core.utils.utils import make_dir, load_json, save_json
 
 def sync_nodes(is_ddp):
     if is_ddp:
-        dist.barrier()
+        local_rank = os.environ["LOCAL_RANK"]
+        dev_list = list(map(int, local_rank.split(',')))
+        dist.barrier(device_ids = dev_list)
+#        dist.barrier()
     else:
         pass
-
 
 def cleanup(is_ddp):
     if is_ddp:
@@ -46,9 +49,10 @@ def setup_DDP(seed=-1):
 
     world_size = get_node_count()
     if world_size > 1:
-        dist.init_process_group("nccl")
+        dist.init_process_group("nccl", timeout = datetime.timedelta(seconds=360))
         rank = dist.get_rank()
         device = rank % torch.cuda.device_count()
+        #dist.barrier(device_ids = [device])
     else:
         rank, device = 0, 0
 
