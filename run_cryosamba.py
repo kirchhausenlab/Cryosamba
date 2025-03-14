@@ -1,6 +1,7 @@
 import os
 import sys
 import shutil
+import shutil_nfs
 import json
 import subprocess
 from functools import wraps
@@ -15,6 +16,7 @@ from rich.console import Console
 app = typer.Typer()
 
 RUNS_DIR = os.path.join(os.getcwd(), "runs")
+CRYOSAMBA_DIR = os.path.dirname(__file__)
 
 
 def select_gpus() -> Optional[Union[List[str], int]]:
@@ -65,7 +67,7 @@ def select_gpus() -> Optional[Union[List[str], int]]:
 
 def run_training(gpus: str, exp_name: str) -> None:
     config_path = os.path.join(RUNS_DIR, exp_name, "train_config.json")
-    cmd = f"OMP_NUM_THREADS=1 CUDA_VISIBLE_DEVICES={gpus} torchrun --standalone --nproc_per_node=$(echo {gpus} | tr ',' '\\n' | wc -l) train.py --config {config_path}"
+    cmd = f"OMP_NUM_THREADS=1 CUDA_VISIBLE_DEVICES={gpus} torchrun --standalone --nproc_per_node=$(echo {gpus} | tr ',' '\\n' | wc -l) {CRYOSAMBA_DIR}/train.py --config {config_path}"
     rprint(
         f"[yellow][bold]!!! Training instructions, read before proceeding !!![/bold][/yellow]"
     )
@@ -90,7 +92,7 @@ def run_training(gpus: str, exp_name: str) -> None:
 
 def run_inference(gpus: str, exp_name: str) -> None:
     config_path = os.path.join(RUNS_DIR, exp_name, "inference_config.json")
-    cmd = f"OMP_NUM_THREADS=1 CUDA_VISIBLE_DEVICES={gpus} torchrun --standalone --nproc_per_node=$(echo {gpus} | tr ',' '\\n' | wc -l) inference.py --config {config_path}"
+    cmd = f"OMP_NUM_THREADS=1 CUDA_VISIBLE_DEVICES={gpus} torchrun --standalone --nproc_per_node=$(echo {gpus} | tr ',' '\\n' | wc -l) {CRYOSAMBA_DIR}/inference.py --config {config_path}"
     rprint(
         f"[yellow][bold]!!! Inference instructions, read before proceeding !!![/bold][/yellow]"
     )
