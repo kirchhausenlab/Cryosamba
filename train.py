@@ -275,11 +275,14 @@ class Train:
             epoch += 1
 
             if self.do_early_stopping and epoch >= 20:
-                if self.rank == 0:
-                    val_loss = self.validation(write=False)
-                    if self.early_stopper.early_stop(val_loss):
-                        self.log(f"Early stopping training at epoch {epoch}.")
-                        break
+                # This seems to cause non-zero ranks to hang when
+                # early termination is triggered. Rank 0 will clean up,
+                # but not the rest.
+                #if self.rank == 0:
+                val_loss = self.validation(write=False)
+                if self.early_stopper.early_stop(val_loss):
+                    self.log(f"Early stopping training at epoch {epoch}.")
+                    break
                     
                 sync_nodes(self.is_ddp)
 
