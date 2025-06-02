@@ -139,6 +139,8 @@ class Inference:
     def process_crop_params(self, crop_params):
         coords, border_pad = torch.split(crop_params, 3, dim=1)
         residual_pad = self.overlap_pad * (self.overlap_pad > border_pad)
+        between = torch.logical_and(border_pad > 0, border_pad < self.overlap_pad)
+        residual_pad = residual_pad - (between * border_pad)
         residual_pad[..., 1] *= -1
 
         pad = torch.maximum(border_pad, self.overlap_pad)
