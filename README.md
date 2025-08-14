@@ -34,7 +34,7 @@ CryoSamba can be run via [Terminal](#terminal). We also provide a [User Interfac
 
 If you want to use CryoSamba on Windows, have a deeper understanding of the source code, change the optional parameters, or alter/use the code for your research, refer to the [advanced instructions](https://github.com/kirchhausenlab/Cryosamba/blob/main/advanced_instructions.md).
 
-**Before trying CryoSamba on your own data, we recommend you first make sure it works with the sample data we provide.**
+**Before trying CryoSamba on your own data, we recommend you first make sure it works with the [sample data](https://www.dropbox.com/scl/fo/c4xyjev9l68j41plfgmj9/AFrKKYx5iFx8KHu-hkwcfLI?rlkey=9kylczfvnorb1dn4a0b2u7t5j&st=0s0lwtet&dl=0) sample data we provide.**
 
 Feel free to contact us about any issues or questions related to the code. We also suggest reading our [Guides](#guides) and the [Troubleshooting](#troubleshooting) section. Our goal is to make sure everyone (with a capable hardware) is able to run CryoSamba.
 
