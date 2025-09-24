@@ -217,3 +217,10 @@ Explanation of parameters:
 You can simply open the final denoised volume in your preferred data visualization/processing software and check how it looks like.
 
  
+### Non-interactive options.
+
+Both train.py and inference.py will take the options --non_interactive and --restart. These can be useful for running under a job scheduler or to automate pipelines.
+
+--non_interactive will answer 'yes' to all questions and resume from checkpoints if they exists. 
+
+--restart will delete existing training or inference runs and start from scratch.

@@ -59,7 +59,7 @@ class Train:
         cfg = load_json(args.config)
 
         if self.rank == 0:
-            setup_run(cfg, mode="training")
+            setup_run(cfg, mode="training", non_interactive = args.non_interactive, restart = args.restart)
             self.writer = set_writer_train(cfg)
         sync_nodes(self.is_ddp)
 
@@ -275,11 +275,15 @@ class Train:
             epoch += 1
 
             if self.do_early_stopping and epoch >= 20:
-                if self.rank == 0:
-                    val_loss = self.validation(write=False)
-                    if self.early_stopper.early_stop(val_loss):
-                        self.log(f"Early stopping training at epoch {epoch}.")
-                        break
+                # This seems to cause non-zero ranks to hang when
+                # early termination is triggered. Rank 0 will clean up,
+                # but not the rest.
+                #if self.rank == 0:
+                val_loss = self.validation(write=False)
+                if self.early_stopper.early_stop(val_loss):
+                    self.log(f"Early stopping training at epoch {epoch}.")
+                    break
+                    
                 sync_nodes(self.is_ddp)
 
         sync_nodes(self.is_ddp)
@@ -297,6 +301,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("-c", "--config", default="configs/default_train.json")
     parser.add_argument("-s", "--seed", type=int, default=-1)
+    parser.add_argument("-i", "--non_interactive", default=False, action=argparse.BooleanOptionalAction)
+    parser.add_argument("-r", "--restart", type=bool, action=argparse.BooleanOptionalAction)
     args = parser.parse_args()
 
     task = Train(args)

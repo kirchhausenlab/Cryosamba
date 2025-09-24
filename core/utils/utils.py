@@ -90,17 +90,17 @@ def set_writer_train(cfg):
 
 def prompt(query):
     sys.stdout.write("%s [y/n]:" % query)
-    val = input()
+    val = input().strip().lower()
 
     try:
         ret = strtobool(val)
-    except ValueError:
+    except (ValueError, TypeError):
         sys.stdout("please answer with y/n")
         return prompt(query)
     return ret
 
 
-def setup_run(cfg, mode):
+def setup_run(cfg, mode, non_interactive = False, restart = False):
     save_dir = cfg.train_dir if mode == "training" else cfg.inference_dir
     can_resume_run = (
         os.path.exists(os.path.join(save_dir, "last.pt"))
@@ -109,25 +109,37 @@ def setup_run(cfg, mode):
     )
     new_run = True
     if os.path.exists(save_dir):
-        while True:
-            if (
-                prompt(
-                    f"Dir {save_dir} already exists. Would you like to overwrite it?"
-                )
-                == True
-            ):
-                shutil.rmtree(save_dir)
-            elif can_resume_run:
-                if prompt(f"Would you like to resume the existing {mode}?") == True:
-                    message = f"Resuming {mode} from {save_dir}"
-                    new_run = False
+        if restart:
+            non_interactive = True
+            can_resume_run = False
+            shutil.rmtree(save_dir)
+            message = f"Restarting previous {mode} from {save_dir}"
+            set_logger(save_dir)
+            logger.info(message)
+        if non_interactive:
+            if can_resume_run:
+                message = f"Resuming {mode} from {save_dir}"
+                new_run = False
+        else:
+            while True:
+                if (
+                    prompt(
+                        f"Dir {save_dir} already exists. Would you like to overwrite it?"
+                    )
+                    == True
+                ):
+                    shutil.rmtree(save_dir)
+                elif can_resume_run:
+                    if prompt(f"Would you like to resume the existing {mode}?") == True:
+                        message = f"Resuming {mode} from {save_dir}"
+                        new_run = False
+                    else:
+                        print("Understandable, have a nice day.")
+                        sys.exit()
                 else:
-                    print("Understandable, have a nice day.")
+                    print("No checkpoints found.")
                     sys.exit()
-            else:
-                print("No checkpoints found.")
-                sys.exit()
-            break
+                break
     if new_run:
         message = f"Starting new {mode} in {save_dir}"
         make_dir(save_dir)
